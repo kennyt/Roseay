@@ -1,0 +1,27 @@
+class User < ActiveRecord::Base
+  has_secure_password
+
+  attr_accessible :username, :password, :password_confirmation,
+                  :session_token
+
+  has_many :submissions, class_name: 'Song'
+  has_many :likes
+  has_many :liked_songs, through: :likes, source: :song
+
+  validates_length_of :username, minimum: 4, message: "too short"
+  validates_length_of :password, minimum: 4, message: "too short"
+
+  validates_uniqueness_of :username, case_sensitive: false,
+                           message: "already taken"
+
+  validates_presence_of :password_confirmation, if: :made_password?,
+                         message: "can't be blank"
+
+  def made_password?
+    password
+  end
+
+  def vote_up(song)
+    Like.create(user_id: id, song_id: song.id)
+  end
+end
