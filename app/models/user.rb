@@ -22,6 +22,11 @@ class User < ActiveRecord::Base
   end
 
   def vote_up(song)
-    Like.create(user_id: id, song_id: song.id)
+    self.liked_songs << song
+    song.points += 1
+  end
+
+  def avg
+    (submissions.inject(0.0){|x, y| x + y.points} / submissions.length).round(1)
   end
 end

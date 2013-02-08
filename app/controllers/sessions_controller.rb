@@ -7,7 +7,8 @@ class SessionsController < ApplicationController
     @user = User.find_by_username(params[:user][:username])
 
     if @user
-      redirect_to root_path
+      build_cookie(@user)
+      redirect_to songs_path
     else
       flash.now[:notice] = "Email/Password incorrect"
       @user ||= User.new

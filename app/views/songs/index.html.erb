@@ -1,17 +1,43 @@
 <% if current_user %>
   <%= link_to 'logout', session_path(current_user), method: :delete %>
+  <%= "| " %>
+  <%= link_to "#{current_user.username}", user_path(current_user) %>
+  <%= "| " %>
+  <%= "avg(#{current_user.avg})" %>
 <% else %>
   <%= link_to 'login', new_session_path %>
+  <%= "| " %>
   <%= link_to 'signup', new_user_path %>
 <% end %>
-<h1>.songs</h1>
+<%= "| " %>
+<%= link_to 'submit', new_song_path %>
+
+
+<h1>.dance</h1>
 <br>
 <% @songs.each do |song| %>
-  <ol ><style type="text/css">a {text-decoration: none}</style>
+  <ol ><style type="text/css">a {text-decoration: none} a {color: black}</style>
+
+    <% if current_user %>
+      <% if able_to_vote?(song, current_user) %>
+        <%= link_to '^ ', upvote_song_path(song) %>
+        <%= "| " %>
+      <% else %>
+        <%= "~ | " %>
+      <% end %>
+    <% else %>
+      <%= link_to '^ ', new_session_path %>
+      <%= "| " %>
+    <% end %>
+
     <%= link_to " #{song.song_artist} - #{song.song_name}", song.song_link %>
     <br>
-    <%= "#{song.points} points by " %>
-    <%= link_to song.author.username, user_path(song.author) %>
-    <%= "| #{distance_of_time_in_words(song.created_at-Time.now.round(3))} ago" %>
+    <font size="2">
+      <%= "#{song.points} points ~ " %>
+      <%= link_to song.author.username, user_path(song.author) %>
+      <%= "| " %>
+      <%= "#{distance_of_time_in_words(song.created_at-Time.now)} ago" %>
+    </font>
   </ol>
 <% end %>
+
