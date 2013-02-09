@@ -1,12 +1,13 @@
-<h3>.signin</h3>
-<%= form_for(@user, url: sessions_path, method: :post) do |f| %>
-  <%= f.label :username %>
-  <br>
-  <%= f.text_field :username %>
-  <br>
-  <%= f.label :password %>
-  <br>
-  <%= f.password_field :password %>
-  <br>
-  <%= f.submit %>
-<% end %>
+<div class="form">
+  <h3>.signin</h3>
+  <%= form_for(@user, url: sessions_path, method: :post) do |f| %>
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+    <br>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+    <br>
+    <br>
+    <%= f.submit 'Sign In' %>
+  <% end %>
+</div>

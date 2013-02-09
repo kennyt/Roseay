@@ -32,6 +32,8 @@ GEM
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
+    bootstrap-sass (2.2.2.0)
+      sass (~> 3.2)
     builder (3.0.4)
     capybara (2.0.2)
       mime-types (>= 1.16)
@@ -151,6 +153,9 @@ GEM
       multi_json (~> 1.0)
       rubyzip
       websocket (~> 1.0.4)
+    simple_form (2.0.4)
+      actionpack (~> 3.0)
+      activemodel (~> 3.0)
     slop (3.4.3)
     sprockets (2.2.2)
       hike (~> 1.2)
@@ -181,6 +186,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt-ruby
+  bootstrap-sass (~> 2.2.2.0)
   capybara
   coffee-rails (~> 3.2.1)
   factory_girl_rails
@@ -190,6 +196,7 @@ DEPENDENCIES
   rails (= 3.2.11)
   rspec-rails
   sass-rails (~> 3.2.3)
+  simple_form
   sqlite3
   terminal-notifier-guard
   uglifier (>= 1.0.3)

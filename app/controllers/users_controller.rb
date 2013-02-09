@@ -13,15 +13,16 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
+    user = User.new(params[:user])
+    user.username.downcase!
 
-    if @user.save
-      build_cookie(@user)
+    if user.save
+      build_cookie(user)
       redirect_to songs_path
     else
-      flash.now[:notice] = @user.errors.full_messages.first
-
-      render root_path
+      flash.now[:notice] = user.errors.full_messages.first
+      @user = user
+      render 'users/new', notice: 'oops!'
     end
   end
 end

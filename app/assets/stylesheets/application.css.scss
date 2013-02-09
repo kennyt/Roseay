@@ -1,0 +1,127 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+
+
+@import "bootstrap-styles";
+@import "bootstrap";
+
+a {text-decoration: none} a {color: black}
+
+.form {
+  margin-left: 150px;
+  font-family: 'quicksand';
+}
+
+.song {
+  margin: 10px;
+  margin-left: 100px;
+
+  a {
+    &:hover{
+      text-decoration: none;
+      color: red;
+    }
+  }
+  .upvote {
+    &:hover {
+      color: red;
+    }
+  }
+}
+
+.upvote {
+  position: relative;
+  top: 7px;
+  font-weight: bold;
+  font-size: 20px;
+  font-family: monospace;
+  line-height: 0.5px;
+
+}
+
+.big_header {
+  margin-top: 25px;
+  margin-left: 178px;
+  font-family: 'quicksand';
+  a{
+    &:hover{
+      text-decoration: none;
+      color: purple;
+    }
+  }
+}
+
+.info_bar {
+  font-size: 11px;
+}
+
+.top_header {
+  margin-left: 150px;
+  a {
+    &:hover {
+      text-decoration: none;
+      color: green;
+    }
+  }
+}
+
+.small_header {
+  margin-left: 183px;
+  font-size: 12px;
+  color: purple;
+}
+
+.user_page {
+  margin-left: 125px;
+}
+
+.user_page_list {
+  margin-left: 50px;
+  margin-top: 5px;
+  a {
+    &:hover {
+      text-decoration: none;
+      color: red;
+    }
+  }
+}
+
+.user_page_top_header {
+  margin-left: 150px;
+  a {
+    &:hover {
+      text-decoration: none;
+      color: green;
+    }
+  }
+}
+
+.user_page_list_header {
+  font-size: 20px;
+  font-family: 'text me one';
+}
+
+.small_header_index {
+  margin-left: 178px;
+  font-size: 12px;
+  color: purple;
+
+  a {
+    color: purple;
+    &:hover {
+      text-decoration: none;
+      color: green;
+    }
+  }
+}

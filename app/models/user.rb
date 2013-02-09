@@ -27,6 +27,11 @@ class User < ActiveRecord::Base
   end
 
   def avg
+    return 0 if submissions.length == 0
     (submissions.inject(0.0){|x, y| x + y.points} / submissions.length).round(1)
+  end
+
+  def total
+    submissions.inject(0) {|x, y| x + y.points }
   end
 end

@@ -1,43 +1,29 @@
-<% if current_user %>
-  <%= link_to 'logout', session_path(current_user), method: :delete %>
+<div class="top_header">
+  <% if current_user %>
+    <%= link_to 'logout', session_path(current_user), method: :delete %>
+    <%= "| " %>
+    <%= link_to "#{current_user.username}", user_path(current_user) %>
+    <%= "| " %>
+    <%= "avg(#{current_user.avg})" %>
+  <% else %>
+    <%= link_to 'login', new_session_path %>
+    <%= "| " %>
+    <%= link_to 'signup', new_user_path %>
+  <% end %>
   <%= "| " %>
-  <%= link_to "#{current_user.username}", user_path(current_user) %>
+  <%= link_to 'submit', new_song_path %>
+</div>
+
+<div class="big_header">
+  <h1><%= link_to '.dance', root_path %></h1>
+</div>
+
+<div class="small_header_index">
+  <%= link_to "relevance", songs_path(:by_time => 0) %>
   <%= "| " %>
-  <%= "avg(#{current_user.avg})" %>
-<% else %>
-  <%= link_to 'login', new_session_path %>
-  <%= "| " %>
-  <%= link_to 'signup', new_user_path %>
-<% end %>
-<%= "| " %>
-<%= link_to 'submit', new_song_path %>
-
-
-<h1>.dance</h1>
-<br>
-<% @songs.each do |song| %>
-  <ol ><style type="text/css">a {text-decoration: none} a {color: black}</style>
-
-    <% if current_user %>
-      <% if able_to_vote?(song, current_user) %>
-        <%= link_to '^ ', upvote_song_path(song) %>
-        <%= "| " %>
-      <% else %>
-        <%= "~ | " %>
-      <% end %>
-    <% else %>
-      <%= link_to '^ ', new_session_path %>
-      <%= "| " %>
-    <% end %>
-
-    <%= link_to " #{song.song_artist} - #{song.song_name}", song.song_link %>
-    <br>
-    <font size="2">
-      <%= "#{song.points} points ~ " %>
-      <%= link_to song.author.username, user_path(song.author) %>
-      <%= "| " %>
-      <%= "#{distance_of_time_in_words(song.created_at-Time.now)} ago" %>
-    </font>
-  </ol>
-<% end %>
+  <%= link_to "time", songs_path(:by_time => 1) %>
+</div>
+<ol>
+  <%= render @songs %>
+</ol>
 

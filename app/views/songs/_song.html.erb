@@ -1,0 +1,25 @@
+<li class="song">
+  <% if current_user %>
+    <% if able_to_vote?(song, current_user) %>
+      <%= link_to '^ ', upvote_song_path(song), class: 'upvote' %>
+    <% else %>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <% end %>
+  <% else %>
+    <%= link_to '^ ', new_session_path, class: 'upvote' %>
+  <% end %>
+
+  <%= link_to " #{song.song_artist} - #{song.song_name}", song.song_link %>
+  <br>
+  <div class="info_bar">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <% if song.points == 1 %>
+      <%= "1 point  ~ " %>
+    <% else %>
+      <%= "#{song.points} points ~ " %>
+    <% end %>
+    <%= link_to song.author.username, user_path(song.author) %>
+    <%= "| " %>
+    <%= "#{distance_of_time_in_words(song.created_at-Time.now)} ago" %>
+  </div>
+</li>

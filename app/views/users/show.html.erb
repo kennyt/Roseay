@@ -1,18 +1,12 @@
-<%= link_to 'home', root_path %>
+<div class="user_page_top_header">
+  <%= link_to 'home', root_path %>
+</div>
 <br>
-<h1><%= @user.username %></h1>
-<ol>
-  <%= "avg(#{@user.avg})" %>
-  <h2>submissions (<%= @user.submissions.length %>)</h2>
-  <% @submissions.each do |link| %>
-    <%= "#{link.points} points |" %>
-    <%= link_to "#{link.song_artist} - #{link.song_name}", link.song_link %>
-    <br>
-  <% end %>
-  <h2>upvoted (<%= @user.liked_songs.length %>)</h2><style type="text/css">a {text-decoration: none}</style>
-  <% @liked_songs.each do |song| %>
-    <%= "#{song.points} points | " %>
-    <%= link_to "#{song.song_artist} - #{song.song_name}", song.song_link %>
-    <br>
-  <% end %>
-</ol>
+<div class="big_header">
+  <h1><%= @user.username %></h1>
+</div>
+<div class="small_header">
+  <%= "total (#{@user.total}) | " %>
+  <%= "avg (#{@user.avg})" %>
+</div>
+<%= render @user %>

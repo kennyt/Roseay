@@ -1,6 +1,10 @@
 class SongsController < ApplicationController
   def index
-    @songs = Song.all.sort {|x, y| y.true_value <=> x.true_value }
+    if params[:by_time] == '0' || params[:by_time].nil?
+      @songs = Song.all.sort {|x, y| y.true_value <=> x.true_value}
+    else
+      @songs = Song.order('created_at DESC').all
+    end
   end
 
   def new
@@ -17,7 +21,7 @@ class SongsController < ApplicationController
   	if @song.save
   		redirect_to songs_path
   	else
-  		flash.now[:notice] = song.errors.full_messages.first
+  		flash.now[:notice] = @song.errors.full_messages.first
   		render 'songs/new'
   	end
   end
