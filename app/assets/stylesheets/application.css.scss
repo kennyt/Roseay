@@ -57,13 +57,14 @@ a {text-decoration: none} a {color: black}
   a{
     &:hover{
       text-decoration: none;
-      color: purple;
+      color: #33CCCC;
     }
   }
 }
 
 .info_bar {
   font-size: 11px;
+  color: grey;
 }
 
 .top_header {
@@ -124,4 +125,26 @@ a {text-decoration: none} a {color: black}
       color: green;
     }
   }
+}
+
+body {
+  background: #FFFFFF;
+}
+
+.testing1 {
+  margin-left: 580px;
+  position: relative;
+  top: -600px;
+  font-size: 31px;
+  font-family: 'text me one';
+  a {
+    &:hover{
+      color: orange;
+      text-decoration: none;
+    }
+  }
+}
+
+.space{
+  font-size: 8px;
 }

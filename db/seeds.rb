@@ -17,4 +17,10 @@ a.submissions.create(song_name: 'Aerodynamic', song_artist: 'Daft Punk', song_li
 a.submissions.create(song_name: 'I"ll Listen', song_artist: 'Armin Van Buuren', song_link: 'http://www.youtube.com/watch?v=1hH9ObJQAqc')
 a = User.create(username: 'appler', password: '1234', password_confirmation: '1234')
 a.submissions.create(song_name: 'Let the Love', song_artist: 'Starkillers', song_link: 'http://www.youtube.com/watch?v=IEmDs1weDec')
+a.submissions.create(song_name: 'Invasion', song_artist: 'W&W', song_link: 'http://www.youtube.com/watch?v=brxRa06vgEA')
+a.submissions.create(song_name: 'Moscow', song_artist: 'W&W', song_link: 'http://www.youtube.com/watch?v=xkkLlNyhIQM')
 a = User.create(username: 'water_bottle', password: '1234', password_confirmation: '1234')
+a.submissions.create(song_name: 'Zoology', song_artist: 'Knife Party', song_link: 'http://www.youtube.com/watch?v=7h6KgztO0GM')
+a.submissions.create(song_name: 'Goin In (Skrillex Goin Down Remix)', song_artist: 'Skrillex', song_link: 'http://www.youtube.com/watch?v=EtSz_7nMyyU')
+a.submissions.create(song_name: 'Goin In (Skrillex Goin Hard Remix)', song_artist: 'Skrillex', song_link: 'http://www.youtube.com/watch?v=BUK2H08AZB4')
+
