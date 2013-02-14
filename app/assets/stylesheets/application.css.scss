@@ -21,6 +21,7 @@ a {text-decoration: none} a {color: black}
 .form {
   margin-left: 150px;
   font-family: 'quicksand';
+  width: 300px;
 }
 
 .song {
@@ -57,7 +58,7 @@ a {text-decoration: none} a {color: black}
   a{
     &:hover{
       text-decoration: none;
-      color: #33CCCC;
+      color:  #87CEFA;
     }
   }
 }
@@ -65,6 +66,7 @@ a {text-decoration: none} a {color: black}
 .info_bar {
   font-size: 11px;
   color: grey;
+  cursor: default;
 }
 
 .top_header {
@@ -134,9 +136,10 @@ body {
 .testing1 {
   margin-left: 580px;
   position: relative;
-  top: -600px;
+  top: -660px;
   font-size: 31px;
   font-family: 'text me one';
+  cursor: default;
   a {
     &:hover{
       color: orange;
@@ -147,4 +150,13 @@ body {
 
 .space{
   font-size: 8px;
+}
+
+.sign_in_txt {
+  font-size: 26px;
+  font-family: 'text me one';
+  margin-left: 500px;
+  position: fixed;
+  top: 200px;
+  cursor: default;
 }

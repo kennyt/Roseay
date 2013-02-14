@@ -36,7 +36,7 @@ end
 
 gem 'simple_form'
 gem 'jquery-rails'
-gem 'dynamic-form'
+gem 'dynamic_form'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

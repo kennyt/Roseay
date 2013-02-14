@@ -1,5 +1,5 @@
 <div class="form">
-  <h3>.signin</h3>
+  <h3>signin</h3>
   <%= form_for(@user, url: sessions_path, method: :post) do |f| %>
     <%= f.label :username %>
     <%= f.text_field :username %>
@@ -8,6 +8,33 @@
     <%= f.password_field :password %>
     <br>
     <br>
-    <%= f.submit 'Sign In' %>
+    <%= f.submit 'sign in' %>
   <% end %>
+</div>
+<span class="info_bar">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+___________________________________________________________
+</span>
+<div class="form">
+  <h3>join</h3>
+  <%= form_for(@user, url: users_path, method: :post) do |f| %>
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+    <br>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+    <br>
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+    <br>
+    <br>
+    <%= f.submit 'join' %>
+  <% end %>
+</div>
+
+<div class="sign_in_txt">
+  a poet once said : <br><br><br>
+  <i>"She got a big booty so I call her big booty"<br><br>- 2 Chainz</i>
+  <br><br><br><br>
+  we aspire to be that simple.
 </div>
