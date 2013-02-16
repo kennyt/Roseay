@@ -9,7 +9,6 @@ gem 'rails', '3.2.11'
 gem 'pg'
 gem 'launchy'
 gem 'heroku'
-
 group :test do
   gem 'capybara'
   gem 'factory_girl_rails'
