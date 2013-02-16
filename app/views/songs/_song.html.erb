@@ -1,7 +1,7 @@
 <li class="song">
   <% if current_user %>
     <% if able_to_vote?(song, current_user) %>
-      <%= link_to '^', upvote_song_path(song), class: 'upvote' %>
+      <b><%= link_to '^', upvote_song_path(song), class: 'upvote' %></b>
       &nbsp;
     <% else %>
         <!-- &nbsp;+&nbsp;&nbsp; -->
