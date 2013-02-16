@@ -8,6 +8,7 @@ gem 'rails', '3.2.11'
 # gem 'sqlite3'
 gem 'pg'
 gem 'launchy'
+gem 'heroku'
 
 group :test do
   gem 'capybara'
