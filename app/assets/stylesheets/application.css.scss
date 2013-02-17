@@ -134,15 +134,18 @@ body {
 }
 
 .testing1 {
-  margin-left: 600px;
+  margin-left: 575px;
   position: absolute;
-  top: 250px;
+  top: 0px;
   font-size: 31px;
   font-family: 'text me one';
   cursor: default;
+  width: 57%;
+  height: 145%;
+  background-image:url('/assets/blurred2.jpg');
   a {
     &:hover{
-      color: orange;
+      color: white;
       text-decoration: none;
     }
   }
@@ -167,6 +170,19 @@ body {
   a {
     &:hover{
       text-decoration: none;
+    }
+  }
+}
+
+.motto {
+  text-align: left;
+  vertical-align: middle;
+  margin-top: 34%;
+  color: white;
+  a {
+    color: #98DDDB;
+    &:link{
+      color: white;
     }
   }
 }

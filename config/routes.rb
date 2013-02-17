@@ -1,5 +1,6 @@
 Dotsongs::Application.routes.draw do
-  resources :users
+  resources :users 
+
   resources :songs do
 	member do
       get 'upvote'

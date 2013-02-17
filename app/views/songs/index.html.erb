@@ -1,4 +1,6 @@
 <div class="top_header">
+  <%= link_to '.dream', songs_path %>
+  <%= "| " %>
   <% if current_user %>
     <%= link_to 'logout', session_path(current_user), method: :delete %>
     <%= "| " %>
@@ -15,7 +17,7 @@
 </div>
 
 <div class="big_header">
-  <h1><%= link_to '.dream', root_path %></h1>
+  <h1><%= link_to '.edm', root_path %></h1>
 </div>
 
 <div class="small_header_index">
@@ -27,12 +29,15 @@
   <%= render @songs %>
 </ol>
 <div class="testing1">
-  <i>we love music <br><br><br> we value easy <br><br><br>we <a href="http://bit.ly/X9MzcP" target="_blank">d</a><a href="http://bit.ly/XNAcV7" target="_blank">r</a><a href="http://bit.ly/VTta4S" target="_blank">e</a><a href="http://bit.ly/VTtdxu" target="_blank">a</a><a href="http://bit.ly/YZ6DAM" target="_blank">m</a> easy music exploration</i>
+  <div class="motto">
+    <i>&nbsp;&nbsp;&nbsp;&nbsp;we love music <br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;we value simplicity <br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;we <a href="http://bit.ly/X9MzcP" target="_blank">d</a><a href="http://bit.ly/XNAcV7" target="_blank">r</a><a href="http://bit.ly/VTta4S" target="_blank">e</a><a href="http://bit.ly/VTtdxu" target="_blank">a</a><a href="http://bit.ly/YZ6DAM" target="_blank">m</a> simple music exploration</i>
+  </div>
   <br><br><br><br><br>
   <i></i>
 </div>
 <div class="pagination">
   <% if @more %>
-    <a href="#"><%= link_to 'next', songs_path(:page => @next_page) %></a>
+    <% params[:page] = @next_page %>
+    <a href="#"><%= link_to 'next', songs_path(params) %></a>
   <% end %>
 </div>
