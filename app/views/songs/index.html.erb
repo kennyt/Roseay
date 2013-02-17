@@ -23,12 +23,16 @@
   <%= "| " %>
   <%= link_to "time", songs_path(:by_time => 1) %>
 </div>
-<ol>
+<ol start=<%= "#{@start_num}" %> >
   <%= render @songs %>
 </ol>
 <div class="testing1">
   <i>we love music <br><br><br> we value easy <br><br><br>we <a href="http://bit.ly/X9MzcP" target="_blank">d</a><a href="http://bit.ly/XNAcV7" target="_blank">r</a><a href="http://bit.ly/VTta4S" target="_blank">e</a><a href="http://bit.ly/VTtdxu" target="_blank">a</a><a href="http://bit.ly/YZ6DAM" target="_blank">m</a> easy music exploration</i>
   <br><br><br><br><br>
   <i></i>
-
+</div>
+<div class="pagination">
+  <% if @more %>
+    <a href="#"><%= link_to 'next', songs_path(:page => @next_page) %></a>
+  <% end %>
 </div>

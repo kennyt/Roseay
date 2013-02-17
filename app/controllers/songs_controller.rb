@@ -5,6 +5,22 @@ class SongsController < ApplicationController
     else
       @songs = Song.order('created_at DESC').all
     end
+    @all_songs = @songs
+
+    if params[:page]
+      x = (params[:page].to_i * 15)
+      @songs = @songs[x.to_i..(x.to_i+14)]
+    else
+      params[:page] = 0
+      @songs = @songs[0..14]
+    end
+    @next_page = params[:page].to_i + 1
+    @start_num = ((params[:page].to_i * 15) + 1)
+    if @songs.last == @all_songs.last
+      @more = false
+    else
+      @more = true
+    end
   end
 
   def new

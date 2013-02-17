@@ -27,7 +27,6 @@ a {text-decoration: none} a {color: black}
 .song {
   margin: 10px;
   margin-left: 100px;
-
   a {
     &:hover{
       text-decoration: none;
@@ -48,7 +47,7 @@ a {text-decoration: none} a {color: black}
   font-size: 20px;
   font-family: monospace;
   line-height: 0.5px;
-  color: #3CB47E;
+  color: #7DA7D4;
 }
 
 .big_header {
@@ -131,13 +130,13 @@ a {text-decoration: none} a {color: black}
 }
 
 body {
-  background: #FFFFFF;
+  background: white;
 }
 
 .testing1 {
   margin-left: 600px;
   position: absolute;
-  top: 300px;
+  top: 250px;
   font-size: 31px;
   font-family: 'text me one';
   cursor: default;
@@ -160,4 +159,14 @@ body {
   position: fixed;
   top: 200px;
   cursor: default;
+}
+
+.pagination {
+  margin-left: 200px;
+
+  a {
+    &:hover{
+      text-decoration: none;
+    }
+  }
 }
