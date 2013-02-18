@@ -1,5 +1,5 @@
 <div class="top_header">
-  <%= link_to '.dream', songs_path %>
+  <%= link_to '.dream', root_path %>
   <%= "| " %>
   <% if current_user %>
     <%= link_to 'logout', session_path(current_user), method: :delete %>
@@ -29,12 +29,16 @@
   <%= render @songs %>
 </ol>
 <div class="testing1">
-  <div class="motto">
-    <i>&nbsp;&nbsp;&nbsp;&nbsp;we love music <br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;we value simplicity <br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;we <a href="http://bit.ly/X9MzcP" target="_blank">d</a><a href="http://bit.ly/XNAcV7" target="_blank">r</a><a href="http://bit.ly/VTta4S" target="_blank">e</a><a href="http://bit.ly/VTtdxu" target="_blank">a</a><a href="http://bit.ly/YZ6DAM" target="_blank">m</a> simple music exploration</i>
-  </div>
-  <br><br><br><br><br>
-  <i></i>
+
+  <% if @embed %>
+    <iframe width="545" height="335" src=<%="http://www.youtube.com/embed/#{@embed}?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1"%> frameborder="0"></iframe>
+  <% else %>
+    <div class="motto">
+      <i>&nbsp;&nbsp;&nbsp;&nbsp;we love music <br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;we value simplicity <br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;we <a href="http://bit.ly/X9MzcP" target="_blank">d</a><a href="http://bit.ly/XNAcV7" target="_blank">r</a><a href="http://bit.ly/VTta4S" target="_blank">e</a><a href="http://bit.ly/VTtdxu" target="_blank">a</a><a href="http://bit.ly/YZ6DAM" target="_blank">m</a> simple music exploration</i>
+    </div>
+  <% end %>
 </div>
+<!--   <iframe width="50%" height="140" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F75900036&amp;color=ff6600&amp;auto_play=true"></iframe> -->
 <div class="pagination">
   <% if @more %>
     <% params[:page] = @next_page %>

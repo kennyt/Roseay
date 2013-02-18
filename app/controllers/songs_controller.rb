@@ -14,12 +14,18 @@ class SongsController < ApplicationController
       params[:page] = 0
       @songs = @songs[0..14]
     end
+
     @next_page = params[:page].to_i + 1
     @start_num = ((params[:page].to_i * 15) + 1)
+
     if @songs.last == @all_songs.last
       @more = false
     else
       @more = true
+    end
+
+    if params[:embed]
+      @embed = params[:embed]
     end
   end
 

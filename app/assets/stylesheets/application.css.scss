@@ -134,7 +134,7 @@ body {
 }
 
 .testing1 {
-  margin-left: 575px;
+  margin-left: 43%;
   position: absolute;
   top: 0px;
   font-size: 31px;
@@ -143,6 +143,7 @@ body {
   width: 57%;
   height: 145%;
   background-image:url('/assets/blurred2.jpg');
+  background-size: cover, 100%;
   background-repeat: no-repeat;
   a {
     &:hover{
@@ -150,6 +151,20 @@ body {
       text-decoration: none;
     }
   }
+}
+iframe {
+  position: fixed;
+  margin-top: 12%;
+}
+
+.signin_pic {
+  position: absolute;
+  margin-left: 35%;
+  top: 0px;
+  width: 65%;
+  height: 100%;
+  background-image:url('/assets/roses.jpg');
+  background-repeat: no-repeat; 
 }
 
 .space{
@@ -159,10 +174,11 @@ body {
 .sign_in_txt {
   font-size: 26px;
   font-family: 'text me one';
-  margin-left: 500px;
-  position: fixed;
-  top: 200px;
+  text-align: left;
+  margin-top: 24%;
   cursor: default;
+  vertical-align: middle;
+  color: black;
 }
 
 .pagination {
