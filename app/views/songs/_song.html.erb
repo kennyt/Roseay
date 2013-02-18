@@ -14,7 +14,7 @@
   <% end %>
 
   <% if song.song_link.split("youtube.com")[1] %>
-    <%= link_to " #{song.song_artist} - #{song.song_name}", songs_path(:embed => song.song_link.split('watch?v=')[1]) %>
+    <%= link_to " #{song.song_artist} - #{song.song_name}", songs_path(:d => song.song_link.split('watch?v=')[1]) %>
     <span style="font-size: 8px"><%= link_to "src", song.song_link, :target => '_blank' %>
   <% else %>
     <%= link_to " #{song.song_artist} - #{song.song_name}", song.song_link, :target => '_blank' %>

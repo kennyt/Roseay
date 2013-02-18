@@ -24,8 +24,8 @@ class SongsController < ApplicationController
       @more = true
     end
 
-    if params[:embed]
-      @embed = params[:embed]
+    if params[:d]
+      @embed = params[:d]
     end
   end
 
