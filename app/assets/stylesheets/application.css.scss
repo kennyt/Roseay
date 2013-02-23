@@ -26,7 +26,7 @@ a {text-decoration: none} a {color: black}
 
 .song {
   margin: 10px;
-  margin-left: 100px;
+  margin-left: 7%;
   a {
     &:hover{
       text-decoration: none;
@@ -195,11 +195,22 @@ iframe {
   text-align: left;
   vertical-align: middle;
   margin-top: 34%;
-  color: white;
+  color:white ;
   a {
     color: #98DDDB;
     &:link{
       color: white;
     }
+  }
+}
+
+.need-to-login {
+  width: 30px;
+  height: 20px;
+  background: transparent;
+  position: absolute;
+  &:hover{
+    text-decoration: none;
+    color: green;
   }
 }

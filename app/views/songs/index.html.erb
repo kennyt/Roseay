@@ -6,7 +6,7 @@
     <%= "| " %>
     <%= link_to "#{current_user.username}", user_path(current_user) %>
     <%= "| " %>
-    <%= "avg(#{current_user.avg})" %>
+    <%= "total(#{current_user.total})" %>
   <% else %>
     <%= link_to 'login', new_session_path %>
     <%= "| " %>
@@ -21,13 +21,21 @@
 </div>
 
 <div class="small_header_index">
-  <%= link_to "relevance", songs_path(:by_time => 0) %>
+  <%= link_to "relevance", songs_path(:by_time => 0), :class => 'relevance' %>
   <%= "| " %>
-  <%= link_to "time", songs_path(:by_time => 1) %>
+  <%= link_to "time", songs_path(:by_time => 1), :class => 'time' %>
 </div>
-<ol start=<%= "#{@start_num}" %> >
-  <%= render @songs %>
-</ol>
+<div id="12345" data-time="<%=@by_time%>">
+  <ol start=<%= "#{@start_num}" %> id="songwrap" >
+      <%= render @songs %>
+      <div class="pagination">
+        <% if @more %>
+          <% params[:page] = @next_page %>
+          <span id="nextbtn"><%= link_to 'next', songs_path(params) %></span>
+        <% end %>
+      </div>
+  </ol>
+</div>
 <div class="testing1">
 
   <% if @embed %>
@@ -38,10 +46,186 @@
     </div>
   <% end %>
 </div>
-<!--   <iframe width="50%" height="140" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F75900036&amp;color=ff6600&amp;auto_play=true"></iframe> -->
-<div class="pagination">
-  <% if @more %>
-    <% params[:page] = @next_page %>
-    <a href="#"><%= link_to 'next', songs_path(params) %></a>
-  <% end %>
-</div>
+
+
+
+<script type="text/javascript">
+  $(function(){
+
+    $('#12345').on('click', '#nextbtn a', function(ev){
+      console.log('hello')
+      ev.preventDefault();
+      var songStart = parseInt($('ol').attr('start')) + 15
+      var page = parseInt($('#nextbtn a').attr('href').split('?page=')[1])
+      var byTime = $('#12345').attr('data-time')
+      $('#songwrap').remove()
+      $.getJSON(
+        '/songs.json?page='+page+'&by_time="'+byTime+'"',
+        function(data){
+          $('#12345').append('<ol start="' + songStart + '" id="songwrap"></ol>')
+          $.each(data, function(i, datum){
+            var songID = datum['id']
+            var link = datum['song_link'].split('watch?v=')[1]
+            var points = datum['points']
+            var createdAt = datum['created_at']
+            console.log(page);
+
+            $('#songwrap').append('<li class="song" id="'+i+'"></li>')
+            if (datum['voted'] == 0){
+              $('#'+i).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
+            } else if (datum['voted'] == 1){
+              $('#'+i).append('<a href="/sessions/new" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
+            } else {
+              $('#'+i).append('<a href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
+            }
+            $('#'+i).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>')
+            $('#'+i).append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
+            $('#'+i+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
+            $('#'+i+' .info_bar').append('<a href="/users/'+datum["author_id"]+'">'+datum["author"]+'</a>')
+            $('#'+i+' .info_bar').append('&nbsp;|&nbsp;'+ datum['time'] +' ago')
+          })
+          $('#songwrap').append('<div class="pagination"><span id="nextbtn"><a href="/songs?page='+ (page+1) +'">next</a></span></div>')
+        }
+      )
+      ev.stopImmediatePropagation()
+    })
+
+    $('#12345').on('click', '.upvote',function(ev){
+      ev.preventDefault();
+      ev.stopImmediatePropagation();
+
+      var that = this;
+      var parent = this.parentNode;
+      songID = parseInt($(parent).attr('id'));
+
+
+      path = $(this).attr('href') + '.json'
+      if (path == '/sessions/new.json'){
+        $('#songwrap').append('<a class="need-to-login" href="/sessions/new">login</a>')
+        $('.need-to-login').css('top', ev.pageY - 8)
+        $('.need-to-login').css('left', ev.pageX - 65)
+      } else {
+      $.post(path, function(response){
+        console.log(response)
+        $(that).remove();
+        $(parent).prepend('</b>&nbsp;&nbsp;&nbsp;<b>')
+      })
+      }
+    })
+
+    $('#12345').on('click', '#song a', function(ev){
+      ev.preventDefault();
+      ev.stopImmediatePropagation();
+      var link = this['href'].split('songs?d=')[1]
+      console.log(link)
+      $('.testing1').empty();
+      $('.testing1').append('<iframe width="545" height="335" src="http://www.youtube.com/embed/'+ link +'?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1" frameborder="0"></iframe>')
+    })
+
+    $('.relevance').click(function(ev){
+      ev.preventDefault();
+      ev.stopImmediatePropagation();
+      $('#songwrap').remove();
+
+      $.getJSON(
+        '/songs.json?page=-1',
+        function(data){
+          $('#12345').append('<ol start="1" id="songwrap"></ol>')
+          $('#12345').attr('data-time', '')
+          $.each(data, function(i, datum){
+            var songID = datum['id']
+            var link = datum['song_link'].split('watch?v=')[1]
+            var points = datum['points']
+            var createdAt = datum['created_at']
+
+            $('#songwrap').append('<li class="song" id="'+i+'"></li>')
+            if (datum['voted'] == 0){
+              $('#'+i).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
+            } else if (datum['voted'] == 1){
+              $('#'+i).append('<a href="/sessions/new" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
+            } else {
+              $('#'+i).append('<a href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
+            }
+            $('#'+i).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>')
+            $('#'+i).append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
+            $('#'+i+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
+            $('#'+i+' .info_bar').append('<a href="/users/'+datum["author_id"]+'">'+datum["author"]+'</a>')
+            $('#'+i+' .info_bar').append('&nbsp;|&nbsp;'+ datum['time'] +' ago')
+          })
+          $('#songwrap').append('<div class="pagination"><span id="nextbtn"><a href="/songs?page=1">next</a></span></div>')
+        }
+      )
+    })
+
+    $('.time').click(function(ev){
+      ev.preventDefault();
+      ev.stopImmediatePropagation();
+      $('#songwrap').remove();
+
+      $.getJSON(
+        '/songs.json?page=-1&by_time=1',
+        function(data){
+          $('#12345').append('<ol start="1" id="songwrap"></ol>')
+          $('#12345').attr('data-time', true)
+          $.each(data, function(i, datum){
+            var songID = datum['id']
+            var link = datum['song_link'].split('watch?v=')[1]
+            var points = datum['points']
+            var createdAt = datum['created_at']
+
+            $('#songwrap').append('<li class="song" id="'+i+'"></li>')
+            if (datum['voted'] == 0){
+              $('#'+i).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
+            } else if (datum['voted'] == 1){
+              $('#'+i).append('<a href="/sessions/new" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
+            } else {
+              $('#'+i).append('<a href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
+            }
+            $('#'+i).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>')
+            $('#'+i).append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
+            $('#'+i+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
+            $('#'+i+' .info_bar').append('<a href="/users/'+datum["author_id"]+'">'+datum["author"]+'</a>')
+            $('#'+i+' .info_bar').append('&nbsp;|&nbsp;'+ datum['time'] +' ago')
+          })
+          $('#songwrap').append('<div class="pagination"><span id="nextbtn"><a href="/songs?page=1">next</a></span></div>')
+        }
+      )
+    })
+
+    $('h1 a').click(function(ev){
+      ev.preventDefault();
+      ev.stopImmediatePropagation();
+      $('#songwrap').remove();
+
+      $.getJSON(
+        '/songs.json?page=-1',
+        function(data){
+          $('#12345').append('<ol start="1" id="songwrap"></ol>')
+          $.each(data, function(i, datum){
+            var songID = datum['id']
+            var link = datum['song_link'].split('watch?v=')[1]
+            var points = datum['points']
+            var createdAt = datum['created_at']
+
+            $('#songwrap').append('<li class="song" id="'+i+'"></li>')
+            if (datum['voted'] == 0){
+              $('#'+i).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
+            } else if (datum['voted'] == 1){
+              $('#'+i).append('<a href="/sessions/new" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
+            } else {
+              $('#'+i).append('<a href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
+            }
+            $('#'+i).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>')
+            $('#'+i).append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
+            $('#'+i+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
+            $('#'+i+' .info_bar').append('<a href="/users/'+datum["author_id"]+'">'+datum["author"]+'</a>')
+            $('#'+i+' .info_bar').append('&nbsp;|&nbsp;'+ datum['time'] +' ago')
+          })
+          $('#songwrap').append('<div class="pagination"><span id="nextbtn"><a href="/songs?page=1">next</a></span></div>')
+        }
+      )
+    })
+
+  })
+</script>
+

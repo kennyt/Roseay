@@ -3,7 +3,7 @@ Dotsongs::Application.routes.draw do
 
   resources :songs do
 	member do
-      get 'upvote'
+      post 'upvote'
 	end
   end
   resources :sessions

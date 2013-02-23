@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user, :able_to_vote?
+  include ActionView::Helpers::DateHelper
 
   def build_cookie(user)
     cookies[:user_id] = user.id
@@ -17,5 +18,25 @@ class ApplicationController < ActionController::Base
 
   def able_to_vote?(song, user)
     !(user.liked_songs.include?(song) || user.submissions.include?(song))
+  end
+
+  def custom_json(songs)
+    songlist = songs.map do |song|
+      {
+        id: song.id,
+        created_at: song.created_at,
+        points: song.points,
+        song_artist: song.song_artist,
+        song_link: song.song_link,
+        song_name: song.song_name,
+        user_id: song.user_id,
+        voted: current_user ? (current_user.liked_songs.include?(song) || current_user == song.author) ? 0 : 2 : 1,
+        author: song.author.username,
+        author_id: song.author.id,
+        time: distance_of_time_in_words(song.created_at - Time.now)
+      }
+    end
+
+    songlist.to_json
   end
 end
