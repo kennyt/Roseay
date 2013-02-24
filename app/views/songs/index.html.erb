@@ -39,7 +39,14 @@
 <div class="testing1">
 
   <% if @embed %>
-    <iframe  width="545" height="335" src=<%="http://www.youtube.com/embed/#{@embed}?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1"%> frameborder="0"></iframe>
+    <% if @embed.include?('soundcloud') %>
+      
+      <% embed_info = @client.get('/oembed', :url => CGI::unescape(@embed)) %>
+      <% p embed_info %>
+      <%= embed_info['html'] %>
+    <% else %>
+      <iframe  width="545" height="335" src=<%="http://www.youtube.com/embed/#{@embed}?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1"%> frameborder="0"></iframe>
+    <% end %>
   <% else %>
     <div class="motto">
       <i>&nbsp;&nbsp;&nbsp;&nbsp;we love music <br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;we value simplicity <br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;we <a href="http://bit.ly/X9MzcP" target="_blank">d</a><a href="http://bit.ly/XNAcV7" target="_blank">r</a><a href="http://bit.ly/VTta4S" target="_blank">e</a><a href="http://bit.ly/VTtdxu" target="_blank">a</a><a href="http://bit.ly/YZ6DAM" target="_blank">m</a> simple music exploration</i>
@@ -132,6 +139,7 @@
       }
 
       if (link.indexOf('soundcloud')+1){
+        var link = link.replace(/%2F/g, '/').replace(/%3A/g, ':')
         SC.oEmbed(link,{auto_play:true, maxwidth:600, show_comments: false, color:'266973' }, function(track){
           $('.testing1').append(track.html);
         })

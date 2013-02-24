@@ -30,6 +30,8 @@ class SongsController < ApplicationController
       @embed = params[:d]
     end
 
+    @client = Soundcloud.new(:client_id => '8f1e619588b836d8f108bfe30977d6db')
+
     respond_to do |format|
       format.html
       format.json { render :json => custom_json(@songs) }
