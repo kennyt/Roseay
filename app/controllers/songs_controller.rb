@@ -1,7 +1,9 @@
 class SongsController < ApplicationController
   def index
+
     if params[:by_time] == '0' || params[:by_time].nil? || params[:by_time] == ''
-      @songs = Song.includes(:author).sort {|x,y| y.true_value <=> x.true_value }
+      @songs = Song.includes(:author).all
+      @songs.sort! {|x,y| y.true_value <=> x.true_value }
     else
       @songs = Song.includes(:author).order('created_at DESC').all
       @by_time = true
@@ -11,7 +13,7 @@ class SongsController < ApplicationController
     if params[:page].to_i >= -1
       params[:page] = 0 if params[:page].to_i == -1
       x = (params[:page].to_i * 15)
-      @songs = @songs[x.to_i..(x.to_i+14)]
+      @songs = @songs[x..(x+14)]
     else
       params[:page] = 0
       @songs = @songs[0..5]
@@ -62,7 +64,7 @@ class SongsController < ApplicationController
   	if @song.author == current_user
   		# redirect_to songs_path
   	else
-	  if current_user
+	    if current_user
 		  	current_user.liked_songs << @song
 		  	@song.points += 1
 		  	@song.save

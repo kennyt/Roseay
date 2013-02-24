@@ -71,7 +71,7 @@
       var byTime = $('#12345').attr('data-time')
       $('#songwrap').remove()
       $.getJSON(
-        '/songs.json?page='+page+'&by_time="'+byTime+'"',
+        '/songs.json?page='+page+'&by_time='+byTime+'',
         function(data){
           $('#12345').append('<ol start="' + songStart + '" id="songwrap"></ol>')
           $.each(data, function(i, datum){
@@ -79,8 +79,6 @@
             var link = datum['song_link'].split('watch?v=')[1]
             var points = datum['points']
             var createdAt = datum['created_at']
-
-            console.log(link);
 
             if (link == undefined){
               var link = datum['song_link'];
