@@ -138,7 +138,7 @@
 
       if (link.indexOf('soundcloud')+1){
         var link = link.replace(/%2F/g, '/').replace(/%3A/g, ':')
-        SC.oEmbed(link,{auto_play:true, maxwidth:600, show_comments: false, color:'266973' }, function(track){
+        SC.oEmbed(link,{auto_play:true, maxwidth:680, show_comments: false, color:'266973' }, function(track){
           $('.testing1').append(track.html);
         })
       } else {
