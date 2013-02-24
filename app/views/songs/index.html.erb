@@ -73,6 +73,8 @@
             var points = datum['points']
             var createdAt = datum['created_at']
 
+            console.log(link);
+
             if (link == undefined){
               var link = datum['song_link'];
             }
@@ -125,6 +127,10 @@
       $('.testing1').empty();
       var link = this['href'].split('songs?d=')[1]
 
+      if (link == undefined){
+        var link = datum['song_link'];
+      }
+
       if (link.indexOf('soundcloud')+1){
         SC.oEmbed(link,{auto_play:true, maxwidth:600, show_comments: false, color:'266973' }, function(track){
           $('.testing1').append(track.html);
@@ -149,6 +155,10 @@
             var link = datum['song_link'].split('watch?v=')[1]
             var points = datum['points']
             var createdAt = datum['created_at']
+
+            if (link == undefined){
+              var link = datum['song_link'];
+            }
 
             $('#songwrap').append('<li class="song" id="'+i+'"></li>')
             if (datum['voted'] == 0){
@@ -185,6 +195,10 @@
             var points = datum['points']
             var createdAt = datum['created_at']
 
+            if (link == undefined){
+              var link = datum['song_link'];
+            }
+
             $('#songwrap').append('<li class="song" id="'+i+'"></li>')
             if (datum['voted'] == 0){
               $('#'+i).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
@@ -218,6 +232,10 @@
             var link = datum['song_link'].split('watch?v=')[1]
             var points = datum['points']
             var createdAt = datum['created_at']
+
+            if (link == undefined){
+              var link = datum['song_link'];
+            }
 
             $('#songwrap').append('<li class="song" id="'+i+'"></li>')
             if (datum['voted'] == 0){
