@@ -58,7 +58,6 @@
   $(function(){
 
     $('#12345').on('click', '#nextbtn a', function(ev){
-      console.log('hello')
       ev.preventDefault();
       var songStart = parseInt($('ol').attr('start')) + 15
       var page = parseInt($('#nextbtn a').attr('href').split('?page=')[1])
@@ -73,7 +72,6 @@
             var link = datum['song_link'].split('watch?v=')[1]
             var points = datum['points']
             var createdAt = datum['created_at']
-            console.log(page);
 
             if (link == undefined){
               var link = datum['song_link'];
@@ -115,7 +113,6 @@
         $('.need-to-login').css('left', ev.pageX - 65)
       } else {
       $.post(path, function(response){
-        console.log(response)
         $(that).remove();
         $(parent).prepend('</b>&nbsp;&nbsp;&nbsp;<b>')
       })
@@ -129,7 +126,7 @@
       var link = this['href'].split('songs?d=')[1]
 
       if (link.indexOf('soundcloud')+1){
-        SC.oEmbed(link,{auto_play:true, maxwidth:600}, function(track){
+        SC.oEmbed(link,{auto_play:true, maxwidth:600, show_comments: false, color:'266973' }, function(track){
           $('.testing1').append(track.html);
         })
       } else {
