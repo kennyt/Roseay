@@ -9,7 +9,7 @@ gem 'rails', '3.2.11'
 gem 'pg'
 gem 'launchy'
 gem 'heroku'
-# gem 'soundcloud'
+gem 'soundcloud'
 
 group :test do
   gem 'capybara'

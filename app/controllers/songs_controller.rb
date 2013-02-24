@@ -1,17 +1,11 @@
 class SongsController < ApplicationController
   def index
     if params[:by_time] == '0' || params[:by_time].nil? || params[:by_time] == ''
-      # @songs = Song.all.sort {|x, y| y.true_value <=> x.true_value}
       @songs = Song.includes(:author).sort {|x,y| y.true_value <=> x.true_value }
-      # @song_with_users = Song.includes(:author).sort {|x,y| y.true_value <=> x.true_value }
     else
       @songs = Song.includes(:author).order('created_at DESC').all
-      # @song_with_users = Song.includes(:author).order('created_at DESC').all
-      # @songs = Song.order('created_at DESC').all
       @by_time = true
     end
-    # @all_songs = @songs
-    # @songs = @song_with_users
     @song_with_users = @songs
 
     if params[:page].to_i >= -1
@@ -38,7 +32,6 @@ class SongsController < ApplicationController
 
     respond_to do |format|
       format.html
-      # format.json { render :json => custom_json(@song_with_users[@next_page*15..(@next_page*15)+14]) }
       format.json { render :json => custom_json(@songs) }
     end
   end
