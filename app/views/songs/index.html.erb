@@ -129,7 +129,7 @@
       $('#songwrap').remove();
       $('#12345').append('<ol start="1" id="songwrap" goback-start="'+songStart+'"></ol>')
       if (page) {
-        $('#songwrap').append('<span class="pagination"><span class="goback" id="nextbtn"><a href="/songs?page='+ (page-1) +'">back</a></span></span>')
+        $('#songwrap').append('<br><span class="pagination"><span class="goback" id="nextbtn"><a href="/songs?page='+ (page-1) +'">back</a></span></span>')
       }
 
       $.getJSON(
