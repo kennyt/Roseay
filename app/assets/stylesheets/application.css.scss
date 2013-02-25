@@ -112,7 +112,8 @@ a {text-decoration: none} a {color: black}
 
 .user_page_list_header {
   font-size: 20px;
-  font-family: 'text me one';
+  font-family: 'quicksand';
+  /*margin-left: 178px;*/
 }
 
 .small_header_index {
@@ -127,6 +128,11 @@ a {text-decoration: none} a {color: black}
       color: green;
     }
   }
+}
+
+.user_info {
+  margin-left: 11%;
+  font-size: 12px;
 }
 
 body {
@@ -144,7 +150,6 @@ body {
   height: 150%;
   background-image:url('/assets/blurred2.jpg');
   background-size: cover, 100%;
-  background-repeat: no-repeat;
   a {
     &:hover{
       color: white;
@@ -218,4 +223,28 @@ iframe {
 .scplayer {
   position: fixed;
   margin-top: 25%;
+}
+
+.add-to-hubsongs {
+  color: white;
+  font-size: 90px;
+  margin-top: 20%;
+  margin-left: 560px;
+  position:fixed;
+}
+
+.add-to-hubsongs:link {
+  color: #98DDDB;
+}
+
+.user_header {
+  margin-top: 25px;
+  margin-left: 138px;
+  font-family: 'quicksand';
+}
+
+.goback {
+  margin-left: -40px;
+  margin-top: 80px;
+  margin-bottom: -30px;
 }

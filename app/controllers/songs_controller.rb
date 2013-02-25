@@ -78,4 +78,17 @@ class SongsController < ApplicationController
       format.json { render :json => current_user }
     end
   end
+
+  def uphub
+    @song = Song.find(params[:id])
+    if current_user && !(current_user.songhubs.include?(@song))
+      current_user.songhubs << @song
+    else
+      redirect_to new_session_path
+    end
+
+    respond_to do |format|
+      format.json { render :json => current_user }
+    end
+  end
 end

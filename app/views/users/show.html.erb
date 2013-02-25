@@ -6,7 +6,8 @@
   <h1><%= @user.username %></h1>
 </div>
 <div class="small_header">
-  <%= "total: #{@user.total} | " %>
-  <%= "taste: #{@user.avg}" %>
+  <%= "points ~ #{@user.total}" %><br>
+  <%= "submissions ~ #{@user.submissions.length}" %><br>
+  <%= "taste ~ #{@user.avg}" %>
 </div>
 <%= render @user %>

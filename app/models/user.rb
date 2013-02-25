@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   has_many :submissions, class_name: 'Song'
   has_many :likes
   has_many :liked_songs, through: :likes, source: :song
+  has_many :hubsongs
+  has_many :songhubs, through: :hubsongs, source: :song
 
   validates_length_of :username, minimum: 4, message: "too short"
   validates_length_of :password, minimum: 4, message: "too short"

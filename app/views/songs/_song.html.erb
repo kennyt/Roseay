@@ -1,5 +1,6 @@
 
-<li class="song" id="<%=song.id%>">
+
+<li class="song" id="<%=song.id%>" data-uphub="<%= able_to_uphub?(song, current_user)%>">
   <% if current_user %>
     <% if able_to_vote?(song, current_user) %>
       <%= link_to('^', upvote_song_path(song), method: :post, class: 'upvote') %>
@@ -25,7 +26,7 @@
     <% else %>
       <span class="12345"><%= "#{song.points} points ~ " %></span>
     <% end %>
-    <%= link_to song.author.username, user_path(song.author) %>
+    <%= link_to song.author.username, user_path(song.author), {class: 'user', data_author_total: song.author.total, data_author_avg: song.author.avg, data_author_submissions: song.author.submissions.length} %>
     <%= "| " %>
     <%= "#{distance_of_time_in_words(song.created_at-Time.now)} ago" %>
   </div>

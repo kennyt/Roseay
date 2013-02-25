@@ -4,6 +4,7 @@ class Song < ActiveRecord::Base
   belongs_to :author, class_name: 'User', :foreign_key => :user_id
   has_many :likes
   has_many :likers, through: :likes, source: :user
+  has_many :hubsongs
 
   validates_presence_of :song_link
   validates_presence_of :song_artist
