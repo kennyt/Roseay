@@ -137,25 +137,30 @@
         function(data){
           $('#songwrap').append('<h4 class="user_header">'+data['username']+'.hub</h4>')
           $('#songwrap').append('<div class="user_info">total ~ '+total+'<br>submissions ~ '+submissions+'<br>taste ~ '+avg+'</div>')
-          $.each(data['songhubs'], function(i, datum){
-            var songID = datum['id']
-            var link = datum['song_link'].split('watch?v=')[1]
-            var points = datum['points']
-            var createdAt = datum['created_at']
 
-            if (link == undefined){
-              var link = datum['song_link'];
-            }
+          if (data['songhubs'].length){
+            $.each(data['songhubs'], function(i, datum){
+              var songID = datum['id']
+              var link = datum['song_link'].split('watch?v=')[1]
+              var points = datum['points']
+              var createdAt = datum['created_at']
 
-            if (datum['uphubbed'] == 0) {
-              $('#songwrap').append('<li class="song" id="'+songID+'" data-uphub="true"></li>')
-            } else {
-              $('#songwrap').append('<li class="song" id="'+songID+'" data-uphub="false"></li>')
-            }
-            
-            $('#'+songID).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
-            $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+' - '+datum["song_name"]+'</a></span>')
-          })
+              if (link == undefined){
+                var link = datum['song_link'];
+              }
+
+              if (datum['uphubbed'] == 0) {
+                $('#songwrap').append('<li class="song" id="'+songID+'" data-uphub="true"></li>')
+              } else {
+                $('#songwrap').append('<li class="song" id="'+songID+'" data-uphub="false"></li>')
+              }
+              
+              $('#'+songID).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
+              $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+' - '+datum["song_name"]+'</a></span>')
+            })
+          } else {
+            $('#songwrap').append('<br><br><span style="margin-left:138px">empty playlist</span>')
+          }
         }
         )
     })
