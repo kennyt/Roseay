@@ -10,7 +10,7 @@
   <% else %>
     <%= link_to 'login', new_session_path %>
     <%= "| " %>
-    <%= link_to 'signup', new_session_path %>
+    <%= link_to 'signup', new_session_path, class: 'x1c2' %>
   <% end %>
   <%= "| " %>
   <%= link_to 'submit', new_song_path %>
@@ -188,7 +188,13 @@
       var path = $(this).attr('href')
       $(this).remove();
 
-      $.post(path)
+      if ($('.x1c2').length){
+        $('.testing1').append('<a class="need-to-login2" href="/sessions/new">login</a>')
+        $('.need-to-login2').css('top', ev.pageY)
+        $('.need-to-login2').css('left', ev.pageX * .50)
+      } else {
+        $.post(path)
+      }
     })
 
     $('#12345').on('click', '#song a', function(ev){

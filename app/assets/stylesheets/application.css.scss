@@ -220,6 +220,17 @@ iframe {
   }
 }
 
+.need-to-login2 {
+  background: transparent;
+  position: absolute;
+  color: #98DDDB;
+  font-size: 60px;
+  &:hover{
+    text-decoration: none;
+    color: green;
+  }
+}
+
 .scplayer {
   position: fixed;
   margin-top: 25%;
