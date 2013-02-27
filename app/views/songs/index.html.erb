@@ -1,5 +1,5 @@
 <div class="top_header">
-  <%= link_to '.roseay', root_path %>
+  <%= link_to 'roseay', root_path %>
   <%= "| " %>
   <% if current_user %>
     <%= link_to 'logout', session_path(current_user), method: :delete %>
@@ -48,11 +48,35 @@
     <% end %>
     
   <% else %>
-    <div class="motto">
-      <i>&nbsp;&nbsp;&nbsp;&nbsp;we love music <br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;we value simplicity <br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;we <a href="http://bit.ly/X9MzcP" target="_blank">d</a><a href="http://bit.ly/XNAcV7" target="_blank">r</a><a href="http://bit.ly/VTta4S" target="_blank">e</a><a href="http://bit.ly/VTtdxu" target="_blank">a</a><a href="http://bit.ly/YZ6DAM" target="_blank">m</a> simple music exploration</i>
-    </div>
+    <!-- <div class="motto"> -->
+<!--       &nbsp;&nbsp;&nbsp;&nbsp;we love music <br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;we value simplicity <br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;we <a href="http://bit.ly/X9MzcP" target="_blank">d</a><a href="http://bit.ly/XNAcV7" target="_blank">r</a><a href="http://bit.ly/VTta4S" target="_blank">e</a><a href="http://bit.ly/VTtdxu" target="_blank">a</a><a href="http://bit.ly/YZ6DAM" target="_blank">m</a> simple music exploration -->
+       <!-- <i>&nbsp;"she got a big booty so I call her big booty"<br><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;- Two Chainz <br><br><br>
+      &nbsp;we aspire to be that simple. <br><br><br><br><br></i> -->
+      <!--&nbsp;"omg call 911" <br><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;- Excited Girl In Skrillex's Song <br><br><br>
+      &nbsp;and that legendary.
+ -->
+    <!-- </div> -->
   <% end %>
+ <div class="comment-section">
+  <div class="comment-header">
+    comments <br>
+    global
+  </div>
+  <span class="comments">
+    <div class="comment"><strong>test by test</strong> <br> hello i am testing this. ths is a great song dude!hello i am testing this. ths is a great so</div>
+    <div class="comment"><strong>test by test </strong><br> hello i am testing this. ths is a great song dude!hello i am testing this. ths is a great song dude!hello i am testing this. ths is a great song dude!</div>
+    <div class="comment"><strong>test by test</strong> <br> hello i am testing this. ths is a greis. ths is a great song dude!hello i am testing this. ths is a great song dude!</div>
+    <div class="comment"><strong>test by test</strong> <br> hello i am testing this. ths is a great song dude! is a great song dude!hello i am testing this. ths is a great song dude!</div>
+    <div class="comment"><strong>test by test</strong> <br> hello i am testing this. ths is a great song dude!hello i am testing this. ths is a great song dude!hello i am testing this. ths is a great song dude!</div>
+    <div class="comment"><strong>test by test</strong> <br> hello i am tes song dude!hello i am testing this. ths is a great song dude!</div>
+    <div class="comment"><strong>test by test</strong> <br> hello i am testing thie!hello i am testing this. ths is a great song dude!</div>
+    <div class="comment"><strong>test by test</strong> <br> hello i am testing this. ths is a great song dude!hs is a great song dude!hello i am testing this. ths is a great song dude!</div>
+  </span>
+ </div>
 </div>
+
 
 
 <script src="//connect.soundcloud.com/sdk.js"></script>
@@ -205,7 +229,7 @@
     $('#12345').on('click', '#song a', function(ev){
       ev.preventDefault();
       ev.stopImmediatePropagation();
-      $('.testing1').empty();
+      $('iframe').remove();
       var link = this['href'].split('songs?d=')[1]
       var songId = $(this).parent().parent().attr('id')
 
@@ -215,11 +239,12 @@
 
       if (link.indexOf('soundcloud')+1){
         var link = link.replace(/%2F/g, '/').replace(/%3A/g, ':')
-        SC.oEmbed(link,{auto_play:true, maxwidth:545, show_comments: false, color:'266973' }, function(track){
+        SC.oEmbed(link,{auto_play:true, maxwidth:545, height:300, show_comments: false, color:'266973' }, function(track){
+          track.html['height'] = 300
           $('.testing1').append(track.html);
         })
       } else {
-        $('.testing1').append('<iframe width="545" height="335" src="http://www.youtube.com/embed/'+ link +'?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1" frameborder="0"></iframe>')
+        $('.testing1').append('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +'?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&fmt=18" frameborder="0"></iframe>')
       }
 
       if ($(this).parent().parent().attr('data-uphub') == 'true'){

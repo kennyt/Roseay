@@ -148,7 +148,9 @@ body {
   cursor: default;
   width: 57%;
   height: 150%;
-  background-image:url('/assets/blurred2.jpg');
+  background-image:url('/assets/roses.jpg');
+  background-attachment: fixed;
+  background-position: 70px, 50px;
   background-size: cover, 100%;
   a {
     &:hover{
@@ -158,8 +160,8 @@ body {
   }
 }
 iframe {
-  position: fixed;
-  margin-top: 16%;
+  position: absolute;
+
 }
 
 .signin_pic {
@@ -199,14 +201,9 @@ iframe {
 .motto {
   text-align: left;
   vertical-align: middle;
-  margin-top: 34%;
-  color:white ;
-  a {
-    color: #98DDDB;
-    &:link{
-      color: white;
-    }
-  }
+  margin-top: 43%;
+  color:#2E0F2D ;
+
 }
 
 .need-to-login {
@@ -239,7 +236,7 @@ iframe {
 .add-to-hubsongs {
   color: white;
   font-size: 90px;
-  margin-top: 20%;
+  margin-top: 9%;
   margin-left: 560px;
   position:fixed;
 }
@@ -259,3 +256,28 @@ iframe {
   margin-top: 80px;
   margin-bottom: -30px;
 }
+
+.comment-section {
+  /*background-image: url('white.png');*/
+  background: white;
+  position: absolute;
+  width: 500px;
+  height: 65%;
+  margin-top: 33%;
+  border-left: dashed #123630 1px;
+}
+
+.comment-header {
+  text-align: center;
+  font-family: 'text me one';
+  font-size: 20px;
+}
+
+.comment {
+  font-size: 12px;
+  font-family: arial;
+  margin: 0px;
+  height: 75px;
+  margin-left: 20px;
+}
+
