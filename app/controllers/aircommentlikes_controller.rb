@@ -1,0 +1,3 @@
+class AircommentlikesController < ApplicationController
+
+end

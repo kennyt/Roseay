@@ -1,0 +1,3 @@
+class SongcommentlikesController < ApplicationController
+
+end

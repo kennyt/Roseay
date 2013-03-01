@@ -11,7 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130224231647) do
+ActiveRecord::Schema.define(:version => 20130227064155) do
+
+  create_table "aircommentlike", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "aircomment_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "aircomments", :force => true do |t|
+    t.text     "body"
+    t.integer  "user_id"
+    t.integer  "points",     :default => 1
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
 
   create_table "hubsongs", :force => true do |t|
     t.integer  "song_id"
@@ -25,6 +40,22 @@ ActiveRecord::Schema.define(:version => 20130224231647) do
     t.integer  "song_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "songcommentlikes", :force => true do |t|
+    t.integer  "songcomment_id"
+    t.integer  "user_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "songcomments", :force => true do |t|
+    t.text     "body"
+    t.integer  "song_id"
+    t.integer  "user_id"
+    t.integer  "points",     :default => 1
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "songs", :force => true do |t|

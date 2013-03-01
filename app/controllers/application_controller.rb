@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def custom_json(songs)
+  def custom_song_json(songs)
     songlist = songs.map do |song|
       {
         id: song.id,
@@ -45,10 +45,23 @@ class ApplicationController < ActionController::Base
         uphubbed: current_user ? current_user.songhubs.include?(song) ? 1 : 0 : 0,
         author_avg: song.author.avg,
         author_total: song.author.total,
-        author_submissions: song.author.submissions.length
+        author_submissions: song.author.submissions.length,
+        comment_amount: song.songcomments.length
       }
     end
 
     songlist.to_json
+  end
+
+  def custom_comment_json(comments)
+    commentlist = comments.map do |comment|
+      {
+        id: comment.id,
+        user_id: comment.user_id,
+        created_at: comment.created_at,
+        body: comment.body,
+        voted: current_user 
+      }
+    end
   end
 end

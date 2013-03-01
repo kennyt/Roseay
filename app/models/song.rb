@@ -5,6 +5,8 @@ class Song < ActiveRecord::Base
   has_many :likes
   has_many :likers, through: :likes, source: :user
   has_many :hubsongs
+  has_many :songcomments
+  has_many :songcommenters, through: :songcomments, source: :user
 
   validates_presence_of :song_link
   validates_presence_of :song_artist

@@ -12,15 +12,15 @@ class SongsController < ApplicationController
 
     if params[:page].to_i >= -1
       params[:page] = 0 if params[:page].to_i == -1
-      x = (params[:page].to_i * 15)
-      @songs = @songs[x..(x+14)]
+      x = (params[:page].to_i * 20)
+      @songs = @songs[x..(x+19)]
     else
       params[:page] = 0
       @songs = @songs[0..5]
     end
 
     @next_page = params[:page].to_i + 1
-    @start_num = ((params[:page].to_i * 15) + 1)
+    @start_num = ((params[:page].to_i * 20) + 1)
 
     if @songs.last == @song_with_users.last
       @more = false
@@ -36,7 +36,7 @@ class SongsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render :json => custom_json(@songs) }
+      format.json { render :json => custom_song_json(@songs) }
     end
   end
 
@@ -89,6 +89,22 @@ class SongsController < ApplicationController
 
     respond_to do |format|
       format.json { render :json => current_user }
+    end
+  end
+
+  def show
+    @songcomments = Song.find(params[:id]).songcomments
+  end
+
+  def songcomment
+    @song = Song.find(params[:id])
+    songcomment = @song.songcomments.new(params[:songcomment])
+    if songcomment.save
+      current_user.songcomments << songcomment
+    end
+
+    respond_to do |format|
+      format.json { render :json => custom_comment_json(@song.songcomments)}
     end
   end
 end
