@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
   def convert_with_links(body)
     converted = body
     words = body.split(' ').select {|word| word.include?('&')}
-    words.select! { |word| word[1..-1].to_i < Song.all.length + 1 && word[1..-1].to_i > 0 }
+    words.select! { |word| word[1..-1].to_i < Song.last.id + 1 && word[1..-1].to_i > 0 }
     words.each do |word|
       song = Song.find(word[1..-1])
       if song.song_link.include?('youtube.com')
