@@ -13,7 +13,7 @@ group :test do
   gem 'factory_girl_rails'
 end
 
-gem 'sqlite3'
+# gem 'sqlite3'
 group :development do
   gem 'rspec-rails'
   gem 'guard-rspec'
@@ -24,8 +24,8 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  # gem 'pg'
-  # gem 'heroku'
+  gem 'pg'
+  gem 'heroku'
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'bcrypt-ruby'
