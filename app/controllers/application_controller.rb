@@ -45,23 +45,47 @@ class ApplicationController < ActionController::Base
         uphubbed: current_user ? current_user.songhubs.include?(song) ? 1 : 0 : 0,
         author_avg: song.author.avg,
         author_total: song.author.total,
-        author_submissions: song.author.submissions.length,
-        comment_amount: song.songcomments.length
+        author_submissions: song.author.submissions.length
       }
     end
 
-    songlist.to_json
+    songlist
   end
 
-  def custom_comment_json(comments)
-    commentlist = comments.map do |comment|
+  def custom_remark_json(remarks)
+    remarks.map do |remark|
       {
-        id: comment.id,
-        user_id: comment.user_id,
-        created_at: comment.created_at,
-        body: comment.body,
-        voted: current_user 
+        id: remark.id,
+        user_id: remark.user_id,
+        created_at: remark.created_at,
+        body: convert_with_links(remark.body),
+        author: remark.user.username,
+        author_id: remark.user.id,
+        time: distance_of_time_in_words(remark.created_at - Time.now),
+        author_total: remark.user.total,
+        author_avg: remark.user.avg,
+        author_submissions: remark.user.submissions.length
       }
     end
+  end
+
+  def convert_with_links(body)
+    converted = body
+    words = body.split(' ').select {|word| word.include?('&')}
+    words.select! { |word| Song.find(word[1..-1].to_i) }
+    words.each do |word|
+      song = Song.find(word[1..-1])
+      if song.song_link.include?('youtube.com')
+        link = song.song_link.split('watch?v=')[1]
+      else
+        link = song.song_link
+      end
+      if current_user ? current_user.songhubs.include?(song) ? false : true : true
+        converted.sub!(word, '<span id="song"><a href="/songs?d='+link+'" data-uphubb="true">'+word+'</a></span>')
+      else 
+        converted.sub!(word, '<span id="song"><a href="/songs?d='+link+'">'+word+'</a></span>')
+      end
+    end
+    converted
   end
 end

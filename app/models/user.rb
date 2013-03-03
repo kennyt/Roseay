@@ -9,12 +9,9 @@ class User < ActiveRecord::Base
   has_many :liked_songs, through: :likes, source: :song
   has_many :hubsongs
   has_many :songhubs, through: :hubsongs, source: :song
-  has_many :aircomments
-  has_many :aircommentlikes
-  has_many :liked_aircomments, through: :aircommentlikes, source: :aircomment
-  has_many :songcomments
-  has_many :songcommentlikes
-  has_many :liked_songcomments, through: :songcommentlikes, source: :songcomment
+  has_many :remarks
+  has_many :mentions, :as => :mentionable
+  has_many :targeted_remarks, :through => :mentions, source: :remark
 
   validates_length_of :username, minimum: 4, message: "too short"
   validates_length_of :password, minimum: 4, message: "too short"

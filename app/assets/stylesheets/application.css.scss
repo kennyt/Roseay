@@ -71,6 +71,7 @@ a {text-decoration: none} a {color: black}
 
 .top_header {
   margin-left: 150px;
+  background: transparent;
   a {
     &:hover {
       text-decoration: none;
@@ -155,16 +156,10 @@ body {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  a {
-    &:hover{
-      color: white;
-      text-decoration: none;
-    }
-  }
 }
+
 iframe {
   position: absolute;
-
 }
 
 .signin_pic {
@@ -246,6 +241,10 @@ iframe {
 
 .add-to-hubsongs:link {
   color: #98DDDB;
+  &:hover{
+    color:white;
+    text-decoration: none;
+  }
 }
 
 .user_header {
@@ -260,7 +259,7 @@ iframe {
   margin-bottom: -30px;
 }
 
-.comment-section {
+.remark-section {
   /*background-image: url('white.png');*/
   background: white;
   position: absolute;
@@ -270,13 +269,13 @@ iframe {
   border-left: dashed #123630 1px;
 }
 
-.comment-header {
-  text-align: center;
+.remark-header {
+  margin-left: 190px;
   font-family: 'text me one';
   font-size: 20px;
 }
 
-.comment {
+.remarks {
   font-size: 12px;
   font-family: arial;
   margin: 0px;
@@ -284,14 +283,51 @@ iframe {
   margin-left: 20px;
 }
 
-.comment-input {
-  margin-left: 25px;
+.remark-input {
+  margin-left: 5px;
   resize: none;
   height: 40px;
   width: 450px;
 }
 
-.aircomment-btn {
+.remark-input-btn {
   text-align: center;
   margin-left: 175px;
+}
+
+.next-remark-btn {
+  /*margin-left: 200px;*/
+  font-family: arial;
+  font-size: 16px;  
+  cursor: pointer;
+}
+
+.remark {
+  margin-left: 20px;
+  word-wrap: break-word;
+  height: 57px;
+  a {
+    &:hover{
+      color: red;
+      text-decoration: none;
+    }
+  }
+  .user {
+    font-size: 15px;
+  }
+}
+
+.remark-body {
+  margin-left: 10px;
+}
+
+.refresh {
+/*  margin-left: 170px;*/
+  margin-right: 100px;
+  font-family: arial;
+  font-size: 12px;
+  &:hover{
+    color: red;
+    cursor: pointer;
+  }
 }

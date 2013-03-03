@@ -30,6 +30,6 @@
     <%= "| " %>
     <%= "#{distance_of_time_in_words(song.created_at-Time.now)} ago" %>
     <%= "| " %>
-    <!-- <a href=""></a> -->
+    <%= "&" + song.id.to_s %>
   </div>
 </li>
