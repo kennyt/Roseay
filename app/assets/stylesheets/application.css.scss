@@ -312,6 +312,14 @@ iframe {
       text-decoration: none;
     }
   }
+  &:hover {
+    .remark-body {
+      a {
+        color: #98DDDB;
+      }
+    }
+  }
+  
   .user {
     font-size: 15px;
   }
