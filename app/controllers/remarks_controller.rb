@@ -16,4 +16,15 @@ class RemarksController < ApplicationController
 			format.json { render :json => @remarks }
 		end
 	end
+
+	def destroy
+		@remark = Remark.find(params[:id])
+		@remark.destroy
+		page = params[:page].to_i
+
+		respond_to do |format|
+			format.html
+			format.json { render :json => current_user }
+		end
+	end
 end

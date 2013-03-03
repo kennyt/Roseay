@@ -4,7 +4,10 @@
   <% if current_user %>
     <%= link_to 'logout', session_path(current_user), method: :delete %>
     <%= "| " %>
-    <%= link_to "#{current_user.username}", user_path(current_user), {class: 'user', data_author_total: current_user.total, data_author_avg: current_user.avg, data_author_submissions: current_user.submissions.length} %>
+    <%= link_to "#{current_user.username}", user_path(current_user), {class: 'user',
+                                            data_author_total: current_user.total,
+                                            data_author_avg: current_user.avg,
+                                            data_author_submissions: current_user.submissions.length} %>
     <%= "| " %>
     <%= "total(#{current_user.total})" %>
   <% else %>
@@ -56,15 +59,6 @@
   <button class="remark-input-btn">post</button>
   <span class="refresh">home</span>
   <span class="remarks">
-<!--     <div class="comment"><strong>test by test</strong> <br> hello i am testing this. ths is a great song dude!hello i am testing this. ths is a great so</div>
-    <div class="comment"><strong>test by test </strong><br> hello i am testing this. ths is a great song dude!hello i am testing this. ths is a great song dude!hello i am testing this. ths is a great song dude!</div>
-    <div class="comment"><strong>test by test</strong> <br> hello i am testing this. ths is a greis. ths is a great song dude!hello i am testing this. ths is a great song dude!</div>
-    <div class="comment"><strong>test by test</strong> <br> hello i am testing this. ths is a great song dude! is a great song dude!hello i am testing this. ths is a great song dude!</div>
-    <div class="comment"><strong>test by test</strong> <br> hello i am testing this. ths is a great song dude!hello i am testing this. ths is a great song dude!hello i am testing this. ths is a great song dude!</div>
-    <div class="comment"><strong>test by test</strong> <br> hello i am tes song dude!hello i am testing this. ths is a great song dude!</div>
-    <div class="comment"><strong>test by test</strong> <br> hello i am testing thie!hello i am testing this. ths is a great song dude!</div>
-    <div class="comment"><strong>test by test</strong> <br> hello i am testing this. ths is a great song dude!hs is a great song dude!hello i am testing this. ths is a great song dude!</div>
-    <div class="comment"><strong>test by test</strong> <br> hello i am testing this. ths is a great song dude!hs is a great song dude!hello i am testing this. ths is a great song dude!</div> -->
   </span>
   <span class="pagination"><a class="next-remark-btn" data-remark-page="1">next</a></span>
  </div>
@@ -79,6 +73,9 @@
 
 <script type="text/javascript">
   $(function(){
+    idleSeconds = 0;
+    blurSeconds = 0;
+    onTab = true;
 
     var setupSong = function(datum){
       var songID = datum['id']
@@ -108,7 +105,8 @@
       $('#'+songID+' .info_bar').append('&nbsp;|&nbsp;'+ datum['time'] +' ago &nbsp;| &'+datum['id'])
     }
 
-    var fetchRemarks = function(page, callback) {
+    var fetchRemarks = function(page) {
+      idleSeconds = 0
       $('.remarks').empty();
       if (!(page)) {
         page = 0
@@ -117,13 +115,27 @@
         '/remarks.json?page='+page,
         function(response){
           $.each(response, function(i, datum){
-            $('.remarks').append('<div class="remark"><a class="user" href="/users/'+datum["author_id"]+'" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+'" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+'</a> | '+datum['time']+' ago <br><span class="remark-body">'+datum['body']+'</span></div>')
+            $('.remarks').append('<div class="remark" id="'+i+'"><a class="user" href="/users/'+datum["author_id"]+'" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+'" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+'</a> | <span class="remark-info">'+datum['time']+' ago</span> <br><span class="remark-body">'+datum['body']+'</span></div>')
+            if (datum['authored']){
+              $('.remarks #'+i+' .remark-info').append('&nbsp;| <span class="delete-remark" data-remark-id="'+datum['id']+'">delete</span>')
+            }
           })
           $('.next-remark-btn').attr('data-remark-page', page+1)
         }
       )
     }
-    fetchRemarks();
+
+    $('.testing1').on('click', '.delete-remark', function(){
+      var remark_id = $(this).attr('data-remark-id')
+      var page = parseInt($('.next-remark-btn').attr('data-remark-page'))-1
+      $.post(
+        '/remarks/'+ remark_id+'.json?page='+page,
+        { '_method': 'delete'},
+        function(){
+          fetchRemarks(page);
+        }
+      )
+    })
 
     $('.testing1').on('click', '.refresh', function(){
       fetchRemarks();
@@ -167,32 +179,6 @@
         function(data){
           $('#12345').append('<ol start="' + songStart + '" id="songwrap"></ol>')
           $.each(data, function(i, datum){
-            // var songID = datum['id']
-            // var link = datum['song_link'].split('watch?v=')[1]
-            // var points = datum['points']
-            // var createdAt = datum['created_at']
-
-            // if (link == undefined){
-            //   var link = datum['song_link'];
-            // }
-
-            // if (datum['uphubbed'] == 0) {
-            //   $('#songwrap').append('<li class="song" id="'+songID+'" data-uphub="true"></li>')
-            // } else {
-            //   $('#songwrap').append('<li class="song" id="'+songID+'" data-uphub="false"></li>')
-            // }
-            // if (datum['voted'] == 0){
-            //   $('#'+songID).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
-            // } else if (datum['voted'] == 1){
-            //   $('#'+songID).append('<a href="/sessions/new" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
-            // } else {
-            //   $('#'+songID).append('<a href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
-            // }
-            // $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>')
-            // $('#'+songID).append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
-            // $('#'+songID+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
-            // $('#'+songID+' .info_bar').append('<a class="user" href="/users/'+datum["author_id"]+'" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+'" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+'</a>')
-            // $('#'+songID+' .info_bar').append('&nbsp;|&nbsp;'+ datum['time'] +' ago')
             setupSong(datum);
           })
           $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page='+ (page+1) +'">next</a></span></span>')
@@ -307,7 +293,7 @@
           $('.testing1').append(track.html);
         })
       } else {
-        $('.testing1').append('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +'?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&fmt=18" frameborder="0"></iframe>')
+        $('.testing1').append('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +'?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360" frameborder="0"></iframe>')
       }
 
       if (($(this).parent().parent().attr('data-uphub') == 'true') || ($(this).attr('data-uphubb') == 'true')){
@@ -326,31 +312,6 @@
           $('#12345').append('<ol start="1" id="songwrap"></ol>')
           $('#12345').attr('data-time', '')
           $.each(data, function(i, datum){
-            // var songID = datum['id']
-            // var link = datum['song_link'].split('watch?v=')[1]
-            // var points = datum['points']
-            // var createdAt = datum['created_at']
-
-            // if (link == undefined){
-            //   var link = datum['song_link'];
-            // }
-            // if (datum['uphubbed'] == 0) {
-            //   $('#songwrap').append('<li class="song" id="'+songID+'" data-uphub="true"></li>')
-            // } else {
-            //   $('#songwrap').append('<li class="song" id="'+songID+'" data-uphub="false"></li>')
-            // }
-            // if (datum['voted'] == 0){
-            //   $('#'+songID).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
-            // } else if (datum['voted'] == 1){
-            //   $('#'+songID).append('<a href="/sessions/new" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
-            // } else {
-            //   $('#'+songID).append('<a href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
-            // }
-            // $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>')
-            // $('#'+songID).append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
-            // $('#'+songID+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
-            // $('#'+songID+' .info_bar').append('<a class="user" href="/users/'+datum["author_id"]+'" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+'" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+'</a>')
-            // $('#'+songID+' .info_bar').append('&nbsp;|&nbsp;'+ datum['time'] +' ago')
             setupSong(datum);
           })
           $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page=1">next</a></span></span>')
@@ -369,32 +330,6 @@
           $('#12345').append('<ol start="1" id="songwrap"></ol>')
           $('#12345').attr('data-time', true)
           $.each(data, function(i, datum){
-            // var songID = datum['id']
-            // var link = datum['song_link'].split('watch?v=')[1]
-            // var points = datum['points']
-            // var createdAt = datum['created_at']
-
-            // if (link == undefined){
-            //   var link = datum['song_link'];
-            // }
-
-            // if (datum['uphubbed'] == 0) {
-            //   $('#songwrap').append('<li class="song" id="'+songID+'" data-uphub="true"></li>')
-            // } else {
-            //   $('#songwrap').append('<li class="song" id="'+songID+'" data-uphub="false"></li>')
-            // }
-            // if (datum['voted'] == 0){
-            //   $('#'+songID).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
-            // } else if (datum['voted'] == 1){
-            //   $('#'+songID).append('<a href="/sessions/new" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
-            // } else {
-            //   $('#'+songID).append('<a href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
-            // }
-            // $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>')
-            // $('#'+songID).append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
-            // $('#'+songID+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
-            // $('#'+songID+' .info_bar').append('<a class="user" href="/users/'+datum["author_id"]+'" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+'" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+'</a>')
-            // $('#'+songID+' .info_bar').append('&nbsp;|&nbsp;'+ datum['time'] +' ago')
             setupSong(datum);
           })
           $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page=1">next</a></span></span>')
@@ -412,32 +347,6 @@
         function(data){
           $('#12345').append('<ol start="1" id="songwrap"></ol>')
           $.each(data, function(i, datum){
-            // var songID = datum['id']
-            // var link = datum['song_link'].split('watch?v=')[1]
-            // var points = datum['points']
-            // var createdAt = datum['created_at']
-
-            // if (link == undefined){
-            //   var link = datum['song_link'];
-            // }
-
-            // if (datum['uphubbed'] == 0) {
-            //   $('#songwrap').append('<li class="song" id="'+songID+'" data-uphub="true"></li>')
-            // } else {
-            //   $('#songwrap').append('<li class="song" id="'+songID+'" data-uphub="false"></li>')
-            // }
-            // if (datum['voted'] == 0){
-            //   $('#'+songID).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
-            // } else if (datum['voted'] == 1){
-            //   $('#'+songID).append('<a href="/sessions/new" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
-            // } else {
-            //   $('#'+songID).append('<a href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
-            // }
-            // $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>')
-            // $('#'+songID).append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
-            // $('#'+songID+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
-            // $('#'+songID+' .info_bar').append('<a class="user" href="/users/'+datum["author_id"]+'" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+'" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+'</a>')
-            // $('#'+songID+' .info_bar').append('&nbsp;|&nbsp;'+ datum['time'] +' ago')
             setupSong(datum);
           })
           $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page=1">next</a></span></span>')
@@ -445,8 +354,35 @@
       )
     })
 
+    setInterval(function(){
+      if (onTab){
+        idleSeconds += 1;
+      }
+      if ((idleSeconds  >= 20) && ($('.next-remark-btn').attr('data-remark-page'))){
+        fetchRemarks(parseInt($('.next-remark-btn').attr('data-remark-page') - 1))
+      }
+    }, 4000)
 
+    window.onfocus = function(){
+      onTab = true
+      if (blurSeconds >= 15){
+        fetchRemarks(parseInt($('.next-remark-btn').attr('data-remark-page') - 1))
+      }
+      blurSeconds = 0;
+    }
 
+    window.onblur = function(){
+      onTab = false
+
+    }
+
+    setInterval(function(){
+      if (!(onTab)) {
+        blurSeconds += 1;
+      }
+    }, 4000)
+
+    fetchRemarks();
   })
 </script>
 

@@ -8,7 +8,7 @@ Dotsongs::Application.routes.draw do
 		end
   end
   resources :sessions
-  resources :remarks, only: [:index, :create]
+  resources :remarks, only: [:index, :create, :destroy]
 
   root to: 'songs#index'
 end

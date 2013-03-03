@@ -60,6 +60,7 @@ class ApplicationController < ActionController::Base
         created_at: remark.created_at,
         body: convert_with_links(remark.body),
         author: remark.user.username,
+        authored: remark.user == current_user,
         author_id: remark.user.id,
         time: distance_of_time_in_words(remark.created_at - Time.now),
         author_total: remark.user.total,

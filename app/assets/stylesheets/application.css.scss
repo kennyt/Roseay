@@ -339,3 +339,11 @@ iframe {
     cursor: pointer;
   }
 }
+
+.delete-remark {
+  cursor: pointer;
+  font-size: 7px;
+  &:hover{
+    color: red;
+  }
+}
