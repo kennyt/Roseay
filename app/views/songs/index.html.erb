@@ -5,6 +5,7 @@
     <%= link_to 'logout', session_path(current_user), method: :delete %>
     <%= "| " %>
     <%= link_to "#{current_user.username}", user_path(current_user), {class: 'user',
+                                                                      id: 'logged_in',
                                             data_author_total: current_user.total,
                                             data_author_avg: current_user.avg,
                                             data_author_submissions: current_user.submissions.length} %>
@@ -17,6 +18,8 @@
   <% end %>
   <%= "| " %>
   <%= link_to 'submit', new_song_path %>
+  <%= "| " %>
+  <span class="about">about us</span>
 </div>
 
 <div class="big_header">
@@ -47,7 +50,7 @@
       <% embed_info = @client.get('/oembed', :url => CGI::unescape(@embed)) %>
       <%= embed_info['html'] %>
     <% else %>
-      <iframe  width="545" height="335" src=<%="http://www.youtube.com/embed/#{@embed}?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&fmt=18"%> frameborder="0"></iframe>
+      <iframe  width="545" height="220" src=<%="http://www.youtube.com/embed/#{@embed}?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&fmt=18"%> frameborder="0"></iframe>
     <% end %>
   <% end %>
 
@@ -145,16 +148,20 @@
       var input = $('.remark-input').val();
       $('.remark-input').val('')
 
-      $.post(
-        '/remarks.json',
-        { 'remark':{
-          'body': input
+      if ($('#logged_in').length){
+        $.post(
+          '/remarks.json',
+          { 'remark':{
+            'body': input
+            }
+          },
+          function(response){
+            fetchRemarks();
           }
-        },
-        function(response){
-          fetchRemarks();
-        }
-      )
+        )
+      } else {
+        $('.remark-input').val('you have to login to post a remark. chill, it takes 10 seconds.')
+      }
     })
 
     $('.testing1').on('click', '.next-remark-btn', function(ev){
@@ -195,7 +202,11 @@
       var total = $(this).attr('data_author_total')
       var avg = $(this).attr('data_author_avg')
       var submissions = $(this).attr('data_author_submissions')
-      var page = parseInt($('#nextbtn a').attr('href').split('?page=')[1])
+      if ($('#nextbtn a').length) {
+        var page = parseInt($('#nextbtn a').attr('href').split('?page=')[1])
+      } else {
+        var page = 0
+      }
       var songStart = $('ol').attr('start')
 
 
@@ -292,6 +303,9 @@
           track.html['height'] = 300
           $('.testing1').append(track.html);
         })
+      } else if (link.indexOf('&aboutus')+1) {
+        var link = link.replace('&aboutus', '')
+        $('.testing1').append('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +'?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360&start=119" frameborder="0"></iframe>')
       } else {
         $('.testing1').append('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +'?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360" frameborder="0"></iframe>')
       }
@@ -352,6 +366,11 @@
           $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page=1">next</a></span></span>')
         }
       )
+    })
+
+    $('.about').click(function(){
+      $('#songwrap').empty()
+      $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><br><i>"our work is never over"</i><br>-Daft Punk<br><br>our aim is to make people who share songs, look cool.<br><br><br>on the song list, notice the "&" numbers.<br> type it in a comment and it will turn into a link.<br> for example: <span id="song"><a href="songs?d=6jhC6GjGC5M&aboutus">&25</a></span><br><br>straight magical. <br><br><br>the +.hub button puts the song into your playlist<br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>so submit some songs, <br> vote something up,<br>comment on something cool,<br>make people"s day.<br>.roseay</div>')
     })
 
     setInterval(function(){

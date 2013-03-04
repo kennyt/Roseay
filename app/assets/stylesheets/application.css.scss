@@ -80,6 +80,24 @@ a {text-decoration: none} a {color: black}
   }
 }
 
+.about {
+  &:hover{
+    color: green;
+    cursor: pointer;
+  }
+}
+
+.about-text {
+  margin-left: 10%;
+  margin-top: 2%;
+  a {
+    &:hover{
+      color: #98DDDB;
+      text-decoration: none;
+    }
+  }
+}
+
 .small_header {
   margin-left: 183px;
   font-size: 12px;
@@ -266,7 +284,7 @@ iframe {
   width: 500px;
   height: 75%;
   margin-top: 33%;
-  border-left: dashed #123630 1px;
+  border-left: solid #E1EDC9 1px;
 }
 
 .remark-header {
@@ -347,3 +365,4 @@ iframe {
     color: red;
   }
 }
+
