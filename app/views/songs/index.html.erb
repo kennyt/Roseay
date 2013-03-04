@@ -289,6 +289,7 @@
     $('body').on('click', '#song a', function(ev){
       ev.preventDefault();
       ev.stopImmediatePropagation();
+      $('.add-to-hubsongs').remove();
       $('iframe').remove();
       var link = this['href'].split('songs?d=')[1]
       var songId = $(this).parent().parent().attr('id')
