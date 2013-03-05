@@ -161,7 +161,8 @@ $(function(){
       path,
       function(data){
         $('#songwrap').append('<h4 class="user_header">'+data['username']+'.hub</h4>')
-        $('#songwrap').append('<div class="user_info">total ~ '+total+'<br>submissions ~ '+submissions+'<br>taste ~ '+avg+'</div>')
+        // $('#songwrap').append('<div class="user_info">total ~ '+total+'<br>submissions ~ '+submissions+'<br>taste ~ '+avg+'</div>')
+        $('#songwrap').append('<div class="user_info">total ~ '+total+'</div>')
 
         if (data['songhubs'].length){
           $.each(data['songhubs'], function(i, datum){
@@ -241,19 +242,19 @@ $(function(){
 
     if (link.indexOf('soundcloud')+1){
       var link = link.replace(/%2F/g, '/').replace(/%3A/g, ':')
-      SC.oEmbed(link,{auto_play:true, maxwidth:545, height:300, show_comments: false, color:'266973' }, function(track){
+      SC.oEmbed(link,{auto_play:true, maxwidth:545, height:300, show_comments: false, color:'602220' }, function(track){
         track.html['height'] = 300
-        $('.testing1').append(track.html);
+        $('.testing1').prepend(track.html);
       })
     } else if (link.indexOf('&aboutus')+1) {
       var link = link.replace('&aboutus', '')
-      $('.testing1').append('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +'?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360&start=119" frameborder="0"></iframe>')
+      $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +'?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360&start=119" frameborder="0"></iframe>')
     } else {
-      $('.testing1').append('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +'?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360" frameborder="0"></iframe>')
+      $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +'?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360" frameborder="0"></iframe>')
     }
 
     if (($(this).parent().parent().attr('data-uphub') == 'true') || ($(this).attr('data-uphubb') == 'true')){
-      $('.testing1').append('<a href="/songs/'+ songId +'/uphub" class="add-to-hubsongs">+.hub</a>')
+      $('.testing1').prepend('<a href="/songs/'+ songId +'/uphub" class="add-to-hubsongs">+.hub</a>')
     }
   })
 
@@ -312,7 +313,7 @@ $(function(){
 
   $('.about').click(function(){
     $('#songwrap').empty()
-    $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><br><i>"our work is never over"</i><br>-Daft Punk<br><br>our aim is to make people who share songs, look cool.<br><br><br>on the song list, notice the "&" numbers.<br> type it in a comment and it will turn into a link.<br> for example: <span id="song"><a href="songs?d=6jhC6GjGC5M&aboutus">&25</a></span><br><br>straight magical. <br><br><br>the +.hub button puts the song into your playlist<br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>so submit some songs, <br> vote something up,<br>comment on something cool,<br>make people"s day.<br>.roseay</div>')
+    $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><br><i>"our work is never over"</i><br>-Daft Punk<br><br>our aim is to make people who share songs, look cool.<br><br><br>on the song list, notice the "&" numbers.<br> type it in a comment and it will turn into a link.<br> for example: <span id="song"><a href="songs?d=6jhC6GjGC5M&aboutus">&25</a></span><br><br>straight magical. <br><br><br>the +.hub button puts the song into your playlist<br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>so submit some songs, <br> vote something up,<br>comment on something cool,<br>make someone\'s day.<br>.roseay</div>')
   })
 
   setInterval(function(){

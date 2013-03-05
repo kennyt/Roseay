@@ -62,15 +62,11 @@ class SongsController < ApplicationController
   def upvote
 	 @song = Song.find(params[:id])
   	if @song.author == current_user
-  		# redirect_to songs_path
   	else
-	    if current_user
+	    if current_user && !current_user.liked_songs.include?(@song)
 		  	current_user.liked_songs << @song
 		  	@song.points += 1
 		  	@song.save
-		  	# redirect_to songs_path
-  		else
-  			# redirect_to new_session_path
   		end
   	end
 

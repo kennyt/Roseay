@@ -18,6 +18,10 @@
 
 a {text-decoration: none} a {color: black}
 
+.submit-button {
+  color: green;
+}
+
 .form {
   margin-left: 150px;
   font-family: 'quicksand';
@@ -70,7 +74,7 @@ a {text-decoration: none} a {color: black}
 }
 
 .top_header {
-  margin-left: 150px;
+  margin-left: 16%;
   background: transparent;
   a {
     &:hover {
@@ -132,7 +136,6 @@ a {text-decoration: none} a {color: black}
 .user_page_list_header {
   font-size: 20px;
   font-family: 'quicksand';
-  /*margin-left: 178px;*/
 }
 
 .small_header_index {
@@ -148,6 +151,16 @@ a {text-decoration: none} a {color: black}
     }
   }
 }
+.left-side-wrapper {
+  background: white;
+  width: 40%;
+  float: left;
+}
+.right-side-wrapper {
+  background: white;
+  width: 40%;
+  float: left;
+}
 
 .user_info {
   margin-left: 11%;
@@ -155,29 +168,32 @@ a {text-decoration: none} a {color: black}
 }
 
 body {
-  background: white;
+  background-image: linear-gradient(bottom, rgb(0,32,36) 6%, rgb(11,92,117) 53%, rgb(22,105,135) 100%);
+  background-image: -o-linear-gradient(bottom, rgb(0,32,36) 6%, rgb(11,92,117) 53%, rgb(22,105,135) 100%);
+  background-image: -moz-linear-gradient(bottom, rgb(0,32,36) 6%, rgb(11,92,117) 53%, rgb(22,105,135) 100%);
+  background-image: -webkit-linear-gradient(bottom, rgb(0,32,36) 6%, rgb(11,92,117) 53%, rgb(22,105,135) 100%);
+  background-image: -ms-linear-gradient(bottom, rgb(0,32,36) 6%, rgb(11,92,117) 53%, rgb(22,105,135) 100%);
+
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.06, rgb(0,32,36)),
+    color-stop(0.53, rgb(11,92,117)),
+    color-stop(1, rgb(22,105,135))
+  );
 }
 
 .testing1 {
-  margin-left: 43%;
-  position: absolute;
-  top: 0px;
+  position: relative;
   font-size: 31px;
   font-family: 'text me one';
   cursor: default;
-  width: 57%;
-  height: 180%;
-  background-image:url('/assets/roses.jpg');
-  background-attachment: fixed;
-  background-position: 130px, 110px;
-  background-size: cover, 115%;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+  background: white;
 }
 
 iframe {
-  position: absolute;
+  position: relative;
 }
 
 .signin_pic {
@@ -278,12 +294,10 @@ iframe {
 }
 
 .remark-section {
-  /*background-image: url('white.png');*/
   background: white;
-  position: absolute;
+  position: relative;
   width: 500px;
   height: 75%;
-  margin-top: 33%;
   border-left: solid #E1EDC9 1px;
 }
 
@@ -314,7 +328,6 @@ iframe {
 }
 
 .next-remark-btn {
-  /*margin-left: 200px;*/
   font-family: arial;
   font-size: 16px;  
   cursor: pointer;
@@ -333,7 +346,7 @@ iframe {
   &:hover {
     .remark-body {
       a {
-        color: #98DDDB;
+        color: #A7D98C;
       }
     }
   }
@@ -348,7 +361,6 @@ iframe {
 }
 
 .refresh {
-/*  margin-left: 170px;*/
   margin-right: 100px;
   font-family: arial;
   font-size: 12px;
