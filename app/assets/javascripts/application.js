@@ -161,7 +161,6 @@ $(function(){
       path,
       function(data){
         $('#songwrap').append('<h4 class="user_header">'+data['username']+'.hub</h4>')
-        // $('#songwrap').append('<div class="user_info">total ~ '+total+'<br>submissions ~ '+submissions+'<br>taste ~ '+avg+'</div>')
         $('#songwrap').append('<div class="user_info">total ~ '+total+'</div>')
 
         if (data['songhubs'].length){
