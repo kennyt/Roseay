@@ -87,7 +87,8 @@ $(function(){
         'song_artist' : songArtist,
         'song_link': songLink
         }
-      })
+      }
+    )
   })
 
   $('.testing1').on('click', '.delete-remark', function(){
