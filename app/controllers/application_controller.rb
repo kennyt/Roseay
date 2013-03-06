@@ -75,16 +75,20 @@ class ApplicationController < ActionController::Base
     words = body.split(' ').select {|word| word.include?('&')}
     words.select! { |word| word[1..-1].to_i < Song.last.id + 1 && word[1..-1].to_i > 0 }
     words.each do |word|
-      song = Song.find(word[1..-1])
-      if song.song_link.include?('youtube.com')
-        link = song.song_link.split('watch?v=')[1]
+      if Song.find_by_id(word[1..-1]).nil? 
+        return converted
       else
-        link = song.song_link
-      end
-      if current_user ? current_user.songhubs.include?(song) ? false : true : true
-        converted.sub!(word, '<span id="song"><a href="/songs?d='+link+'" data-uphubb="true">'+word+'</a></span>')
-      else 
-        converted.sub!(word, '<span id="song"><a href="/songs?d='+link+'">'+word+'</a></span>')
+        song = Song.find(word[1..-1])
+        if song.song_link.include?('youtube.com')
+          link = song.song_link.split('watch?v=')[1]
+        else
+          link = song.song_link
+        end
+        if current_user ? current_user.songhubs.include?(song) ? false : true : true
+          converted.sub!(word, '<span id="song"><a href="/songs?d='+link+'" data-uphubb="true">'+word+'</a></span>')
+        else 
+          converted.sub!(word, '<span id="song"><a href="/songs?d='+link+'">'+word+'</a></span>')
+        end
       end
     end
     converted
