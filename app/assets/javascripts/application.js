@@ -165,6 +165,12 @@ $(function(){
     var total = $(this).attr('data_author_total')
     var avg = $(this).attr('data_author_avg')
     var submissions = $(this).attr('data_author_submissions')
+    var byTime = $('#12345').attr('data-time')
+    if ( byTime == "true"){
+      var byTime = 1
+    } else {
+      var byTime = 0
+    }
     if ($('#nextbtn a').length) {
       var page = parseInt($('#nextbtn a').attr('href').split('?page=')[1])
     } else {
@@ -176,7 +182,7 @@ $(function(){
     $('#songwrap').remove();
     $('#12345').append('<ol start="1" id="songwrap" goback-start="'+songStart+'"></ol>')
     if (page) {
-      $('#songwrap').append('<br><span class="pagination"><span class="goback" id="nextbtn"><a href="/songs?page='+ (page-1) +'">back</a></span></span>')
+      $('#songwrap').append('<br><span class="pagination"><span class="goback" id="nextbtn"><a href="/songs?page='+ (page-1) +'&by_time='+byTime+'">back</a></span></span>')
     }
 
     $.getJSON(
