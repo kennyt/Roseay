@@ -11,12 +11,12 @@
                                               data_author_avg: current_user.avg,
                                               data_author_submissions: current_user.submissions.length} %>
     <% else %>
-      <%= link_to 'login', new_session_path %>
+      <a href="#newSessionModal" data-toggle="modal">login</a>
       <%= "| " %>
-      <%= link_to 'signup', new_session_path, class: 'x1c2' %>
+      <a href="#newSessionModal" data-toggle="modal">join</a>
     <% end %>
     <%= "| " %>
-    <%= link_to 'submit', new_song_path, class: 'submit-button' %>
+    <a href="#newSongModal" class="submit-button" data-toggle="modal">submit</a>
     <%= "| " %>
     <span class="about">about</span>
   </div>
@@ -68,6 +68,10 @@
   </div>
 </div>
 
+
+ 
+<%= render 'new_song_modal' %>
+<%= render 'new_session_modal' %>
 
 
 <script src="//connect.soundcloud.com/sdk.js"></script>

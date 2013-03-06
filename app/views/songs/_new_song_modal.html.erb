@@ -1,0 +1,29 @@
+<div id="newSongModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">submit</h3>
+  </div>
+  <div class="modal-body">
+    <h4>youtube/soundcloud links</h4>
+    <p><%= form_for(@song) do |f| %>
+    <%= f.label :song_artist %>
+
+    <%= f.text_field :song_artist %>
+    <br>
+    <%= f.label :song_name %>
+
+    <%= f.text_field :song_name %>
+    <br>
+    <%= f.label :song_link %>
+
+    <%= f.text_field :song_link %>
+    <br>
+    <br>
+    
+  <div class="modal-footer">
+    <a id="close-modal" data-dismiss="modal" aria-hidden="true">Close</a>
+    <%= f.submit 'submit', class: 'song-modal-submit' %>
+  </div>
+  <% end %></p>
+  </div>
+</div>

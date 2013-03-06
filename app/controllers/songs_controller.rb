@@ -33,6 +33,8 @@ class SongsController < ApplicationController
     end
 
     @client = Soundcloud.new(:client_id => '8f1e619588b836d8f108bfe30977d6db')
+    @song = Song.new
+    @user = User.new
 
     respond_to do |format|
       format.html
@@ -51,12 +53,15 @@ class SongsController < ApplicationController
   def create
   	@song = current_user.submissions.new(params[:song])
 
-  	if @song.save
-  		redirect_to songs_path
-  	else
-  		flash.now[:notice] = @song.errors.full_messages.first
-  		render 'songs/new'
-  	end
+    respond_to do |format|
+    	if @song.save
+    		# redirect_to songs_path
+        format.json { render :json => @song}
+    	else
+    		flash.now[:notice] = @song.errors.full_messages.first
+    		render 'songs/new'
+    	end
+    end
   end
 
   def upvote

@@ -1,0 +1,38 @@
+<div id="newSessionModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">signin/join</h3>
+  </div>
+  <div class="modal-body">
+    <h3>signin</h3>
+    <%= form_for(@user, url: sessions_path, method: :post) do |f| %>
+      <%= f.label :username %>
+      <%= f.text_field :username %>
+      <br>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+      <br>
+      <br>
+      <%= f.submit 'sign in', class: 'login-session-modal' %>
+    <% end %>
+
+    <h3>join</h3>
+    <%= form_for(@user, url: users_path, method: :post) do |f| %>
+      <%= f.label :username %>
+      <%= f.text_field :username %>
+      <br>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+      <br>
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation %>
+      <br>
+      <br>
+      <%= f.submit 'join', class: 'join-session-modal' %>
+    <% end %>
+    
+    <div class="modal-footer">
+      <a id="close-modal" data-dismiss="modal" aria-hidden="true">Close</a>
+    </div>
+  </div>
+</div>

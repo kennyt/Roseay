@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
 //= require_tree .
 
 
@@ -68,6 +69,26 @@ $(function(){
       }
     )
   }
+
+  $('body').on('click', '.song-modal-submit', function(ev){
+    ev.preventDefault();
+    var songArtist = $('#song_song_artist').val();
+    var songName = $('#song_song_name').val();
+    var songLink = $('#song_song_link').val();
+    $('#song_song_artist').val('');
+    $('#song_song_name').val('');
+    $('#song_song_link').val('');
+    $('#close-modal').trigger('click');
+
+    $.post(
+      '/songs.json',
+      {'song' : {
+        'song_name' : songName,
+        'song_artist' : songArtist,
+        'song_link': songLink
+        }
+      })
+  })
 
   $('.testing1').on('click', '.delete-remark', function(){
     var remark_id = $(this).attr('data-remark-id')

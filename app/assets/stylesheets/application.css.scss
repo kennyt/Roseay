@@ -16,7 +16,7 @@
 @import "bootstrap-styles";
 @import "bootstrap";
 
-a {text-decoration: none} a {color: black}
+a {text-decoration: none; cursor: pointer;} a {color: black}
 
 .submit-button {
   color: green;
