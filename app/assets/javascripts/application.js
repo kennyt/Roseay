@@ -15,8 +15,6 @@
 //= require bootstrap
 //= require_tree .
 
-
-
 $(function(){
   idleSeconds = 0;
   blurSeconds = 0;
@@ -275,9 +273,11 @@ $(function(){
       })
     } else if (link.indexOf('&aboutus')+1) {
       var link = link.replace('&aboutus', '')
-      $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +'?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360&start=119" frameborder="0"></iframe>')
+      $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +
+                             '?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360&start=119" frameborder="0"></iframe>')
     } else {
-      $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +'?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360" frameborder="0"></iframe>')
+      $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +
+                             '?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360" frameborder="0"></iframe>')
     }
 
     if (($(this).parent().parent().attr('data-uphub') == 'true') || ($(this).attr('data-uphubb') == 'true')){
@@ -370,16 +370,6 @@ $(function(){
       blurSeconds += 1;
     }
   }, 4000)
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-39103821-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
 
   fetchRemarks();
 })
