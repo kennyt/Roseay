@@ -42,23 +42,23 @@ $(function(){
       $('#'+songID).append('<a href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
     }
     $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>')
-    $('#'+songID).append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
+                 .append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
     $('#'+songID+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
-    $('#'+songID+' .info_bar').append('<a class="user" href="/users/'+datum["author_id"]+
-      '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
-      '" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+'</a>')
-    $('#'+songID+' .info_bar').append('&nbsp;|&nbsp;'+ datum['time'] +' ago &nbsp;| &'+datum['id'])
+                              .append('<a class="user" href="/users/'+datum["author_id"]+
+                                      '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
+                                      '" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+'</a>')
+                              .append('&nbsp;|&nbsp;'+ datum['time'] +' ago &nbsp;| &'+datum['id'])
   }
 
   var fetchRemarks = function(page) {
     idleSeconds = 0
-    $('.remarks').empty();
     if (!(page)) {
       page = 0
     }
     $.getJSON(
       '/remarks.json?page='+page,
       function(response){
+        $('.remarks').empty();
         $.each(response, function(i, datum){
           $('.remarks').append('<div class="remark" id="'+i+'"><a class="user" href="/users/'+datum["author_id"]+
             '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
@@ -147,10 +147,10 @@ $(function(){
 
     var page = parseInt($('#nextbtn a').attr('href').split('?page=')[1])
     var byTime = $('#12345').attr('data-time')
-    $('#songwrap').remove()
     $.getJSON(
       '/songs.json?page='+page+'&by_time='+byTime+'',
       function(data){
+        $('#songwrap').remove()
         $('#12345').append('<ol start="' + songStart + '" id="songwrap"></ol>')
         $.each(data, function(i, datum){
           setupSong(datum);
@@ -183,15 +183,16 @@ $(function(){
     var songStart = $('ol').attr('start')
 
 
-    $('#songwrap').remove();
-    $('#12345').append('<ol start="1" id="songwrap" goback-start="'+songStart+'"></ol>')
-    if (page) {
-      $('#songwrap').append('<br><span class="pagination"><span class="goback" id="nextbtn"><a href="/songs?page='+ (page-1) +'&by_time='+byTime+'">back</a></span></span>')
-    }
 
     $.getJSON(
       path,
       function(data){
+        $('#songwrap').remove();
+        $('#12345').append('<ol start="1" id="songwrap" goback-start="'+songStart+'"></ol>')
+        if (page) {
+          $('#songwrap').append('<br><span class="pagination"><span class="goback" id="nextbtn"><a href="/songs?page='+
+                               (page-1) +'&by_time='+byTime+'">back</a></span></span>')
+        }
         $('#songwrap').append('<h4 class="user_header">'+data['username']+'.hub</h4>')
         $('#songwrap').append('<div class="user_info">total ~ '+total+'</div>')
 
@@ -226,10 +227,9 @@ $(function(){
     ev.preventDefault();
     ev.stopImmediatePropagation();
 
-    var that = this;
     var parent = this.parentNode;
     var songID = parseInt($(parent).attr('id'));
-
+    $(this).remove();
 
     path = $(this).attr('href') + '.json'
     if (path == '/sessions/new.json'){
@@ -238,7 +238,6 @@ $(function(){
       $('.need-to-login').css('left', ev.pageX - 65)
     } else {
     $.post(path, function(response){
-      $(that).remove();
       $(parent).prepend('</b>&nbsp;&nbsp;&nbsp;<b>')
     })
     }
@@ -294,11 +293,11 @@ $(function(){
   $('.relevance').click(function(ev){
     ev.preventDefault();
     ev.stopImmediatePropagation();
-    $('#songwrap').remove();
 
     $.getJSON(
       '/songs.json?page=-1',
       function(data){
+        $('#songwrap').remove();
         $('#12345').append('<ol start="1" id="songwrap"></ol>')
         $('#12345').attr('data-time', '')
         $.each(data, function(i, datum){
@@ -312,11 +311,11 @@ $(function(){
   $('.time').click(function(ev){
     ev.preventDefault();
     ev.stopImmediatePropagation();
-    $('#songwrap').remove();
 
     $.getJSON(
       '/songs.json?page=-1&by_time=1',
       function(data){
+        $('#songwrap').remove();
         $('#12345').append('<ol start="1" id="songwrap"></ol>')
         $('#12345').attr('data-time', true)
         $.each(data, function(i, datum){
@@ -330,11 +329,12 @@ $(function(){
   $('h1 a').click(function(ev){
     ev.preventDefault();
     ev.stopImmediatePropagation();
-    $('#songwrap').remove();
 
     $.getJSON(
       '/songs.json?page=-1',
       function(data){
+        $('#songwrap').remove();
+        $('#12345').attr('data-time', '')
         $('#12345').append('<ol start="1" id="songwrap"></ol>')
         $.each(data, function(i, datum){
           setupSong(datum);
