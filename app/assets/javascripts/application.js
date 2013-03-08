@@ -44,7 +44,9 @@ $(function(){
     $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>')
     $('#'+songID).append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
     $('#'+songID+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
-    $('#'+songID+' .info_bar').append('<a class="user" href="/users/'+datum["author_id"]+'" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+'" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+'</a>')
+    $('#'+songID+' .info_bar').append('<a class="user" href="/users/'+datum["author_id"]+
+      '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
+      '" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+'</a>')
     $('#'+songID+' .info_bar').append('&nbsp;|&nbsp;'+ datum['time'] +' ago &nbsp;| &'+datum['id'])
   }
 
@@ -58,7 +60,11 @@ $(function(){
       '/remarks.json?page='+page,
       function(response){
         $.each(response, function(i, datum){
-          $('.remarks').append('<div class="remark" id="'+i+'"><a class="user" href="/users/'+datum["author_id"]+'" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+'" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+'</a> | <span class="remark-info">'+datum['time']+' ago</span> <br><span class="remark-body">'+datum['body']+'</span></div>')
+          $('.remarks').append('<div class="remark" id="'+i+'"><a class="user" href="/users/'+datum["author_id"]+
+            '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
+            '" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+
+            '</a> | <span class="remark-info">'+datum['time']+' ago</span> <br><span class="remark-body">'+
+            datum['body']+'</span></div>')
           if (datum['authored']){
             $('.remarks #'+i+' .remark-info').append('&nbsp;| <span class="delete-remark" data-remark-id="'+datum['id']+'">delete</span>')
           }
