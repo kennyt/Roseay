@@ -18,8 +18,33 @@
 
 a {text-decoration: none; cursor: pointer;} a {color: black}
 
+.playlist-container {
+  width: 60px;
+  margin-left: 20px;
+  float: left;
+}
+
+.playlist-song {
+  background: blue;
+  width: 50px;
+}
+
 .submit-button {
   color: green;
+  position: absolute;
+  margin-left: 7%;
+  margin-top: 68px;
+  width: 50px;
+  text-align: center;
+  background: #98DD9D;
+  text-decoration: none;
+  border-radius: 2px;
+
+  &:hover {
+    text-decoration: none;
+    background: #C75769;
+    color: white;
+  }
 }
 
 .form {
@@ -171,6 +196,15 @@ body {
   background: #004366;
 }
 
+.page-wrapper {
+  margin-left: 3%;
+}
+
+.player-holder-text {
+  margin-left: 40%;
+  font-size: 10px;
+}
+
 .testing1 {
   position: relative;
   font-size: 31px;
@@ -181,16 +215,6 @@ body {
 
 iframe {
   position: relative;
-}
-
-.signin_pic {
-  position: absolute;
-  margin-left: 35%;
-  top: 0px;
-  width: 65%;
-  height: 100%;
-  background-image:url('/assets/roses.jpg');
-  background-repeat: no-repeat; 
 }
 
 .space{
@@ -284,12 +308,22 @@ iframe {
   margin-bottom: -30px;
 }
 
+.player-holder {
+  text-align: center;
+  width: 544px;
+  height: 220px;
+  background: white;
+  /*border: solid black 1px;*/
+  border-left: solid #0F2E27 1px;
+  border-bottom: solid #0F2E27 1px;
+}
+
 .remark-section {
   background: white;
   position: relative;
-  width: 500px;
+  width: 544px;
   height: 75%;
-  border-left: solid #E1EDC9 1px;
+  border-left: solid #0F2E27 1px;
 }
 
 .remark-header {
@@ -368,4 +402,3 @@ iframe {
     color: red;
   }
 }
-

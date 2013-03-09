@@ -127,7 +127,7 @@ $(function(){
         }
       )
     } else {
-      $('.remark-input').val('you have to login to post a remark. chill, it takes 10 seconds.')
+      $('.remark-input').val('you have to login to post a remark.')
     }
   })
 
@@ -252,7 +252,7 @@ $(function(){
     if ($('.x1c2').length){
       $('.testing1').append('<a class="need-to-login2" href="/sessions/new">login</a>')
       $('.need-to-login2').css('top', ev.pageY)
-      $('.need-to-login2').css('left', ev.pageX * .50)
+      $('.need-to-login2').css('left', ev.pageX)
     } else {
       $.post(path)
     }
@@ -261,6 +261,7 @@ $(function(){
   $('body').on('click', '#song a', function(ev){
     ev.preventDefault();
     ev.stopImmediatePropagation();
+    $('.player-holder').remove();
     $('.add-to-hubsongs').remove();
     $('iframe').remove();
     var link = this['href'].split('songs?d=')[1]

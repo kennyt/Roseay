@@ -1,72 +1,82 @@
-<div class="left-side-wrapper">
-  <div class="top_header">
-    <%= link_to 'roseay', root_path %>
-    | 
-    <% if current_user %>
-      <%= link_to 'logout', session_path(current_user), method: :delete %>
+<div class="page-wrapper"> 
+  <div class="left-side-wrapper">
+    <div class="top_header">
+      <%= link_to 'roseay', root_path %>
       | 
-      <%= link_to "#{current_user.username}", user_path(current_user), {class: 'user',
-                                                                        id: 'logged_in',
-                                              data_author_total: current_user.total,
-                                              data_author_avg: current_user.avg,
-                                              data_author_submissions: current_user.submissions.length} %>
-    <% else %>
-      <a href="#newSessionModal" data-toggle="modal">login</a>
-      |
-      <a href="#newSessionModal" data-toggle="modal">join</a>
-    <% end %>
-     |
-    <a href="#newSongModal" class="submit-button" data-toggle="modal">submit</a>
-    <!-- <span class="about">about</span> -->
-  </div>
-
-  <div class="big_header">
-    <h1><%= link_to '.edm', root_path %></h1>
-  </div>
-
-  <div class="small_header_index">
-    <%= link_to "relevance", songs_path(:by_time => 0), :class => 'relevance' %>
-    | 
-    <%= link_to "time", songs_path(:by_time => 1), :class => 'time' %>
-  </div>
-  <div id="12345" data-time="<%=@by_time%>">
-    <ol start=<%= "#{@start_num}" %> id="songwrap" >
-        <%= render @songs %>
-        <span class="pagination">
-          <% if @more %>
-            <% params[:page] = @next_page %>
-            <span id="nextbtn"><%= link_to 'next', songs_path(params) %></span>
-          <% end %>
-        </span>
-    </ol>
-  </div>
-</div>
-
-<div class="right-side-wrapper">
-  <div class="testing1">
-    <% if @embed %>
-      <% if @embed.include?('soundcloud') %>
-        <% embed_info = @client.get('/oembed', :url => CGI::unescape(@embed)) %>
-        <%= embed_info['html'] %>
+      <% if current_user %>
+        <%= link_to 'logout', session_path(current_user), method: :delete %>
+        | 
+        <%= link_to "#{current_user.username}", user_path(current_user), {class: 'user',
+                                                                          id: 'logged_in',
+                                                data_author_total: current_user.total,
+                                                data_author_avg: current_user.avg,
+                                                data_author_submissions: current_user.submissions.length} %>
       <% else %>
-        <iframe  width="545" height="220" src=<%="http://www.youtube.com/embed/#{@embed}?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&fmt=18"%> frameborder="0"></iframe>
+        <a href="#newSessionModal" data-toggle="modal">login</a>
+        |
+        <a href="#newSessionModal" data-toggle="modal">join</a>
       <% end %>
-    <% end %>
-
-   <div class="remark-section">
-    <div class="remark-header" data-filer="">
-      remarks<br>
+      <!-- <span class="about">about</span> -->
     </div>
-    <textarea class="remark-input"></textarea>
-    <button class="remark-input-btn">post</button>
-    <span class="refresh">home</span>
-    <span class="remarks">
-    </span>
-    <span class="pagination"><a class="next-remark-btn" data-remark-page="1">next</a></span>
-   </div>
-  </div>
-</div>
 
+    <a href="#newSongModal" class="submit-button" data-toggle="modal">submit</a>
+    <div class="big_header">
+      <h1><%= link_to '.edm', root_path %></h1>
+    </div>
+
+    <div class="small_header_index">
+      <%= link_to "relevance", songs_path(:by_time => 0), :class => 'relevance' %>
+      | 
+      <%= link_to "time", songs_path(:by_time => 1), :class => 'time' %>
+    </div>
+    <div id="12345" data-time="<%=@by_time%>">
+      <ol start=<%= "#{@start_num}" %> id="songwrap" >
+          <%= render @songs %>
+          <span class="pagination">
+            <% if @more %>
+              <% params[:page] = @next_page %>
+              <span id="nextbtn"><%= link_to 'next', songs_path(params) %></span>
+            <% end %>
+          </span>
+      </ol>
+    </div>
+  </div>
+
+  <div class="right-side-wrapper">
+    <div class="testing1">
+      <% if @embed %>
+        <% if @embed.include?('soundcloud') %>
+          <% embed_info = @client.get('/oembed', :url => CGI::unescape(@embed)) %>
+          <%= embed_info['html'] %>
+        <% else %>
+          <iframe  width="545" height="220" src=<%="http://www.youtube.com/embed/#{@embed}?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&fmt=18"%> frameborder="0"></iframe>
+        <% end %>
+      <% else %>
+        <div class="player-holder"><span class="player-holder-text"><br><br><br>click a song</span></div>
+      <% end %>
+
+     <div class="remark-section">
+      <div class="remark-header" data-filer="">
+        remarks<br>
+      </div>
+      <textarea class="remark-input"></textarea>
+      <button class="remark-input-btn">post</button>
+      <span class="refresh">refresh</span>
+      <span class="remarks">
+      </span>
+      <span class="pagination"><a class="next-remark-btn" data-remark-page="1">next</a></span>
+     </div>
+    </div>
+  </div>
+<!--   <div class="playlist-container">
+    <div class="playlist-song">song</div>
+    <div class="playlist-song">song</div>
+    <div class="playlist-song">song</div>
+    <div class="playlist-song">spmg</div>
+    <div class="playlist-song">song</div>
+    <div class="playlist-song">song</div>
+  </div> -->
+</div>
 
  
 <%= render 'new_song_modal' %>
