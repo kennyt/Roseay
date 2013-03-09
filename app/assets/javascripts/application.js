@@ -50,7 +50,7 @@ $(function(){
                               .append('&nbsp;|&nbsp;'+ datum['time'] +' ago &nbsp;| &'+datum['id'])
   }
 
-  var fetchRemarks = function(page) {
+  var fetchRemarks = function(page, callback) {
     idleSeconds = 0
     if (!(page)) {
       page = 0
@@ -70,8 +70,17 @@ $(function(){
           }
         })
         $('.next-remark-btn').attr('data-remark-page', page+1)
+        if (callback){
+          callback();
+        }
       }
     )
+  }
+
+  var appendUphub = function(that ,songId){
+    if (($(that).parent().parent().attr('data-uphub') == 'true') || ($(that).attr('data-uphubb') == 'true')){
+      $('.testing1').prepend('<a href="/songs/'+ songId +'/uphub" class="add-to-hubsongs">+.hub</a>')
+    }
   }
 
   $('body').on('click', '.song-modal-submit', function(ev){
@@ -108,7 +117,10 @@ $(function(){
   })
 
   $('.testing1').on('click', '.refresh', function(){
-    fetchRemarks();
+    $('.refresh').html('refreshing..');
+    fetchRemarks(0, function(){
+      $('.refresh').html('refresh');
+    });
   })
 
   $('.testing1').on('click', '.remark-input-btn', function(ev){
@@ -182,8 +194,6 @@ $(function(){
     }
     var songStart = $('ol').attr('start')
 
-
-
     $.getJSON(
       path,
       function(data){
@@ -229,15 +239,16 @@ $(function(){
 
     var parent = this.parentNode;
     var songID = parseInt($(parent).attr('id'));
-    $(this).remove();
+    var that = this;
 
     path = $(this).attr('href') + '.json'
     if (path == '/sessions/new.json'){
-      $('#songwrap').append('<a class="need-to-login" href="/sessions/new">login</a>')
+      $('#songwrap').append('<a class="need-to-login" href="#newSessionModal" data-toggle="modal">login</a>')
       $('.need-to-login').css('top', ev.pageY - 8)
       $('.need-to-login').css('left', ev.pageX - 65)
     } else {
     $.post(path, function(response){
+      $(that).remove();
       $(parent).prepend('</b>&nbsp;&nbsp;&nbsp;<b>')
     })
     }
@@ -264,6 +275,7 @@ $(function(){
     $('.player-holder').remove();
     $('.add-to-hubsongs').remove();
     $('iframe').remove();
+    var that = this;
     var link = this['href'].split('songs?d=')[1]
     var songId = $(this).parent().parent().attr('id')
 
@@ -276,29 +288,33 @@ $(function(){
       SC.oEmbed(link,{auto_play:true, maxwidth:545, height:300, show_comments: false, color:'602220' }, function(track){
         track.html['height'] = 300
         $('.testing1').prepend(track.html);
+        appendUphub(that, songId);
       })
-    } else if (link.indexOf('&aboutus')+1) {
-      var link = link.replace('&aboutus', '')
-      $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +
-                             '?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360&start=119" frameborder="0"></iframe>')
     } else {
-      $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +
-                             '?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360" frameborder="0"></iframe>')
-    }
-
-    if (($(this).parent().parent().attr('data-uphub') == 'true') || ($(this).attr('data-uphubb') == 'true')){
-      $('.testing1').prepend('<a href="/songs/'+ songId +'/uphub" class="add-to-hubsongs">+.hub</a>')
+      if (link.indexOf('&aboutus')+1) {
+        var link = link.replace('&aboutus', '')
+        $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +
+                               '?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360&start=119" frameborder="0"></iframe>')
+        appendUphub(that, songId);
+      } else {
+        $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +
+                               '?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360" frameborder="0"></iframe>')
+        appendUphub(that, songId);
+      }
     }
   })
+
+
 
   $('.relevance').click(function(ev){
     ev.preventDefault();
     ev.stopImmediatePropagation();
-
+    $('h1').append('<span class="song-refreshing">...</span>')
     $.getJSON(
       '/songs.json?page=-1',
       function(data){
         $('#songwrap').remove();
+        $('.song-refreshing').remove();
         $('#12345').append('<ol start="1" id="songwrap"></ol>')
         $('#12345').attr('data-time', '')
         $.each(data, function(i, datum){
@@ -312,11 +328,13 @@ $(function(){
   $('.time').click(function(ev){
     ev.preventDefault();
     ev.stopImmediatePropagation();
+    $('h1').append('<span class="song-refreshing">...</span>')
 
     $.getJSON(
       '/songs.json?page=-1&by_time=1',
       function(data){
         $('#songwrap').remove();
+        $('.song-refreshing').remove();
         $('#12345').append('<ol start="1" id="songwrap"></ol>')
         $('#12345').attr('data-time', true)
         $.each(data, function(i, datum){
@@ -330,11 +348,13 @@ $(function(){
   $('h1 a').click(function(ev){
     ev.preventDefault();
     ev.stopImmediatePropagation();
+    $('h1').append('<span class="song-refreshing">...</span>')
 
     $.getJSON(
       '/songs.json?page=-1',
       function(data){
         $('#songwrap').remove();
+        $('.song-refreshing').remove();
         $('#12345').attr('data-time', '')
         $('#12345').append('<ol start="1" id="songwrap"></ol>')
         $.each(data, function(i, datum){
