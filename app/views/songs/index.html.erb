@@ -26,9 +26,9 @@
     </div>
 
     <div class="small_header_index">
-      <%= link_to "relevance", songs_path(:by_time => 0), :class => 'relevance' %>
+      <%= link_to "rating", songs_path(:by_time => 0), :class => 'relevance' %>
       <%= link_to "time", songs_path(:by_time => 1), :class => 'time' %>
-      <span class="random">random</span>
+      <span class="random">randomize</span>
     </div>
     <div id="12345" data-time="<%=@by_time%>">
       <ol start=<%= "#{@start_num}" %> id="songwrap" >
