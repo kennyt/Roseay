@@ -232,7 +232,8 @@ $(function(){
             }
             
             $('#'+songID).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
-            $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+' - '+datum["song_name"]+'</a>&nbsp;| &'+datum['id']+'</span>')
+            $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+
+                                 ' - '+datum["song_name"]+'</a>&nbsp;| &'+datum['id']+'</span>')
           })
         } else {
           $('#songwrap').append('<br><br><span style="margin-left:138px">empty .hub</span>')
@@ -378,14 +379,20 @@ $(function(){
       idleSeconds += 1;
     }
     if ((idleSeconds  >= 20) && ($('.next-remark-btn').attr('data-remark-page'))){
-      fetchRemarks(parseInt($('.next-remark-btn').attr('data-remark-page') - 1))
+      $('.refresh').html('refreshing..');
+      fetchRemarks(parseInt($('.next-remark-btn').attr('data-remark-page') - 1), function(){
+        $('.refresh').html('refresh')
+      })
     }
   }, 4000)
 
   window.onfocus = function(){
     onTab = true
     if (blurSeconds >= 15){
-      fetchRemarks(parseInt($('.next-remark-btn').attr('data-remark-page') - 1))
+      $('.refresh').html('refreshing..');
+      fetchRemarks(parseInt($('.next-remark-btn').attr('data-remark-page') - 1), function(){
+        $('.refresh').html('refresh')
+      })
     }
     blurSeconds = 0;
   }
