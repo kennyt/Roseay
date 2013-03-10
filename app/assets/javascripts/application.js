@@ -144,12 +144,17 @@ $(function(){
   })
 
   $('.testing1').on('click', '.next-remark-btn', function(ev){
+    $(this).append('---')
     var page = parseInt($(this).attr('data-remark-page'))
-    fetchRemarks(page)
+    fetchRemarks(page, function(){
+      $('.next-remark-btn').html('next')
+    })
   })
 
   $('#12345').on('click', '#nextbtn a', function(ev){
     ev.preventDefault();
+    var that = this;
+    $(that).append('---')
 
     if ($('ol').attr('goback-start')){
       var songStart = parseInt($('ol').attr('goback-start'))
@@ -163,6 +168,7 @@ $(function(){
       '/songs.json?page='+page+'&by_time='+byTime+'',
       function(data){
         $('#songwrap').remove()
+        $(that).html('next');
         $('#12345').append('<ol start="' + songStart + '" id="songwrap"></ol>')
         $.each(data, function(i, datum){
           setupSong(datum);
@@ -176,6 +182,7 @@ $(function(){
   $('body').on('click', '.user', function(ev){
     ev.preventDefault();
     ev.stopImmediatePropagation()
+    $('h1').append('<span class="waiting">...</span>')
 
     var path = $(this).attr('href')
     var total = $(this).attr('data_author_total')
@@ -198,6 +205,7 @@ $(function(){
       path,
       function(data){
         $('#songwrap').remove();
+        $('.waiting').remove();
         $('#12345').append('<ol start="1" id="songwrap" goback-start="'+songStart+'"></ol>')
         if (page) {
           $('#songwrap').append('<br><span class="pagination"><span class="goback" id="nextbtn"><a href="/songs?page='+
