@@ -313,7 +313,21 @@ $(function(){
     }
   })
 
-
+  $('.random').click(function(){
+    $('h1').append('<span class="song-refreshing">...</span>')
+    $.getJSON(
+      '/songs.json?random=1',
+      function(data){
+        $('#songwrap').remove();
+        $('.song-refreshing').remove();
+        $('#12345').append('<ol start="1" id="songwrap"></ol>')
+        $('#12345').attr('data-time', '')
+        $.each(data, function(i, datum){
+          setupSong(datum);
+        })
+      }
+    )
+  })
 
   $('.relevance').click(function(ev){
     ev.preventDefault();

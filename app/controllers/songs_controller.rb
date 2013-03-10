@@ -1,12 +1,23 @@
 class SongsController < ApplicationController
   def index
 
-    if params[:by_time] == '0' || params[:by_time].nil? || params[:by_time] == ''
-      @songs = Song.includes(:author).all
-      @songs.sort! {|x,y| y.true_value <=> x.true_value }
+    if params[:random] == '1'
+      all_songs = Song.all
+      @songs = []
+      while @songs.length < 21 do
+        x = all_songs.sample
+        unless @songs.include?(x)
+          @songs << x
+        end
+      end
     else
-      @songs = Song.includes(:author).order('created_at DESC').all
-      @by_time = true
+      if params[:by_time] == '0' || params[:by_time].nil? || params[:by_time] == ''
+        @songs = Song.includes(:author).all
+        @songs.sort! {|x,y| y.true_value <=> x.true_value }
+      else
+        @songs = Song.includes(:author).order('created_at DESC').all
+        @by_time = true
+      end
     end
     @song_with_users = @songs
 
