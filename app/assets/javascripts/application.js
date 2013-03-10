@@ -374,6 +374,11 @@ $(function(){
     )
   })
 
+  $('.about').click(function(){
+    $('#songwrap').empty()
+    $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><br><i>"they ask me what I do and who I do it fo"</i><br>-Two Chainz<br><br>we do it fo the beautiful people who share songs<br>and fo the cool people who love music<br><br>on the song list, notice the "&" numbers.<br> type it in a comment and it will turn into a link.<br> for example:<span id="song"><a href="songs?d=6jhC6GjGC5M&aboutus">&25</a></span><br><br>straight magical. <br><br><br>the +.hub button puts the song into your playlist<br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>.roseay</div>')
+  })
+
   setInterval(function(){
     if (onTab){
       idleSeconds += 1;
