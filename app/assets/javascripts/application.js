@@ -240,9 +240,9 @@ $(function(){
             }
 
             if (datum['uphubbed'] == 0) {
-              $('#songwrap').append('<li class="song" id="'+songID+'" style="margin: 50px;" data-uphub="true"></li>')
+              $('#songwrap').append('<li class="song" id="'+songID+'" style="margin: 30px;" data-uphub="true"></li>')
             } else {
-              $('#songwrap').append('<li class="song" id="'+songID+'" style="margin: 50px;" data-uphub="false"></li>')
+              $('#songwrap').append('<li class="song" id="'+songID+'" style="margin: 30px;" data-uphub="false"></li>')
             }
             
             $('#'+songID).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
