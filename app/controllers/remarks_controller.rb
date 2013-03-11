@@ -2,7 +2,7 @@ class RemarksController < ApplicationController
 	def index
 		page = params[:page].to_i
 		if params[:filter].blank?
-			remarks = Remark.order('created_at DESC').clean_remarks[page*11..page*11+10]
+			remarks = Remark.order('created_at DESC').all[page*11..page*11+10]
 		else
 		  remarks = Remark.order('created_at DESC').mentioned_song(params[:filter])[page*11..page*11+10]
 		end

@@ -31,9 +31,5 @@
     <%= "#{distance_of_time_in_words(song.created_at-Time.now)} ago" %>
     <%= "| " %>
     <span class="song-id-filter" data-id="<%= song.id %>"><%= "&" + song.id.to_s %></span>
-    <% x = Remark.mentioned_song(song.id).length %>
-    <% unless x == 0 %>
-      (<%= x %>)
-    <% end %>
   </div>
 </li>

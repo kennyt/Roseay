@@ -19,14 +19,58 @@
 a {text-decoration: none; cursor: pointer;} a {color: black}
 
 .playlist-container {
-  width: 60px;
-  margin-left: 20px;
+  position: fixed;
+  width: 1%;
+  margin-left: 3%;
+  margin-top: 115px;
   float: left;
+  color: white;
 }
 
-.playlist-song {
-  background: blue;
-  width: 50px;
+.playlist-song1 {
+  border-radius: 4px;
+  background: #D2B979;
+  text-align: center;
+  vertical-align: middle;
+  height: 65px;
+  margin-bottom: 45px;
+  &:hover{
+    background: #11091B;
+    cursor: pointer;
+  }
+}
+.playlist-song2 {
+  border-radius: 4px;
+  background: #97D581;
+  text-align: center;
+  height: 65px;
+  margin-bottom: 45px;
+  &:hover{
+    background: #11091B;
+    cursor: pointer;
+  }
+}
+.playlist-song3 {
+  border-radius: 4px;
+  background: #D98C9C;
+  text-align: center;
+  height: 65px;
+  margin-bottom: 45px;
+  &:hover{
+    background: #11091B;
+    cursor: pointer;
+  }
+}
+.playlist-song4 {
+  border-radius: 4px;
+  background: #A3C6E0;
+  text-align: center;
+  height: 65px;
+  margin-bottom: 15px;
+  &:hover{
+    background: #11091B;
+    cursor: pointer;
+  }
 }
 
 .submit-button {
@@ -218,14 +262,18 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
 }
 
 .left-side-wrapper {
+  border-radius: 10px;
+  margin: 5px;
   background: white;
   width: 40%;
   float: left;
 }
 .right-side-wrapper {
-  background: white;
+  background: #004366;
   width: 40%;
   float: left;
+  border-radius: 10px;
+  margin-top: 5px;
 }
 
 .user_info {
@@ -246,7 +294,7 @@ body {
 }
 
 .page-wrapper {
-  margin-left: 3%;
+  margin-left: 2%;
 }
 
 .player-holder-text {
@@ -259,7 +307,7 @@ body {
   font-size: 31px;
   font-family: 'text me one';
   cursor: default;
-  background: white;
+  background: #004366;
 }
 
 iframe {
@@ -365,6 +413,8 @@ iframe {
   color: white;
   border-left: solid #0F2E27 1px;
   border-bottom: solid #0F2E27 1px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .remark-section {
@@ -373,6 +423,8 @@ iframe {
   width: 544px;
   height: 75%;
   border-left: solid #0F2E27 1px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .remark-header {

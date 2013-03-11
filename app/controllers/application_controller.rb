@@ -45,8 +45,8 @@ class ApplicationController < ActionController::Base
         uphubbed: current_user ? current_user.songhubs.include?(song) ? 1 : 0 : 0,
         author_avg: song.author.avg,
         author_total: song.author.total,
-        author_submissions: song.author.submissions.length,
-        remark_length: Remark.mentioned_song(song.id).length
+        author_submissions: song.author.submissions.length
+        # remark_length: Remark.mentioned_song(song.id).length
       }
     end
 

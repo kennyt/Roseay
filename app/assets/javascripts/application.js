@@ -48,11 +48,7 @@ $(function(){
                                       '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
                                       '" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+'</a>')
                               .append('&nbsp;|&nbsp;'+ datum['time'] +' ago &nbsp;| <span class="song-id-filter" data-id='+songID+'>&'+datum['id']+
-                                      '</span>')  
-    if (datum['remark_length'] != '0') {
-      $('#'+songID+' .info_bar').append('  ('+datum['remark_length']+')')
-    }
-
+                                      '</span>')
   }
 
   var fetchRemarks = function(page, filter, callback) {
@@ -244,13 +240,13 @@ $(function(){
             }
 
             if (datum['uphubbed'] == 0) {
-              $('#songwrap').append('<li class="song" id="'+songID+'" data-uphub="true"></li>')
+              $('#songwrap').append('<li class="song" id="'+songID+'" style="margin: 50px;" data-uphub="true"></li>')
             } else {
-              $('#songwrap').append('<li class="song" id="'+songID+'" data-uphub="false"></li>')
+              $('#songwrap').append('<li class="song" id="'+songID+'" style="margin: 50px;" data-uphub="false"></li>')
             }
             
             $('#'+songID).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
-            $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+
+            $('#'+songID).append('<span id="song" ><a href="/songs?d='+link+'">'+datum["song_artist"]+
                                  ' - '+datum["song_name"]+'</a>')
           })
         } else {
@@ -409,10 +405,10 @@ $(function(){
   $('body').on('click', ' .song-id-filter', function(){
     var id = $(this).attr('data-id');
     $('h1').append('<span class="song-refreshing">...</span>');
-    $('.remark-header').html('&' + id + ' remarks');
     $('.next-remark-btn').attr('data-remark-filter', id);
 
     fetchRemarks(0, id, function(){
+      $('.remark-header').html('&' + id + ' remarks');
       $('.song-refreshing').remove();
       $('.remark-input').val('&' + id + ' ');
     });
@@ -420,7 +416,7 @@ $(function(){
 
   $('.about').click(function(){
     $('#songwrap').empty()
-    $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><br><i>"they ask me what I do and who I do it fo"</i><br>-Two Chainz<br><br>we do it fo the beautiful people who share songs<br>and fo the cool people who love music<br><br>on the song list, notice the "&" numbers.<br> type it in a comment and it will be directed towards a song.<br>do two &&\'s to make it a global remark<br> for example:  <span id="song"><a href="songs?d=6jhC6GjGC5M&aboutus">&&25</a></span><br><br>straight magical. <br><br><br>the +.hub button puts the song into your playlist<br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>.roseay</div>')
+    $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><i>"they ask me what I do and who I do it fo"</i><br>-Two Chainz<br><br>we do it because we think the people who share good music<br>are the most awesome people in the world<br><br>on the song list, notice the "&" numbers.<br> type it in a remark and it will turn into a link<br> for example:  <span id="song"><a href="songs?d=6jhC6GjGC5M&aboutus">&25</a></span><br><br>straight magical. <br><br><br>the +.hub button puts the song into your playlist<br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>.roseay</div>')
   })
 
   setInterval(function(){
