@@ -26,7 +26,6 @@
     </div>
 
     <div class="small_header_index">
-      <%= link_to "rating", songs_path(:by_time => 0), :class => 'relevance' %>
       <span class="random">randomize</span>
     </div>
     <div id="12345" data-time="<%=@by_time%>">
@@ -65,6 +64,7 @@
       <span class="remarks">
       </span>
       <span class="pagination"><a class="next-remark-btn" data-remark-page="1" data-remark-filter>next</a></span>
+      <br>
      </div>
     </div>
   </div>
