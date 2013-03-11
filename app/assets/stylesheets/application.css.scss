@@ -194,7 +194,7 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
 }
 
 .time {
-  margin-left: 10px;
+  margin-left: 13px;
   text-align: center;
   border-radius: 4px;
   padding: 2px;
@@ -229,8 +229,16 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
 }
 
 .user_info {
-  margin-left: 30%;
+  margin-left: 153px;
   font-size: 12px;
+}
+
+.song-id-filter {
+  color: black;
+  &:hover{
+    cursor: pointer;
+    color: green;
+  }
 }
 
 body {

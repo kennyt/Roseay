@@ -47,29 +47,38 @@ $(function(){
                               .append('<a class="user" href="/users/'+datum["author_id"]+
                                       '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
                                       '" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+'</a>')
-                              .append('&nbsp;|&nbsp;'+ datum['time'] +' ago &nbsp;| &'+datum['id'])
+                              .append('&nbsp;|&nbsp;'+ datum['time'] +' ago &nbsp;| <span class="song-id-filter" data-id='+songID+'>&'+datum['id']+
+                                      '</span>')  
+    if (datum['remark_length'] != '0') {
+      $('#'+songID+' .info_bar').append('  ('+datum['remark_length']+')')
+    }
+
   }
 
-  var fetchRemarks = function(page, callback) {
+  var fetchRemarks = function(page, filter, callback) {
     idleSeconds = 0
     if (!(page)) {
       page = 0
     }
     $.getJSON(
-      '/remarks.json?page='+page,
+      '/remarks.json?page='+page+'&filter='+filter,
       function(response){
         $('.remarks').empty();
-        $.each(response, function(i, datum){
-          $('.remarks').append('<div class="remark" id="'+i+'"><a class="user" href="/users/'+datum["author_id"]+
-            '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
-            '" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+
-            '</a> | <span class="remark-info">'+datum['time']+' ago</span> <br><span class="remark-body">'+
-            datum['body']+'</span></div>')
-          if (datum['authored']){
-            $('.remarks #'+i+' .remark-info').append('&nbsp;| <span class="delete-remark" data-remark-id="'+datum['id']+'">delete</span>')
-          }
-        })
-        $('.next-remark-btn').attr('data-remark-page', page+1)
+        if (response.length){
+          $.each(response, function(i, datum){
+            $('.remarks').append('<div class="remark" id="'+i+'"><a class="user" href="/users/'+datum["author_id"]+
+              '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
+              '" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+
+              '</a> | <span class="remark-info">'+datum['time']+' ago</span> <br><span class="remark-body">'+
+              datum['body']+'</span></div>')
+            if (datum['authored']){
+              $('.remarks #'+i+' .remark-info').append('&nbsp;| <span class="delete-remark" data-remark-id="'+datum['id']+'">delete</span>')
+            }
+          })
+          $('.next-remark-btn').attr('data-remark-page', page+1)
+        } else {
+          $('.remarks').append('<div class="remark"><a style="font-size:15px">roseay</a> | beginning of time <br><span class="remark-body"> be the first to remark </span></div>')
+        }
         if (callback){
           callback();
         }
@@ -118,14 +127,18 @@ $(function(){
 
   $('.testing1').on('click', '.refresh', function(){
     $('.refresh').html('refreshing..');
-    fetchRemarks(0, function(){
-      $('.refresh').html('refresh');
+    $('.next-remark-btn').attr('data-remark-filter', '');
+    fetchRemarks(0, "", function(){
+      $('.remark-input').val('');
+      $('.remark-header').html('global remarks')
+      $('.refresh').html('home');
     });
   })
 
   $('.testing1').on('click', '.remark-input-btn', function(ev){
     var input = $('.remark-input').val();
-    $('.remark-input').val('')
+    var filter = $('.next-remark-btn').attr('data-remark-filter');
+    $('.remark-input').val('&' + filter + ' ');
 
     if ($('#logged_in').length){
       $.post(
@@ -135,7 +148,7 @@ $(function(){
           }
         },
         function(response){
-          fetchRemarks();
+          fetchRemarks(0, filter);
         }
       )
     } else {
@@ -145,8 +158,9 @@ $(function(){
 
   $('.testing1').on('click', '.next-remark-btn', function(ev){
     $(this).append('---')
+    var filter = $(this).attr('data-remark-filter');
     var page = parseInt($(this).attr('data-remark-page'))
-    fetchRemarks(page, function(){
+    fetchRemarks(page, filter, function(){
       $('.next-remark-btn').html('next')
     })
   })
@@ -233,7 +247,7 @@ $(function(){
             
             $('#'+songID).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
             $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+
-                                 ' - '+datum["song_name"]+'</a>&nbsp;| &'+datum['id']+'</span>')
+                                 ' - '+datum["song_name"]+'</a>')
           })
         } else {
           $('#songwrap').append('<br><br><span style="margin-left:138px">empty .hub</span>')
@@ -388,6 +402,18 @@ $(function(){
     )
   })
 
+  $('body').on('click', ' .song-id-filter', function(){
+    var id = $(this).attr('data-id');
+    $('h1').append('<span class="song-refreshing">...</span>');
+    $('.remark-header').html('&' + id + ' remarks');
+    $('.next-remark-btn').attr('data-remark-filter', id);
+
+    fetchRemarks(0, id, function(){
+      $('.song-refreshing').remove();
+      $('.remark-input').val('&' + id + ' ');
+    });
+  })
+
   $('.about').click(function(){
     $('#songwrap').empty()
     $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><br><i>"they ask me what I do and who I do it fo"</i><br>-Two Chainz<br><br>we do it fo the beautiful people who share songs<br>and fo the cool people who love music<br><br>on the song list, notice the "&" numbers.<br> type it in a comment and it will turn into a link.<br> for example:<span id="song"><a href="songs?d=6jhC6GjGC5M&aboutus">&25</a></span><br><br>straight magical. <br><br><br>the +.hub button puts the song into your playlist<br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>.roseay</div>')
@@ -399,8 +425,10 @@ $(function(){
     }
     if ((idleSeconds  >= 20) && ($('.next-remark-btn').attr('data-remark-page'))){
       $('.refresh').html('refreshing..');
-      fetchRemarks(parseInt($('.next-remark-btn').attr('data-remark-page') - 1), function(){
-        $('.refresh').html('refresh')
+      var page = parseInt($('.next-remark-btn').attr('data-remark-page') - 1);
+      var filter = $('.next-remark-btn').attr('data-remark-filter');
+      fetchRemarks(page, filter, function(){
+        $('.refresh').html('home')
       })
     }
   }, 4000)
@@ -409,8 +437,10 @@ $(function(){
     onTab = true
     if (blurSeconds >= 15){
       $('.refresh').html('refreshing..');
-      fetchRemarks(parseInt($('.next-remark-btn').attr('data-remark-page') - 1), function(){
-        $('.refresh').html('refresh')
+      var page = parseInt($('.next-remark-btn').attr('data-remark-page') - 1);
+      var filter = $('.next-remark-btn').attr('data-remark-filter');
+      fetchRemarks(page, filter, function(){
+        $('.refresh').html('home')
       })
     }
     blurSeconds = 0;
@@ -427,5 +457,5 @@ $(function(){
     }
   }, 4000)
 
-  fetchRemarks();
+  fetchRemarks(0, "");
 })
