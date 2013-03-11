@@ -116,7 +116,7 @@ $(function(){
       '/remarks/'+ remark_id+'.json?page='+page,
       { '_method': 'delete'},
       function(){
-        fetchRemarks(page);
+        fetchRemarks(page, '');
       }
     )
   })
