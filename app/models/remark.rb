@@ -8,7 +8,17 @@ class Remark < ActiveRecord::Base
 
   def self.mentioned_song(id)
   	id = '&' + id.to_s
-  	Remark.all.select {|x| x.body.include?(id) }
+  	Remark.all.select do |x|
+  		flag = false
+
+  		x.body.split(' ').each do |word|
+  			if word.include?('&')
+  				flag = true if word == id
+  			end
+  		end
+
+  		flag
+  	end
   end
 
   def self.clean_remarks

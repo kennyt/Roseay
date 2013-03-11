@@ -138,7 +138,11 @@ $(function(){
   $('.testing1').on('click', '.remark-input-btn', function(ev){
     var input = $('.remark-input').val();
     var filter = $('.next-remark-btn').attr('data-remark-filter');
-    $('.remark-input').val('&' + filter + ' ');
+    if (filter) {
+      $('.remark-input').val('&' + filter + ' ');
+    } else {
+      $('.remark-input').val('');
+    }
 
     if ($('#logged_in').length){
       $.post(
