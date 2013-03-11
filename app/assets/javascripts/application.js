@@ -130,7 +130,7 @@ $(function(){
     $('.next-remark-btn').attr('data-remark-filter', '');
     fetchRemarks(0, "", function(){
       $('.remark-input').val('');
-      $('.remark-header').html('global remarks')
+      $('.remark-header').html('air remarks')
       $('.refresh').html('home');
     });
   })
