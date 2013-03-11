@@ -13,6 +13,7 @@ class Remark < ActiveRecord::Base
 
   		x.body.split(' ').each do |word|
   			if word.include?('&')
+  				word.sub!('&', '') if word.count('&') == 2
   				flag = true if word == id
   			end
   		end
@@ -24,8 +25,8 @@ class Remark < ActiveRecord::Base
   def self.clean_remarks
   	Remark.all.select do |remark|
   		if remark.body.include?('&')
-  			words = remark.body.split(' ').select { |word| word.include?('&') }
-  			words.select! { |word| word[1..-1].to_i < Song.last.id + 1 && word[1..-1].to_i > 0 }
+  			words = remark.body.split(' ').select { |word| word.include?('&') && word.count('&') == 1 }
+  			words.select! { |word| word[1..-1].to_i < Song.last.id + 1 && word[1..-1].to_i > 0 && !word.include?('!') }
   			words.empty?
   		else
   			true

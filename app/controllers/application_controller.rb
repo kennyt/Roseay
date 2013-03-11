@@ -74,8 +74,16 @@ class ApplicationController < ActionController::Base
   def convert_with_links(body)
     converted = body
     words = body.split(' ').select {|word| word.include?('&')}
-    words.select! { |word| word[1..-1].to_i < Song.last.id + 1 && word[1..-1].to_i > 0 }
+    words.select! do |word|
+      if word.count('&') == 2
+        word.sub('&', '')[1..-1].to_i < Song.last.id + 1 && word.sub('&','')[1..-1].to_i > 0
+      else
+        word[1..-1].to_i < Song.last.id + 1 && word[1..-1].to_i > 0
+      end
+    end
     words.each do |word|
+      original_word = word.dup
+      word.sub!('&', '') if word.count('&') == 2
       if Song.find_by_id(word[1..-1]).nil? 
         return converted
       else
@@ -86,9 +94,9 @@ class ApplicationController < ActionController::Base
           link = song.song_link
         end
         if current_user ? current_user.songhubs.include?(song) ? false : true : true
-          converted.sub!(word, '<span id="song"><a href="/songs?d='+link+'" data-uphubb="true">'+word+'</a></span>')
+          converted.sub!(original_word, '<span id="song"><a href="/songs?d='+link+'" data-uphubb="true">'+original_word+'</a></span>')
         else 
-          converted.sub!(word, '<span id="song"><a href="/songs?d='+link+'">'+word+'</a></span>')
+          converted.sub!(original_word, '<span id="song"><a href="/songs?d='+link+'">'+original_word+'</a></span>')
         end
       end
     end
