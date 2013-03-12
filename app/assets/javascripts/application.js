@@ -238,7 +238,7 @@ $(function(){
       function(data){
         $('.remarks').empty();
         $('.waiting').remove();
-        $('.remark-header').html('remarks on ' + username + '\'s songs')
+        $('.remark-header').html('remarks on ' + username + '\'s songs | total points ~ ' + total)
         $('.remark-header').attr('data-remark-user-page', 0);
         $('.remark-header').attr('data-user-path', path);
 
