@@ -4,6 +4,7 @@ class UsersController < ApplicationController
     @remarks = []
     @user.submissions.each {|song| @remarks << Remark.mentioned_song(song.id) }
     @remarks = @remarks.flatten.uniq
+    @remarks.sort! {|x, y| y.created_at <=> x.created_at }
     page = params[:page].to_i
 
     respond_to do |format|
