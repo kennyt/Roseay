@@ -13,6 +13,9 @@ class Remark < ActiveRecord::Base
 
   		x.body.split(' ').each do |word|
   			if word.include?('&')
+  				word.sub!('&', '')
+  				word = word.to_i
+  				word = word.to_s.prepend('&')
   				flag = true if word == id
   			end
   		end
