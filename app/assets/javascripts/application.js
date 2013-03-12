@@ -56,20 +56,15 @@ $(function(){
     if (!(page)) {
       page = 0
     }
+    $('remark-header').attr('data-remark-user-page', '')
+
     $.getJSON(
       '/remarks.json?page='+page+'&filter='+filter,
       function(response){
         $('.remarks').empty();
         if (response.length){
           $.each(response, function(i, datum){
-            $('.remarks').append('<div class="remark" id="'+i+'"><span class="remark-text"><b><a class="user" href="/users/'+datum["author_id"]+
-              '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
-              '" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+
-              '</a></b> | <span class="remark-info">'+datum['time']+' ago</span> <br><span class="remark-body">'+
-              datum['body']+'</span><span></div>')
-            if (datum['authored']){
-              $('.remarks #'+i+' .remark-info').append('&nbsp;| <span class="delete-remark" data-remark-id="'+datum['id']+'">delete</span>')
-            }
+            setupRemark(i, datum);
           })
           $('.next-remark-btn').attr('data-remark-page', page+1)
         } else {
@@ -80,6 +75,17 @@ $(function(){
         }
       }
     )
+  }
+
+  var setupRemark = function(i, datum){
+    $('.remarks').append('<div class="remark" id="'+i+'"><span class="remark-text"><b><a class="user" href="/users/'+datum["author_id"]+
+                         '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
+                         '" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+
+                         '</a></b> | <span class="remark-info">'+datum['time']+' ago</span> <br><span class="remark-body">'+
+                         datum['body']+'</span><span></div>')
+    if (datum['authored']){
+      $('.remarks #'+i+' .remark-info').append('&nbsp;| <span class="delete-remark" data-remark-id="'+datum['id']+'">delete</span>')
+    }
   }
 
   var appendUphub = function(that ,songId){
@@ -126,7 +132,8 @@ $(function(){
     $('.next-remark-btn').attr('data-remark-filter', '');
     fetchRemarks(0, "", function(){
       $('.remark-input').val('');
-      $('.remark-header').html('air remarks')
+      $('.remark-header').html('air remarks');
+      $('.remark-header').attr('data-remark-user-page', '');
       $('.refresh').html('home');
     });
   })
@@ -159,10 +166,34 @@ $(function(){
   $('.testing1').on('click', '.next-remark-btn', function(ev){
     $(this).append('---')
     var filter = $(this).attr('data-remark-filter');
-    var page = parseInt($(this).attr('data-remark-page'))
-    fetchRemarks(page, filter, function(){
-      $('.next-remark-btn').html('next')
-    })
+    
+    var path = $('.remark-header').attr('data-user-path');
+
+    if ($('.remark-header').attr('data-remark-user-page').length){
+      var page = parseInt($('.remark-header').attr('data-remark-user-page')) + 1;
+      $.getJSON(
+        path + '.json?page=' + page,
+        function(data){
+          $('.remarks').empty();
+          $('.waiting').remove();
+          $('.remark-header').attr('data-remark-user-page', parseInt(page) + 1);
+
+          if (data.length){
+            $.each(data, function(i, datum){
+              setupRemark(i, datum);
+            })
+          } else {
+            $('.remarks').append('<div class="remark"><br><span class="remark-body remark-text"> be the first to remark </span></div>')
+          }
+          $('.next-remark-btn').html('next');
+        }
+      )
+    } else {
+      var page = parseInt($(this).attr('data-remark-page'));
+      fetchRemarks(page, filter, function(){
+        $('.next-remark-btn').html('next')
+      })
+    }
   })
 
   $('#12345').on('click', '#nextbtn a', function(ev){
@@ -198,62 +229,28 @@ $(function(){
     ev.stopImmediatePropagation()
     $('h1').append('<span class="waiting">...</span>')
 
+    var username = $(this).html();
     var path = $(this).attr('href')
     var total = $(this).attr('data_author_total')
-    var avg = $(this).attr('data_author_avg')
-    var submissions = $(this).attr('data_author_submissions')
-    var byTime = $('#12345').attr('data-time')
-    if ( byTime == "true"){
-      var byTime = 1
-    } else {
-      var byTime = 0
-    }
-    if ($('#nextbtn a').length) {
-      var page = parseInt($('#nextbtn a').attr('href').split('?page=')[1])
-    } else {
-      var page = 0
-    }
-    var songStart = $('ol').attr('start')
 
     $.getJSON(
-      path,
+      path + '?page=0',
       function(data){
-        $('#songwrap').remove();
+        $('.remarks').empty();
         $('.waiting').remove();
-        $('#12345').append('<ol start="1" id="songwrap" goback-start="'+songStart+'"></ol>')
-        if (page) {
-          $('#songwrap').append('<br><span class="pagination"><span class="goback" id="nextbtn"><a href="/songs?page='+
-                               (page-1) +'&by_time='+byTime+'">back</a></span></span>')
-        }
-        $('#songwrap').append('<h4 class="user_header">'+data['username']+'</h4>')
-        $('#songwrap').append('<div class="user_info">total ~ '+total+'</div>')
+        $('.remark-header').html('remarks on ' + username + '\'s songs')
+        $('.remark-header').attr('data-remark-user-page', 0);
+        $('.remark-header').attr('data-user-path', path);
 
-        if (data['songhubs'].length){
-          $.each(data['songhubs'], function(i, datum){
-            var songID = datum['id']
-            var link = datum['song_link'].split('watch?v=')[1]
-            var points = datum['points']
-            var createdAt = datum['created_at']
-
-            if (link == undefined){
-              var link = datum['song_link'];
-            }
-
-            if (datum['uphubbed'] == 0) {
-              $('#songwrap').append('<li class="song" id="'+songID+'" style="margin: 30px;" data-uphub="true"></li>')
-            } else {
-              $('#songwrap').append('<li class="song" id="'+songID+'" style="margin: 30px;" data-uphub="false"></li>')
-            }
-            
-            $('#'+songID).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
-            $('#'+songID).append('<span id="song" ><a href="/songs?d='+link+'">'+datum["song_artist"]+
-                                 ' - '+datum["song_name"]+'</a>')
+        if (data.length){
+          $.each(data, function(i, datum){
+            setupRemark(i, datum);
           })
         } else {
-          $('#songwrap').append('<br><br><span style="margin-left:138px">empty .hub</span>')
+          $('.remarks').append('<div class="remark"><br><span class="remark-body remark-text"> be the first to remark </span></div>')
         }
       }
-      )
+    )
   })
 
   $('#12345').on('click', '.upvote',function(ev){
@@ -311,18 +308,18 @@ $(function(){
       SC.oEmbed(link,{auto_play:true, maxwidth:545, height:300, show_comments: false, color:'602220' }, function(track){
         track.html['height'] = 300
         $('.testing1').prepend(track.html);
-        appendUphub(that, songId);
+        // appendUphub(that, songId);
       })
     } else {
       if (link.indexOf('&aboutus')+1) {
         var link = link.replace('&aboutus', '')
         $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +
                                '?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360&start=119" frameborder="0"></iframe>')
-        appendUphub(that, songId);
+        // appendUphub(that, songId);
       } else {
         $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +
                                '?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360" frameborder="0"></iframe>')
-        appendUphub(that, songId);
+        // appendUphub(that, songId);
       }
     }
     if ($(this).html()[0] == '&') {

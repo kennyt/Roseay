@@ -1,10 +1,14 @@
 class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
+    @remarks = []
+    @user.submissions.each {|song| @remarks << Remark.mentioned_song(song.id) }
+    @remarks = @remarks.flatten.uniq
+    page = params[:page].to_i
 
     respond_to do |format|
       format.html
-      format.json { render :json => @user.to_json(:include => :songhubs) }
+      format.json { render :json => custom_remark_json(@remarks[page*11..page*11+10]) }
     end
   end
 

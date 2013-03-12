@@ -13,7 +13,6 @@ class Remark < ActiveRecord::Base
 
   		x.body.split(' ').each do |word|
   			if word.include?('&')
-  				word.sub!('&', '') if word.count('&') == 2
   				flag = true if word == id
   			end
   		end
