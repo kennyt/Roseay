@@ -98,7 +98,7 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
 }
 
 .song {
-  margin: 7px;
+  margin: 6px;
   margin-left: 7%;
   a {
     &:hover{
@@ -207,6 +207,13 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
   font-family: 'quicksand';
 }
 
+.user {
+  color: grey;
+  &:hover{
+    color: red;
+  }
+}
+
 .small_header_index {
   margin-left: 185px;
   font-size: 12px;
@@ -282,10 +289,10 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
 }
 
 .song-id-filter {
-  color: black;
+  color: grey;
   &:hover{
     cursor: pointer;
-    color: green;
+    color: red;
   }
 }
 

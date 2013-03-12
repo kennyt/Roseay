@@ -462,9 +462,9 @@ $(function(){
     }
   }, 4000)
 
-  if (!($('#logged_in').length)){
-    $('#login-modal').trigger('click');
-  }
+  // if (!($('#logged_in').length)){
+  //   $('#login-modal').trigger('click');
+  // }
 
   fetchRemarks(0, "");
 })
