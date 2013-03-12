@@ -325,6 +325,7 @@ $(function(){
         appendUphub(that, songId);
       }
     }
+    document.title = $(this).html();
   })
 
   $('.random').click(function(){
