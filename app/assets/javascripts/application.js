@@ -325,7 +325,11 @@ $(function(){
         appendUphub(that, songId);
       }
     }
-    document.title = $(this).html();
+    if ($(this).html().indexOf('&amp') + 1) {
+      document.title = 'roseay'
+    } else {
+      document.title = $(this).html();
+    }
   })
 
   $('.random').click(function(){
