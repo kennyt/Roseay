@@ -230,6 +230,7 @@ $(function(){
     ev.preventDefault();
     ev.stopImmediatePropagation()
     $('h1').append('<span class="waiting">...</span>')
+    $('.remark-input').val('');
 
     var username = $(this).html();
     var path = $(this).attr('href')
