@@ -56,6 +56,7 @@ $(function(){
     if (!(page)) {
       page = 0
     }
+    $('remark-header').html('air remarks');
     $('remark-header').attr('data-remark-user-page', '')
 
     $.getJSON(
@@ -132,7 +133,6 @@ $(function(){
     $('.next-remark-btn').attr('data-remark-filter', '');
     fetchRemarks(0, "", function(){
       $('.remark-input').val('');
-      $('.remark-header').html('air remarks');
       $('.remark-header').attr('data-remark-user-page', '');
       $('.refresh').html('home');
     });
@@ -141,7 +141,6 @@ $(function(){
   $('.testing1').on('click', '.remark-input-btn', function(ev){
     var input = $('.remark-input').val();
     var filter = $('.next-remark-btn').attr('data-remark-filter');
-    $('.remark-header').html('air remarks');
 
     if (filter) {
       $('.remark-input').val('&' + filter + ' ');
