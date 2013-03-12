@@ -192,6 +192,13 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
   }
 }
 
+#logged_in {
+  color: black;
+  &:hover {
+    color: green;
+  }
+}
+
 .user_page_top_header {
   margin-left: 150px;
   a {
