@@ -69,7 +69,7 @@ $(function(){
           })
           $('.next-remark-btn').attr('data-remark-page', page+1)
         } else {
-          $('.remarks').append('<div class="remark"><br><span class="remark-body remark-text"> be the first to remark </span></div>')
+          $('.remarks').append('<div class="remark"><br><span class="remark-body remark-text"> no more remarks </span></div>')
         }
         if (callback){
           callback();
@@ -185,7 +185,7 @@ $(function(){
               setupRemark(i, datum);
             })
           } else {
-            $('.remarks').append('<div class="remark"><br><span class="remark-body remark-text"> be the first to remark </span></div>')
+            $('.remarks').append('<div class="remark"><br><span class="remark-body remark-text"> no more remarks </span></div>')
           }
           $('.next-remark-btn').html('next');
         }
@@ -250,7 +250,7 @@ $(function(){
             setupRemark(i, datum);
           })
         } else {
-          $('.remarks').append('<div class="remark"><br><span class="remark-body remark-text"> be the first to remark </span></div>')
+          $('.remarks').append('<div class="remark"><br><span class="remark-body remark-text"> no more remarks </span></div>')
         }
       }
     )

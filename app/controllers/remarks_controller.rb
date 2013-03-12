@@ -7,8 +7,13 @@ class RemarksController < ApplicationController
 		  remarks = Remark.order('created_at DESC').mentioned_song(params[:filter])[page*11..page*11+10]
 		end
 
+
 		respond_to do |format|
-			format.json { render :json => custom_remark_json(remarks) }
+			if remarks.nil? 
+				format.json { render :json => {} }
+			else
+				format.json { render :json => custom_remark_json(remarks) }
+			end
 		end
 	end
 
