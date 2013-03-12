@@ -12,7 +12,7 @@
                                                 data_author_avg: current_user.avg,
                                                 data_author_submissions: current_user.submissions.length} %>
       <% else %>
-        <a href="#newSessionModal" data-toggle="modal">login</a>
+        <a id="login-modal" href="#newSessionModal" data-toggle="modal">login</a>
         |
         <a href="#newSessionModal" data-toggle="modal">join</a>
       <% end %>

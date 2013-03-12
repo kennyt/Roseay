@@ -225,7 +225,7 @@ $(function(){
           $('#songwrap').append('<br><span class="pagination"><span class="goback" id="nextbtn"><a href="/songs?page='+
                                (page-1) +'&by_time='+byTime+'">back</a></span></span>')
         }
-        $('#songwrap').append('<h4 class="user_header">'+data['username']+'.hub</h4>')
+        $('#songwrap').append('<h4 class="user_header">'+data['username']+'</h4>')
         $('#songwrap').append('<div class="user_info">total ~ '+total+'</div>')
 
         if (data['songhubs'].length){
@@ -456,6 +456,10 @@ $(function(){
       blurSeconds += 1;
     }
   }, 4000)
+
+  if (!($('#logged_in').length)){
+    $('#login-modal').trigger('click');
+  }
 
   fetchRemarks(0, "");
 })
