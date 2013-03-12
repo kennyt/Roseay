@@ -142,7 +142,7 @@ $(function(){
     var input = $('.remark-input').val();
     var filter = $('.next-remark-btn').attr('data-remark-filter');
     $('.remark-header').html('air remarks');
-    
+
     if (filter) {
       $('.remark-input').val('&' + filter + ' ');
     } else {
@@ -166,6 +166,7 @@ $(function(){
   })
 
   $('.testing1').on('click', '.next-remark-btn', function(ev){
+    idleSeconds = 0;
     $(this).append('---')
     var filter = $(this).attr('data-remark-filter');
     
