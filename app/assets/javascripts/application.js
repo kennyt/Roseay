@@ -62,18 +62,18 @@ $(function(){
         $('.remarks').empty();
         if (response.length){
           $.each(response, function(i, datum){
-            $('.remarks').append('<div class="remark" id="'+i+'"><a class="user" href="/users/'+datum["author_id"]+
+            $('.remarks').append('<div class="remark" id="'+i+'"><span class="remark-text"><b><a class="user" href="/users/'+datum["author_id"]+
               '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
               '" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+
-              '</a> | <span class="remark-info">'+datum['time']+' ago</span> <br><span class="remark-body">'+
-              datum['body']+'</span></div>')
+              '</a></b> | <span class="remark-info">'+datum['time']+' ago</span> <br><span class="remark-body">'+
+              datum['body']+'</span><span></div>')
             if (datum['authored']){
               $('.remarks #'+i+' .remark-info').append('&nbsp;| <span class="delete-remark" data-remark-id="'+datum['id']+'">delete</span>')
             }
           })
           $('.next-remark-btn').attr('data-remark-page', page+1)
         } else {
-          $('.remarks').append('<div class="remark"><a style="font-size:15px">roseay</a> | beginning of time <br><span class="remark-body"> be the first to remark </span></div>')
+          $('.remarks').append('<div class="remark"><br><span class="remark-body remark-text"> be the first to remark </span></div>')
         }
         if (callback){
           callback();

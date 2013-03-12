@@ -98,12 +98,12 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
 }
 
 .song {
-  margin: 10px;
+  margin: 7px;
   margin-left: 7%;
   a {
     &:hover{
       text-decoration: none;
-      color: red;
+      color: #36A179;
     }
   }
   .upvote {
@@ -468,26 +468,36 @@ iframe {
 }
 
 .remark {
-  margin-left: 20px;
+  margin-left: 5px;
+  margin-right: 5px; 
   word-wrap: break-word;
   height: 66px;
+  background: #F5F4FB;
+  border-top: solid white 1px;
+  border-bottom: solid white 1px;
   a {
     &:hover{
-      color: red;
+      color: #C75769;
       text-decoration: none;
     }
   }
   &:hover {
     .remark-body {
       a {
-        color: #A7D98C;
+        /*color: #A7D98C;*/
+        color: #E9BECE;
       }
     }
   }
   
   .user {
-    font-size: 15px;
+    font-size: 11px;
+    color: #1B2550;
   }
+}
+
+.remark-text {
+  margin-left: 10px;
 }
 
 .remark-body {
