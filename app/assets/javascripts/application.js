@@ -56,12 +56,12 @@ $(function(){
     if (!(page)) {
       page = 0
     }
-    $('remark-header').html('air remarks');
-    $('remark-header').attr('data-remark-user-page', '')
+    $('.remark-header').attr('data-remark-user-page', '')
 
     $.getJSON(
       '/remarks.json?page='+page+'&filter='+filter,
       function(response){
+        $('.remark-header').html('air remarks');
         $('.remarks').empty();
         if (response.length){
           $.each(response, function(i, datum){
