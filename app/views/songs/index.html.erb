@@ -124,11 +124,12 @@
   }
 
   var playNextSong = function(id){
-    if ($('.left-side-wrapper #song a').length){
-      var randomNum = Math.floor(Math.random()*21)
+    numberOfSongs = $('.left-side-wrapper #song a').length
+    if (numberOfSongs){
+      var randomNum = Math.floor(Math.random()*(numberOfSongs + 1))
       var song = $('.left-side-wrapper #song a')[randomNum]
       while ($(song.parentNode.parentNode).attr('id') == id){
-        randomNum = Math.floor(Math.random()*21)
+        randomNum = Math.floor(Math.random()*(numberOfSongs + 1))
         song = $('.left-side-wrapper #song a')[randomNum]
       }
       $(song).trigger('click');
