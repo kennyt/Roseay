@@ -106,10 +106,10 @@ $(function(){
   var playNextSong = function(id){
     numberOfSongs = $('.left-side-wrapper #song a').length
     if (numberOfSongs){
-      var randomNum = Math.floor(Math.random()*(numberOfSongs + 1))
+      var randomNum = Math.floor(Math.random()*(numberOfSongs))
       var song = $('.left-side-wrapper #song a')[randomNum]
       while ($(song.parentNode.parentNode).attr('id') == id){
-        randomNum = Math.floor(Math.random()*(numberOfSongs + 1))
+        randomNum = Math.floor(Math.random()*(numberOfSongs))
         song = $('.left-side-wrapper #song a')[randomNum]
       }
       $(song).trigger('click');
