@@ -105,7 +105,7 @@ $(function(){
 
   var playNextSong = function(id){
     numberOfSongs = $('.left-side-wrapper #song a').length
-    if (numberOfSongs){
+    if (numberOfSongs && $('.testing1').attr('data-radio') == 'true'){
       var randomNum = Math.floor(Math.random()*(numberOfSongs))
       var song = $('.left-side-wrapper #song a')[randomNum]
       while ($(song.parentNode.parentNode).attr('id') == id){
@@ -150,7 +150,9 @@ $(function(){
   }
   
 
-
+  $('.next-song-btn').click(function(ev){
+    playNextSong($('.testing1').attr('data-song-played'));
+  })
 
   $('body').on('click', '.song-modal-submit', function(ev){
     ev.preventDefault();
@@ -177,9 +179,11 @@ $(function(){
     if ($('.testing1').attr('data-radio') == 'true') {
       $('.testing1').attr('data-radio', 'false')
       $('.radio-button').html('Jarvis is off')
+      $('.next-song-btn').toggle();
     } else {
       $('.testing1').attr('data-radio', 'true')
       $('.radio-button').html('Jarvis is on')
+      $('.next-song-btn').toggle();
     }
   })
 

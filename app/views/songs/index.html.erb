@@ -27,6 +27,7 @@
       <span class="random">randomize</span>
     </div>
     <span class="radio-button">Jarvis is on</span>
+    <span class="next-song-btn">next</span>
     <div id="12345" data-time="<%=@by_time%>">
       <ol start=<%= "#{@start_num}" %> id="songwrap" >
           <%= render @songs %>
@@ -115,7 +116,7 @@
 
   var playNextSong = function(id){
     numberOfSongs = $('.left-side-wrapper #song a').length
-    if (numberOfSongs){
+    if (numberOfSongs && $('.testing1').attr('data-radio') == 'true'){
       var randomNum = Math.floor(Math.random()*(numberOfSongs))
       var song = $('.left-side-wrapper #song a')[randomNum]
       while ($(song.parentNode.parentNode).attr('id') == id){

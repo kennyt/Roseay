@@ -336,6 +336,24 @@ body {
   }
 }
 
+.next-song-btn {
+  text-align: center;
+  margin-left: 382px;
+  margin-top: -27px;
+  background: #CFAE6E;
+  color: white;
+  width: 35px;
+  position: absolute;
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+  font-size: 10px;
+
+  &:hover{
+    cursor: pointer;
+    background: #C75769;
+  }
+}
+
 .page-wrapper {
   margin-left: 2%;
 }

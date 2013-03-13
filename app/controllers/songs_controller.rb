@@ -10,6 +10,7 @@ class SongsController < ApplicationController
           @songs << x
         end
       end
+      
     else
       if params[:by_time] == '0' || params[:by_time].nil? || params[:by_time] == ''
         @songs = Song.includes(:author).all
