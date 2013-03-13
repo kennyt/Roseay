@@ -124,13 +124,15 @@
   }
 
   var playNextSong = function(id){
-    var randomNum = Math.floor(Math.random()*21)
-    var song = $('.left-side-wrapper #song a')[randomNum]
-    while ($(song.parentNode.parentNode).attr('id') == id){
-      randomNum = Math.floor(Math.random()*21)
-      song = $('.left-side-wrapper #song a')[randomNum]
+    if ($('.left-side-wrapper #song a').length){
+      var randomNum = Math.floor(Math.random()*21)
+      var song = $('.left-side-wrapper #song a')[randomNum]
+      while ($(song.parentNode.parentNode).attr('id') == id){
+        randomNum = Math.floor(Math.random()*21)
+        song = $('.left-side-wrapper #song a')[randomNum]
+      }
+      $(song).trigger('click');
     }
-    $(song).trigger('click');
   }
 
 </script>
