@@ -43,7 +43,7 @@
   </div>
 
   <div class="right-side-wrapper">
-    <div class="testing1" data-radio="false">
+    <div class="testing1" data-radio="true">
       <% if @embed %>
         <% if @embed.include?('soundcloud') %>
           <% embed_info = @client.get('/oembed', :url => CGI::unescape(@embed)) %>
