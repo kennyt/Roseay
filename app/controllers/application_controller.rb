@@ -46,7 +46,6 @@ class ApplicationController < ActionController::Base
         author_avg: song.author.avg,
         author_total: song.author.total,
         author_submissions: song.author.submissions.length
-        # remark_length: Remark.mentioned_song(song.id).length
       }
     end
 

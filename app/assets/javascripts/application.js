@@ -104,11 +104,12 @@ $(function(){
   }
 
   var playNextSong = function(id){
-    if ($('.testing1').attr('data-radio') == "true") {
-      var randomNum = Math.floor(Math.random()*21)
+    numberOfSongs = $('.left-side-wrapper #song a').length
+    if (numberOfSongs){
+      var randomNum = Math.floor(Math.random()*(numberOfSongs + 1))
       var song = $('.left-side-wrapper #song a')[randomNum]
       while ($(song.parentNode.parentNode).attr('id') == id){
-        randomNum = Math.floor(Math.random()*21)
+        randomNum = Math.floor(Math.random()*(numberOfSongs + 1))
         song = $('.left-side-wrapper #song a')[randomNum]
       }
       $(song).trigger('click');
@@ -252,13 +253,13 @@ $(function(){
           } else {
             $('.remarks').append('<div class="remark"><br><span class="remark-body remark-text"> no more remarks </span></div>')
           }
-          $('.next-remark-btn').html('next');
+          $('.next-remark-btn').html('more');
         }
       )
     } else {
       var page = parseInt($(this).attr('data-remark-page'));
       fetchRemarks(page, filter, function(){
-        $('.next-remark-btn').html('next')
+        $('.next-remark-btn').html('more')
       })
     }
   })
@@ -285,7 +286,7 @@ $(function(){
         $.each(data, function(i, datum){
           setupSong(datum);
         })
-        $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page='+ (page+1) +'">next</a></span></span>')
+        $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page='+ (page+1) +'">more</a></span></span>')
       }
     )
     ev.stopImmediatePropagation()
