@@ -95,11 +95,67 @@ $(function(){
     }
   }
 
+  var bindScPlayerFinish = function(){
+    var widgetIframe = $('iframe')[0],
+        widget       = SC.Widget(widgetIframe);
+    widget.bind(SC.Widget.Events.FINISH, function(player, data) {
+      playNextSong($('.testing1').attr('data-song-played'));
+    });
+  }
+
+  var playNextSong = function(id){
+    if ($('.testing1').attr('data-radio') == "true") {
+      var randomNum = Math.floor(Math.random()*21)
+      var song = $('.left-side-wrapper #song a')[randomNum]
+      while ($(song.parentNode.parentNode).attr('id') == id){
+        randomNum = Math.floor(Math.random()*21)
+        song = $('.left-side-wrapper #song a')[randomNum]
+      }
+      $(song).trigger('click');
+    }
+  }
+
+  var youtubeApiCall = function(){
+    if ($('.testing1').attr('data-ytapi-received')){
+      constructYTVideo();
+    } else {
+      $.getScript("https://www.youtube.com/iframe_api");
+      $('.testing1').attr('data-ytapi-received', 'yes')
+    }
+  }
+
+  var constructYTVideo = function(){
+    player = new YT.Player('ytplayer', {
+      height: '220',
+      width: '545',
+      videoId: $('.testing1').attr('data-youtube-code'),
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    })
+  }
+
+  function onPlayerStateChange(event) {
+    var myPlayerState;
+    myPlayerState = event.data;
+    if (myPlayerState == 0){
+      playNextSong($('.testing1').attr('data-song-played'));
+    }
+  }
+
+  function onPlayerReady(event){
+    event.target.playVideo();
+  }
+  
+
+
+
   $('body').on('click', '.song-modal-submit', function(ev){
     ev.preventDefault();
     var songArtist = $('#song_song_artist').val();
-    var songName = $('#song_song_name').val();
-    var songLink = $('#song_song_link').val();
+    var songName   = $('#song_song_name').val();
+    var songLink   = $('#song_song_link').val();
     $('#song_song_artist').val('');
     $('#song_song_name').val('');
     $('#song_song_link').val('');
@@ -116,9 +172,19 @@ $(function(){
     )
   })
 
+  $('.radio-button').click(function(){
+    if ($('.testing1').attr('data-radio') == 'true') {
+      $('.testing1').attr('data-radio', 'false')
+      $('.radio-button').html('Pandora Mode is Off')
+    } else {
+      $('.testing1').attr('data-radio', 'true')
+      $('.radio-button').html('Pandora Mode is On')
+    }
+  })
+
   $('.testing1').on('click', '.delete-remark', function(){
     var remark_id = $(this).attr('data-remark-id')
-    var page = parseInt($('.next-remark-btn').attr('data-remark-page'))-1
+    var page      = parseInt($('.next-remark-btn').attr('data-remark-page'))-1
     $.post(
       '/remarks/'+ remark_id+'.json?page='+page,
       { '_method': 'delete'},
@@ -139,7 +205,7 @@ $(function(){
   })
 
   $('.testing1').on('click', '.remark-input-btn', function(ev){
-    var input = $('.remark-input').val();
+    var input  = $('.remark-input').val();
     var filter = $('.next-remark-btn').attr('data-remark-filter');
 
     if (filter) {
@@ -168,8 +234,7 @@ $(function(){
     idleSeconds = 0;
     $(this).append('---')
     var filter = $(this).attr('data-remark-filter');
-    
-    var path = $('.remark-header').attr('data-user-path');
+    var path   = $('.remark-header').attr('data-user-path');
 
     if ($('.remark-header').attr('data-remark-user-page').length){
       var page = parseInt($('.remark-header').attr('data-remark-user-page')) + 1;
@@ -209,7 +274,7 @@ $(function(){
       var songStart = parseInt($('ol').attr('start')) + 20
     }
 
-    var page = parseInt($('#nextbtn a').attr('href').split('?page=')[1])
+    var page   = parseInt($('#nextbtn a').attr('href').split('?page=')[1])
     var byTime = $('#12345').attr('data-time')
     $.getJSON(
       '/songs.json?page='+page+'&by_time='+byTime+'',
@@ -229,12 +294,13 @@ $(function(){
   $('body').on('click', '.user', function(ev){
     ev.preventDefault();
     ev.stopImmediatePropagation()
+    idleSeconds = 0;
     $('h1').append('<span class="waiting">...</span>')
     $('.remark-input').val('');
 
     var username = $(this).html();
-    var path = $(this).attr('href')
-    var total = $(this).attr('data_author_total')
+    var path     = $(this).attr('href')
+    var total    = $(this).attr('data_author_total')
 
     $.getJSON(
       path + '?page=0',
@@ -262,7 +328,7 @@ $(function(){
 
     var parent = this.parentNode;
     var songID = parseInt($(parent).attr('id'));
-    var that = this;
+    var that   = this;
 
     path = $(this).attr('href') + '.json'
     if (path == '/sessions/new.json'){
@@ -298,9 +364,11 @@ $(function(){
     $('.player-holder').remove();
     $('.add-to-hubsongs').remove();
     $('iframe').remove();
-    var that = this;
-    var link = this['href'].split('songs?d=')[1]
+    var that   = this;
+    var link   = this['href'].split('songs?d=')[1]
     var songId = $(this).parent().parent().attr('id')
+    $('.testing1').attr('data-youtube-code', link + '?autoplay=1&controls=1&iv_load_policy=3&autohide=1&modestbranding=1&loop=1&vq=hd360')
+    $('.testing1').attr('data-song-played', songId);
 
     if (link == undefined){
       var link = datum['song_link'];
@@ -311,18 +379,18 @@ $(function(){
       SC.oEmbed(link,{auto_play:true, maxwidth:545, height:300, show_comments: false, color:'602220' }, function(track){
         track.html['height'] = 300
         $('.testing1').prepend(track.html);
-        // appendUphub(that, songId);
+        bindScPlayerFinish();
       })
     } else {
       if (link.indexOf('&aboutus')+1) {
         var link = link.replace('&aboutus', '')
         $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +
-                               '?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360&start=119" frameborder="0"></iframe>')
-        // appendUphub(that, songId);
+                               '?autoplay=1&controls=1&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360&start=119" frameborder="0"></iframe>')
       } else {
-        $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +
-                               '?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360" frameborder="0"></iframe>')
-        // appendUphub(that, songId);
+        // $('.testing1').prepend('<iframe id="ytplayer" width="545" height="220" src="http://www.youtube.com/embed/'+ link +
+        //                        '?autoplay=1&controls=1&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360" frameborder="0"></iframe>')
+        $('.testing1').prepend('<div id="ytplayer"></div>')
+        youtubeApiCall();
       }
     }
 

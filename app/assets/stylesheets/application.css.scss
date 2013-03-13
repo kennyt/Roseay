@@ -77,7 +77,7 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
   color: green;
   position: absolute;
   margin-left: 90px;
-  margin-top: 65px;
+  margin-top: 47px;
   width: 50px;
   text-align: center;
   background: #98DD9D;
@@ -98,7 +98,7 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
 }
 
 .song {
-  margin: 8px;
+  margin: 9px;
   margin-left: 35px;
   a {
     &:hover{
@@ -287,6 +287,7 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
 .left-side-wrapper {
   border-radius: 10px;
   margin: 5px;
+  margin-bottom: 15px;
   background: white;
   width: 40%;
   float: left;
@@ -297,6 +298,7 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
   float: left;
   border-radius: 10px;
   margin-top: 5px;
+  margin-bottom: 15px;
 }
 
 .user_info {
@@ -313,7 +315,25 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
 }
 
 body {
-  background: #004366;
+  /*background: #004366;*/
+  /*background: black;*/
+  background: #13060E;
+}
+
+.radio-button {
+  text-align: center;
+  margin-left: 320px;
+  margin-top: -55px;
+  background: #0D2426;
+  color: white;
+  width: 70px;
+  position: absolute;
+  border-radius: 3px;
+
+  &:hover{
+    cursor: pointer;
+    background: #C75769;
+  }
 }
 
 .page-wrapper {
@@ -330,7 +350,9 @@ body {
   font-size: 31px;
   font-family: 'text me one';
   cursor: default;
-  background: #004366;
+  /*background: #004366;*/
+  /*background: black;*/
+  background: #13060E;
 }
 
 iframe {
