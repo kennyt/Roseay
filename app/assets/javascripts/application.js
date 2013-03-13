@@ -385,14 +385,16 @@ $(function(){
     } else {
       if (link.indexOf('&aboutus')+1) {
         var link = link.replace('&aboutus', '')
-        $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +
-                               '?autoplay=1&controls=1&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360&start=119" frameborder="0"></iframe>')
+        $('.testing1').attr('data-youtube-code', link + '?autoplay=1&controls=1&iv_load_policy=3&autohide=1&modestbranding=1&vq=hd360&start=119')
+        // $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +
+        //                        '?autoplay=1&controls=1&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360&start=119" frameborder="0"></iframe>')
+        $('.testing1').prepend('<div id="ytplayer"></div>')
       } else {
         // $('.testing1').prepend('<iframe id="ytplayer" width="545" height="220" src="http://www.youtube.com/embed/'+ link +
         //                        '?autoplay=1&controls=1&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360" frameborder="0"></iframe>')
         $('.testing1').prepend('<div id="ytplayer"></div>')
-        youtubeApiCall();
       }
+      youtubeApiCall();
     }
 
     document.title = $(this).html().replace(/&amp;/g, '&');
