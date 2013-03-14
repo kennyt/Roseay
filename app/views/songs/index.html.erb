@@ -1,8 +1,6 @@
 <div class="page-wrapper"> 
   <div class="left-side-wrapper">
     <div class="top_header">
-      <%= link_to 'roseay', root_path %>
-      | 
       <% if current_user %>
         <%= link_to 'logout', session_path(current_user), method: :delete %>
         | 
@@ -20,14 +18,16 @@
 
     <a href="#newSongModal" class="submit-button" data-toggle="modal">submit   song</a>
     <div class="big_header">
-      <h1><%= link_to '.edm', root_path %></h1>
+      <h1><%= link_to 'roseay.edm', root_path %></h1>
     </div>
 
     <div class="small_header_index">
-      <span class="random">randomize</span>
+      <span class="small_header_text">
+        shuffle songs
+      </span>
     </div>
-    <span class="radio-button">Jarvis is on</span>
-    <span class="next-song-btn">next</span>
+    <!-- <span class="radio-button">Jarvis on</span> -->
+    <span class="next-song-btn"><span class="radio-next-text">begin</span></span>
     <div id="12345" data-time="<%=@by_time%>">
       <ol start=<%= "#{@start_num}" %> id="songwrap" >
           <%= render @songs %>
@@ -91,7 +91,7 @@
 
   var player;
   function onYouTubeIframeAPIReady() {
-    player = new YT.Player('ytplayer', {
+    player = new YT.Player('ytplayer1', {
       height: '220',
       width: '545',
       videoId: $('.testing1').attr('data-youtube-code'),

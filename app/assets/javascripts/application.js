@@ -19,6 +19,7 @@ $(function(){
   idleSeconds = 0;
   blurSeconds = 0;
   onTab = true;
+  playerNumber = 0;
 
   var setupSong = function(datum){
     var songID = datum['id']
@@ -126,7 +127,7 @@ $(function(){
   }
 
   var constructYTVideo = function(){
-    player = new YT.Player('ytplayer', {
+    player = new YT.Player('ytplayer' + playerNumber, {
       height: '220',
       width: '545',
       videoId: $('.testing1').attr('data-youtube-code'),
@@ -152,6 +153,7 @@ $(function(){
 
   $('.next-song-btn').click(function(ev){
     playNextSong($('.testing1').attr('data-song-played'));
+    $('.radio-next-text').html('next');
   })
 
   $('body').on('click', '.song-modal-submit', function(ev){
@@ -178,11 +180,11 @@ $(function(){
   $('.radio-button').click(function(){
     if ($('.testing1').attr('data-radio') == 'true') {
       $('.testing1').attr('data-radio', 'false')
-      $('.radio-button').html('Jarvis is off')
+      $('.radio-button').html('off')
       $('.next-song-btn').toggle();
     } else {
       $('.testing1').attr('data-radio', 'true')
-      $('.radio-button').html('Jarvis is on')
+      $('.radio-button').html('Jarvis on')
       $('.next-song-btn').toggle();
     }
   })
@@ -367,9 +369,8 @@ $(function(){
     ev.preventDefault();
     ev.stopImmediatePropagation();
     $('.player-holder').remove();
-    $('.add-to-hubsongs').remove();
+    $('.radio-next-text').html('next')
     $('iframe').remove();
-    var that   = this;
     var link   = this['href'].split('songs?d=')[1]
     var songId = $(this).parent().parent().attr('id')
     $('.testing1').attr('data-youtube-code', link + '?autoplay=1&controls=1&iv_load_policy=3&autohide=1&modestbranding=1&vq=hd360')
@@ -381,30 +382,21 @@ $(function(){
 
     if (link.indexOf('soundcloud')+1){
       var link = link.replace(/%2F/g, '/').replace(/%3A/g, ':')
-      SC.oEmbed(link,{auto_play:true, maxwidth:545, height:300, show_comments: false, color:'602220' }, function(track){
+      SC.oEmbed(link,{auto_play:true, maxwidth:545, height:300, show_comments: true, color:'602220' }, function(track){
         track.html['height'] = 300
         $('.testing1').prepend(track.html);
         bindScPlayerFinish();
       })
     } else {
-      if (link.indexOf('&aboutus')+1) {
-        var link = link.replace('&aboutus', '')
-        $('.testing1').attr('data-youtube-code', link + '?autoplay=1&controls=1&iv_load_policy=3&autohide=1&modestbranding=1&vq=hd360&start=119')
-        // $('.testing1').prepend('<iframe width="545" height="220" src="http://www.youtube.com/embed/'+ link +
-        //                        '?autoplay=1&controls=1&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360&start=119" frameborder="0"></iframe>')
-        $('.testing1').prepend('<div id="ytplayer"></div>')
-      } else {
-        // $('.testing1').prepend('<iframe id="ytplayer" width="545" height="220" src="http://www.youtube.com/embed/'+ link +
-        //                        '?autoplay=1&controls=1&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&vq=hd360" frameborder="0"></iframe>')
-        $('.testing1').prepend('<div id="ytplayer"></div>')
-      }
+      playerNumber ++;
+      $('.testing1').prepend('<div id="ytplayer'+playerNumber+'"></div>')
       youtubeApiCall();
     }
 
     document.title = $(this).html().replace(/&amp;/g, '&');
   })
 
-  $('.random').click(function(){
+  $('.small_header_index').click(function(){
     $('h1').append('<span class="song-refreshing">...</span>')
     $.getJSON(
       '/songs.json?random=1',
@@ -493,7 +485,7 @@ $(function(){
 
   $('.about').click(function(){
     $('#songwrap').empty()
-    $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><i>"they ask me what I do and who I do it fo"</i><br>-Two Chainz<br><br>we do it because we think the people who share good music<br>are the most awesome people in the world<br><br><b>Jarvis</b><br>turn Jarvis on and after every song finishes,<br>Jarvis will intelligently calculate an algorithm that will <br>play the song best matched to your needs, wants, desires.<br> (joking, he chooses a song randomly on the left side of the page)<br>Jarvis is just smart enough to know when you change the page<br>Jarvis loves you<br><br>on the song list, notice the "&" numbers.<br> type it in a remark and it will turn into a link<br> for example:  <span id="song"><a href="songs?d=6jhC6GjGC5M&aboutus">&25</a></span><br><br>straight magical. <br><br><br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>leave jarvis on and party<br>.roseay</div>')
+    $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><i>"they ask me what I do and who I do it fo"</i><br>-Two Chainz<br><br>we do it because we think the people who share good music<br>are the most awesome people in the world<br><br><b>Jarvis</b><br>Jarvis is the reason that after every song finishes,<br>another song begins to play.<br>Jarvis will intelligently calculate an algorithm that will <br>play the song best matched to your needs, wants, desires.<br> (joking, he chooses a song randomly on the left side of the page)<br>Jarvis is just smart enough to know when you change the page<br>Jarvis loves you<br><br>on the song list, notice the "&" numbers.<br> type it in a remark and it will turn into a link<br> for example:  <span id="song"><a href="songs?d=6jhC6GjGC5M">&25</a></span><br><br>straight magical. <br><br><br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>leave jarvis on and party<br>.roseay</div>')
   })
 
   setInterval(function(){
