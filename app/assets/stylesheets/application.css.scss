@@ -319,6 +319,18 @@ body {
   }
 }
 
+.radio-tooltip {
+  position: absolute;
+  background: #C6EBC2;
+  border: solid black 1px;
+  border-radius: 10px;
+  text-align: center;
+  width: 180px;
+  margin-left: 290px;
+  margin-top: 4px;
+  z-index: 1;
+}
+
 .next-song-btn {
   text-align: center;
   margin-left: 322px;

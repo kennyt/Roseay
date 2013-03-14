@@ -150,6 +150,12 @@ $(function(){
     event.target.playVideo();
   }
   
+  var createRadioTooltip = function(){
+    $('.left-side-wrapper').prepend('<span class="radio-tooltip">a random song on the page will play after every song finishes.</span>')
+    setTimeout(function(){
+      $('.radio-tooltip').remove();
+    }, 8000);
+  }
 
   $('.next-song-btn').click(function(ev){
     playNextSong($('.testing1').attr('data-song-played'));
@@ -369,7 +375,13 @@ $(function(){
     ev.preventDefault();
     ev.stopImmediatePropagation();
     $('.player-holder').remove();
-    $('.radio-next-text').html('next')
+    $('.current-song-info').remove();
+
+    if ($('.radio-next-text').html() == 'begin'){
+      $('.radio-next-text').html('next')
+      createRadioTooltip();  
+    }
+
     $('iframe').remove();
     var link   = this['href'].split('songs?d=')[1]
     var songId = $(this).parent().parent().attr('id')
@@ -466,7 +478,7 @@ $(function(){
         $.each(data, function(i, datum){
           setupSong(datum);
         })
-        $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page=1">next</a></span></span>')
+        $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page=1">more</a></span></span>')
       }
     )
   })
