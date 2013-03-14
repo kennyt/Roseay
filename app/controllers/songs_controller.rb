@@ -4,7 +4,7 @@ class SongsController < ApplicationController
     if params[:random] == '1'
       all_songs = Song.all
       @songs = []
-      while @songs.length < 21 do
+      while @songs.length < 31 do
         x = all_songs.sample
         unless @songs.include?(x)
           @songs << x
@@ -24,15 +24,15 @@ class SongsController < ApplicationController
 
     if params[:page].to_i >= -1
       params[:page] = 0 if params[:page].to_i == -1
-      x = (params[:page].to_i * 20)
-      @songs = @songs[x..(x+19)]
+      x = (params[:page].to_i * 30)
+      @songs = @songs[x..(x+29)]
     else
       params[:page] = 0
       @songs = @songs[0..5]
     end
 
     @next_page = params[:page].to_i + 1
-    @start_num = ((params[:page].to_i * 20) + 1)
+    @start_num = ((params[:page].to_i * 30) + 1)
 
     if @songs.last == @song_with_users.last
       @more = false

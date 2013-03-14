@@ -284,7 +284,7 @@ $(function(){
     if ($('ol').attr('goback-start')){
       var songStart = parseInt($('ol').attr('goback-start'))
     } else {
-      var songStart = parseInt($('ol').attr('start')) + 20
+      var songStart = parseInt($('ol').attr('start')) + 30
     }
 
     var page   = parseInt($('#nextbtn a').attr('href').split('?page=')[1])

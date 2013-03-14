@@ -9,10 +9,10 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html
-      if @remarks[page*11..page*11+10].nil?
+      if @remarks[page*16..page*16+15].nil?
         format.json { render :json => {} }
       else
-        format.json { render :json => custom_remark_json(@remarks[page*11..page*11+10]) }
+        format.json { render :json => custom_remark_json(@remarks[page*16..page*16+15]) }
       end
     end
   end

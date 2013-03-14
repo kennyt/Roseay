@@ -2,9 +2,9 @@ class RemarksController < ApplicationController
 	def index
 		page = params[:page].to_i
 		if params[:filter].blank?
-			remarks = Remark.order('created_at DESC').all[page*11..page*11+10]
+			remarks = Remark.order('created_at DESC').all[page*16..page*16+15]
 		else
-		  remarks = Remark.order('created_at DESC').mentioned_song(params[:filter])[page*11..page*11+10]
+		  remarks = Remark.order('created_at DESC').mentioned_song(params[:filter])[page*16..page*16+15]
 		end
 
 
@@ -21,7 +21,7 @@ class RemarksController < ApplicationController
 		@remark = current_user.remarks.build(params[:remark])
 		@remark.body = @remark.body[0..165]
 		@remark.save!
-		@remarks = Remark.order('created_at DESC').all[0..10]
+		@remarks = Remark.order('created_at DESC').all[0..15]
 
 		respond_to do |format|
 			format.json { render :json => @remarks }
