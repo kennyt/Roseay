@@ -22,6 +22,7 @@ $(function(){
   playerNumber = 0;
   songs = [];
   page = 0;
+  names = [];
 
   var fetchSongs = function(callback){
     $('h1').append('<span class="song-refreshing">...</span>')
@@ -37,6 +38,7 @@ $(function(){
 
         $.each(response, function(i, datum){
           songs.push(datum);
+          names.push(datum['song_artist'].toLowerCase() + ' - ' +  datum['song_name'].toLowerCase())
         })
         firstpage = songs.slice(0, 30)
         $.each(firstpage, function(i, song){
@@ -302,6 +304,7 @@ $(function(){
   })
 
   $('#12345').on('click', '.backbtn', function(){
+    $('#song-search').val('');
     $('.nextbtn').show();
     $('.backbtn').html('back')
     if (page < 1){
@@ -576,6 +579,29 @@ $(function(){
   $('.about').click(function(){
     $('#songwrap').empty()
     $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><i>"they ask me what I do and who I do it fo"</i><br>-Two Chainz<br><br>we do it because we think the people who share good music<br>are the most awesome people in the world<br><br><b>Jarvis</b><br>Jarvis is the reason that after every song finishes,<br>another song begins to play.<br>Jarvis will intelligently calculate an algorithm that will <br>play the song best matched to your needs, wants, desires.<br> (joking, he chooses a song randomly on the left side of the page)<br>Jarvis is just smart enough to know when you change the page<br>Jarvis loves you<br><br>on the song list, notice the "&" numbers.<br> type it in a remark and it will turn into a link<br> for example:  <span id="song"><a href="songs?d=6jhC6GjGC5M">&25</a></span><br><br>straight magical. <br><br><br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>leave jarvis on and party<br>.roseay</div>')
+  })
+
+  $('#song-search').keyup(function(){
+      var input = $(this).val();
+      if (input.length > 1){
+        page = 1;
+        $('.backbtn').html('exit search');
+        $('.nextbtn').hide();
+        $('#songwrap').empty();
+        $('#songwrap').attr('start', 1)
+        matchedNames = [];
+        $.each(names, function(i, name){
+          if (name.indexOf(input) != -1) {
+            song = songs[names.indexOf(name)]
+            if (matchedNames.indexOf(song) == -1) {
+              matchedNames.push(song);
+            }
+          }
+        })
+        $.each(matchedNames, function(i, song){
+          setupSong(song);
+        })
+      }
   })
 
   setInterval(function(){
