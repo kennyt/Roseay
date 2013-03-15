@@ -29,15 +29,18 @@
     <!-- <span class="radio-button">Jarvis on</span> -->
     <span class="next-song-btn"><span class="radio-next-text">begin</span></span>
     <div id="12345" data-time="<%=@by_time%>">
-      <ol start=<%= "#{@start_num}" %> id="songwrap" >
-          <%= render @songs %>
-          <span class="pagination">
-            <% if @more %>
-              <% params[:page] = @next_page %>
-              <span id="nextbtn"><%= link_to 'more', songs_path(params) %></span>
-            <% end %>
-          </span>
+      <span class="pagination">
+        <span class="backbtn">back</span>
+        <span class="nextbtn"><a href="#nextbtn">next</a></span>
+      </span>
+      <ol start="1" id="songwrap" >
+
       </ol>
+      <span class="pagination">
+        <span class="backbtn">back</span>
+        <span class="nextbtn"><a href="#nextbtn">next</a></span>
+        <br><br>
+      </span>
     </div>
   </div>
 

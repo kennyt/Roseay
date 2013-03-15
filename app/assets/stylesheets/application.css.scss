@@ -598,13 +598,25 @@ iframe {
   }
 }
 
-#nextbtn {
+.nextbtn {
   padding: 4px;
   border-radius: 4px;
-  background: #49182C;
+  background: #1B0910;
   a {
     color: white;
   }
+  &:hover{
+    background: #C75769;
+    cursor: pointer;
+  }
+}
+
+.backbtn {
+  padding: 4px;
+  border-radius: 4px;
+  background: #1B0910;
+  color: white;
+
   &:hover{
     background: #C75769;
     cursor: pointer;
@@ -617,4 +629,10 @@ iframe {
   &:hover{
     color: red;
   }
+}
+
+.song-holder {
+  margin-left: 32%;
+  margin-top: 10%;
+  font-size: 30px;
 }
