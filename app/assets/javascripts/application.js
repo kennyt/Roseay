@@ -598,9 +598,13 @@ $(function(){
             }
           }
         })
-        $.each(matchedNames, function(i, song){
-          setupSong(song);
-        })
+        if (matchedNames.length){
+          $.each(matchedNames, function(i, song){
+            setupSong(song);
+          })
+        } else {
+          $('#songwrap').html('<br><span class="search-holder">song doesn\'t exist! <br> help us out! <br> go to <a href="https://www.youtube.com" target="_blank">youtube</a>, find it, and submit it here!</span>')
+        }
       }
   })
 
