@@ -65,7 +65,7 @@ $(function(){
     } else if (datum['voted'] == 1){
       $('#'+songID).append('<a href="/sessions/new" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
     } else {
-      $('#'+songID).append('<a href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
+      $('#'+songID).append('<a data_song_index="'+songs.indexOf(datum)+'" href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
     }
     $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>')
                  .append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
@@ -400,6 +400,7 @@ $(function(){
     var parent = this.parentNode;
     var songID = parseInt($(parent).attr('id'));
     var that   = this;
+    var index = parseInt($(this).attr('data_song_index'))
 
     path = $(this).attr('href') + '.json'
     if (path == '/sessions/new.json'){
@@ -408,6 +409,7 @@ $(function(){
       $('.need-to-login').css('left', ev.pageX - 65)
     } else {
     $.post(path, function(response){
+      songs[index]['voted'] = 0;
       $(that).remove();
       $(parent).prepend('</b>&nbsp;&nbsp;&nbsp;<b>')
     })
