@@ -28,6 +28,7 @@ $(function(){
     $('h1').append('<span class="song-refreshing">...</span>')
     $('#songwrap').html('<br><span class="song-holder">loading</span>')
     songs = [];
+    names = [];
     page = 0;
     $.getJSON(
       '/songs.json',
@@ -320,7 +321,7 @@ $(function(){
     }
   })
 
-  $('#12345').on('click', '.nextbtn a', function(ev){
+  $('#12345').on('click', '.nextbtn', function(ev){
     ev.preventDefault();
 
     if ((page + 1)*30 > songs.length){
@@ -488,11 +489,11 @@ $(function(){
     if (songs.length) {
       page = 1;
       $('.nextbtn').hide();
-      $('.backbtn').html('unshuffle');
+      $('.backbtn').html('<span style="font-size:9px;">unshuffle</span>');
       $('#songwrap').empty();
       $('#songwrap').attr('start', 1)
       var randomSongs = []
-      while(randomSongs.length < 31){
+      while(randomSongs.length < 30){
         randomSong = songs[Math.floor(Math.random()*songs.length)]
         if (randomSongs.indexOf(randomSong) == -1) {
           randomSongs.push(randomSong);
