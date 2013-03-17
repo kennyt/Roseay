@@ -599,6 +599,7 @@ $(function(){
       if (input.length > 1){
         page = 1;
         $('.backbtn').html('exit search');
+        $('.backbtn').attr('class', 'backbtn');
         $('.nextbtn').hide();
         $('#songwrap').empty();
         $('#songwrap').attr('start', 1)
