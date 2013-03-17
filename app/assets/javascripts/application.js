@@ -481,9 +481,8 @@ $(function(){
       $('.testing1').prepend('<div id="ytplayer'+playerNumber+'"></div>')
       youtubeApiCall();
     }
-    
+
     if (queueSong == '1'){
-      $('.remark-header').append(queueSong);
       $(this).parent().parent().remove();
     }
 
