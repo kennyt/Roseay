@@ -21,8 +21,12 @@ $(function(){
   onTab = true;
   playerNumber = 0;
   songs = [];
-  page = 0;
   names = [];
+  page = 0;
+
+  var signInRemarks = function(){
+
+  }
 
   var fetchSongs = function(callback){
     $('h1').append('<span class="song-refreshing">...</span>')
@@ -73,9 +77,7 @@ $(function(){
     $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>')
                  .append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
     $('#'+songID+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
-                              .append('<a class="user" href="/users/'+datum["author_id"]+
-                                      '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
-                                      '" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+'</a>')
+                              .append('<span class="user">'+datum["author"]+'</span>')
                               .append('&nbsp;|&nbsp;'+ datum['time'] +' ago &nbsp;| <span class="song-id-filter" data-id='+songID+'>&'+datum['id']+
                                       '</span>')
   }
@@ -108,10 +110,10 @@ $(function(){
   }
 
   var setupRemark = function(i, datum){
-    $('.remarks').append('<div class="remark" id="'+i+'"><span class="remark-text"><b><a class="user" href="/users/'+datum["author_id"]+
+    $('.remarks').append('<div class="remark" id="'+i+'"><span class="remark-text"><b><span class="user" href="/users/'+datum["author_id"]+
                          '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
                          '" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+
-                         '</a></b> | <span class="remark-info">'+datum['time']+' ago</span> <br><span class="remark-body">'+
+                         '</span></b> | <span class="remark-info">'+datum['time']+' ago</span> <br><span class="remark-body">'+
                          datum['body']+'</span><span></div>')
     if (datum['authored']){
       $('.remarks #'+i+' .remark-info').append('&nbsp;| <span class="delete-remark" data-remark-id="'+datum['id']+'">delete</span>')
@@ -187,7 +189,7 @@ $(function(){
 
   $('.next-song-btn').click(function(ev){
     playNextSong($('.testing1').attr('data-song-played'));
-    $('.radio-next-text').html('next');
+    $('.radio-next-text').html('>>|');
   })
 
   $('body').on('click', '.song-modal-submit', function(ev){
@@ -366,36 +368,36 @@ $(function(){
     ev.stopImmediatePropagation()
   })
 
-  $('body').on('click', '.user', function(ev){
-    ev.preventDefault();
-    ev.stopImmediatePropagation()
-    idleSeconds = 0;
-    $('h1').append('<span class="waiting">...</span>')
-    $('.remark-input').val('');
+  // $('body').on('click', '.user', function(ev){
+  //   ev.preventDefault();
+  //   ev.stopImmediatePropagation()
+  //   idleSeconds = 0;
+  //   $('h1').append('<span class="waiting">...</span>')
+  //   $('.remark-input').val('');
 
-    var username = $(this).html();
-    var path     = $(this).attr('href')
-    var total    = $(this).attr('data_author_total')
+  //   var username = $(this).html();
+  //   var path     = $(this).attr('href')
+  //   var total    = $(this).attr('data_author_total')
 
-    $.getJSON(
-      path + '?page=0',
-      function(data){
-        $('.remarks').empty();
-        $('.waiting').remove();
-        $('.remark-header').html('remarks on ' + username + '\'s songs | total points ~ ' + total)
-        $('.remark-header').attr('data-remark-user-page', 0);
-        $('.remark-header').attr('data-user-path', path);
+  //   $.getJSON(
+  //     path + '?page=0',
+  //     function(data){
+  //       $('.remarks').empty();
+  //       $('.waiting').remove();
+  //       $('.remark-header').html('remarks on ' + username + '\'s songs | total points ~ ' + total)
+  //       $('.remark-header').attr('data-remark-user-page', 0);
+  //       $('.remark-header').attr('data-user-path', path);
 
-        if (data.length){
-          $.each(data, function(i, datum){
-            setupRemark(i, datum);
-          })
-        } else {
-          $('.remarks').append('<div class="remark"><br><span class="remark-body remark-text"> no more remarks </span></div>')
-        }
-      }
-    )
-  })
+  //       if (data.length){
+  //         $.each(data, function(i, datum){
+  //           setupRemark(i, datum);
+  //         })
+  //       } else {
+  //         $('.remarks').append('<div class="remark"><br><span class="remark-body remark-text"> no more remarks </span></div>')
+  //       }
+  //     }
+  //   )
+  // })
 
   $('#12345').on('click', '.upvote',function(ev){
     ev.preventDefault();
@@ -565,20 +567,23 @@ $(function(){
     // )
   })
 
-  $('body').on('click', ' .song-id-filter', function(){
-    var id = $(this).attr('data-id');
-    $('h1').append('<span class="song-refreshing">...</span>');
-    $('.next-remark-btn').attr('data-remark-filter', id);
+  // $('body').on('click', ' .song-id-filter', function(){
+  //   var id = $(this).attr('data-id');
+  //   $('h1').append('<span class="song-refreshing">...</span>');
+  //   $('.next-remark-btn').attr('data-remark-filter', id);
 
-    fetchRemarks(0, id, function(){
-      $('.remark-header').html('&' + id + ' remarks');
-      $('.song-refreshing').remove();
-      $('.remark-input').val('&' + id + ' ');
-    });
-  })
+  //   fetchRemarks(0, id, function(){
+  //     $('.remark-header').html('&' + id + ' remarks');
+  //     $('.song-refreshing').remove();
+  //     $('.remark-input').val('&' + id + ' ');
+  //   });
+  // })
 
   $('.about').click(function(){
-    $('#songwrap').empty()
+    page = 1;
+    $('#songwrap').empty();
+    $('.nextbtn').hide();
+    $('.backbtn').html('go home');
     $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><i>"they ask me what I do and who I do it fo"</i><br>-Two Chainz<br><br>we do it because we think the people who share good music<br>are the most awesome people in the world<br><br><b>Jarvis</b><br>Jarvis is the reason that after every song finishes,<br>another song begins to play.<br>Jarvis will intelligently calculate an algorithm that will <br>play the song best matched to your needs, wants, desires.<br> (joking, he chooses a song randomly on the left side of the page)<br>Jarvis is just smart enough to know when you change the page<br>Jarvis loves you<br><br>on the song list, notice the "&" numbers.<br> type it in a remark and it will turn into a link<br> for example:  <span id="song"><a href="songs?d=6jhC6GjGC5M">&25</a></span><br><br>straight magical. <br><br><br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>leave jarvis on and party<br>.roseay</div>')
   })
 
@@ -652,5 +657,9 @@ $(function(){
   // }
 
   fetchSongs();
-  fetchRemarks(0, "");
+  // if ($('#logged_in').length){
+    fetchRemarks(0, "")
+  // } else {
+  //   signInRemarks();
+  // }
 })

@@ -230,9 +230,9 @@ h1 {
 
 .user {
   color: grey;
-  &:hover{
+  /*&:hover{
     color: red;
-  }
+  }*/
 }
 
 .small_header_index {
@@ -291,10 +291,10 @@ h1 {
 
 .song-id-filter {
   color: grey;
-  &:hover{
+  /*&:hover{
     cursor: pointer;
     color: red;
-  }
+  }*/
 }
 
 body {
@@ -563,8 +563,8 @@ iframe {
   }
   
   .user {
-    font-size: 11px;
-    color: #1B2550;
+    font-size: 9px;
+    /*color: #1B2550;*/
   }
 }
 

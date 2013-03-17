@@ -37,15 +37,15 @@ class ApplicationController < ActionController::Base
         song_artist: song.song_artist,
         song_link: song.song_link,
         song_name: song.song_name,
-        user_id: song.user_id,
+        # user_id: song.user_id,
         voted: current_user ? (current_user.liked_songs.include?(song) || current_user == song.author) ? 0 : 2 : 1,
         author: song.author.username,
-        author_id: song.author.id,
-        time: distance_of_time_in_words(song.created_at - Time.now),
+        # author_id: song.author.id,
+        time: distance_of_time_in_words(song.created_at - Time.now)
         # uphubbed: current_user ? current_user.songhubs.include?(song) ? 1 : 0 : 0,
-        author_avg: song.author.avg,
-        author_total: song.author.total,
-        author_submissions: song.author.submissions.length
+        # author_avg: song.author.avg,
+        # author_total: song.author.total,
+        # author_submissions: song.author.submissions.length
       }
     end
 
