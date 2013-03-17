@@ -484,6 +484,9 @@ $(function(){
 
     if (queueSong == '1'){
       $(this).parent().parent().remove();
+      if (!($('.queue-songs a').length)){
+        $('.queue-songs').html('click on +Q to add a song to your Q')
+      }
     }
 
     document.title = $(this).html().replace(/&amp;/g, '&');
