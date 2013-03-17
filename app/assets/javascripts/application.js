@@ -40,6 +40,8 @@ $(function(){
         $('#songwrap').empty();
         $('#songwrap').attr('start', 1)
         $('.song-refreshing').remove();
+        $('.backbtn').attr('class', 'backbtn inactive');
+        $('.nextbtn').attr('class', 'nextbtn');
 
         $.each(response, function(i, datum){
           songs.push(datum);
@@ -557,7 +559,6 @@ $(function(){
     
     $('.nextbtn').show();
     $('.backbtn').html('back');
-    $('.backbtn').attr('class', 'backbtn');
     fetchSongs()
     // $.getJSON(
     //   '/songs.json?page=-1',
