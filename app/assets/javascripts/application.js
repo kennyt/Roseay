@@ -412,7 +412,7 @@ $(function(){
     if (path == '/sessions/new.json'){
       $('#songwrap').append('<a class="need-to-login" href="#newSessionModal" data-toggle="modal">login</a>')
       $('.need-to-login').css('top', ev.pageY - 8)
-      $('.need-to-login').css('left', ev.pageX - 65)
+      $('.need-to-login').css('left', ev.pageX - 60)
     } else {
     $.post(path, function(response){
       songs[index]['voted'] = 0;
@@ -444,7 +444,7 @@ $(function(){
     $('.current-song-info').remove();
 
     if ($('.radio-next-text').html() == 'begin'){
-      $('.radio-next-text').html('next')
+      $('.radio-next-text').html('>>|')
       createRadioTooltip();  
     }
 
