@@ -29,8 +29,8 @@ $(function(){
   }
 
   var fetchSongs = function(callback){
-    $('h1').append('<span class="song-refreshing">...</span>')
-    $('#songwrap').html('<br><span class="song-holder">loading</span>')
+    $('h1').append('<span class="song-refreshing"> | loading...</span>')
+    // $('#songwrap').html('<br><span class="song-holder">loading</span>')
     songs = [];
     names = [];
     page = 0;
@@ -92,7 +92,7 @@ $(function(){
     $.getJSON(
       '/remarks.json?page='+page+'&filter='+filter,
       function(response){
-        $('.remark-header').html('air remarks');
+        $('.remark-header').html('remarks');
         $('.remarks').empty();
         if (response.length){
           $.each(response, function(i, datum){
@@ -310,30 +310,34 @@ $(function(){
     $('#song-search').val('');
     $('.nextbtn').show();
     $('.backbtn').html('back')
-    if (page < 1){
-      page = -1;
-      $('#songwrap').html('<br><span class="song-holder">&nbsp;too far</span>')
-    } else {
+    
+    if ($('.nextbtn').attr('class') == 'nextbtn inactive'){
+      $('.nextbtn').toggleClass('inactive');
+    }
+    if (page > 0){
       page --
       $('#songwrap').empty();
       $('#songwrap').attr('start', page*30 + 1)
       $.each(songs.slice(page*30, page*30+30), function(i, song){
         setupSong(song);
       })
+      if (page < 1) {
+        $('.backbtn').toggleClass('inactive');
+      }
     }
   })
 
   $('#12345').on('click', '.nextbtn', function(ev){
     ev.preventDefault();
-
-    if ((page + 1)*30 > songs.length){
-      if (songs.length/30 == Math.floor(songs.length/30)) {
-        page = songs.length/30;
-      } else {
-        page = Math.floor(songs.length/30) + 1;
+    if ($('.nextbtn').attr('class') == 'nextbtn'){
+      if ($('.backbtn').attr('class') == 'backbtn inactive'){
+        $('.backbtn').toggleClass('inactive');
       }
-      $('#songwrap').html('<br><span class="song-holder">no more</span>')
-    } else {
+
+      if ((page + 2)*30 >= songs.length){
+        $('.nextbtn').toggleClass('inactive');
+      } 
+
       page ++
       $('#songwrap').empty();
       $('#songwrap').attr('start', page*30 + 1)
@@ -342,6 +346,7 @@ $(function(){
       })
     }
 
+    ev.stopImmediatePropagation()
     // var that = this;
     // $(that).append('---')
 
@@ -365,7 +370,6 @@ $(function(){
     //     $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page='+ (page+1) +'">more</a></span></span>')
     //   }
     // )
-    ev.stopImmediatePropagation()
   })
 
   // $('body').on('click', '.user', function(ev){
@@ -492,6 +496,7 @@ $(function(){
       page = 1;
       $('.nextbtn').hide();
       $('.backbtn').html('<span style="font-size:9px;">unshuffle</span>');
+      $('.backbtn').attr('class', 'backbtn');
       $('#songwrap').empty();
       $('#songwrap').attr('start', 1)
       var randomSongs = []
@@ -552,6 +557,7 @@ $(function(){
     
     $('.nextbtn').show();
     $('.backbtn').html('back');
+    $('.backbtn').attr('class', 'backbtn');
     fetchSongs()
     // $.getJSON(
     //   '/songs.json?page=-1',
@@ -658,7 +664,8 @@ $(function(){
 
   fetchSongs();
   // if ($('#logged_in').length){
-    fetchRemarks(0, "")
+  fetchRemarks(0, "")
+  $('.backbtn').toggleClass('inactive');
   // } else {
   //   signInRemarks();
   // }

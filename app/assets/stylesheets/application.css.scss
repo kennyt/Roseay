@@ -644,3 +644,18 @@ iframe {
   font-size: 10px;
   height: 13px;
 }
+
+.inactive {
+  background: white;
+  color: white;
+  a {
+    color: white;
+    &:hover {
+      cursor: default;
+    }
+  }
+  &:hover{
+    cursor: default;
+    background: white;
+  }
+}
