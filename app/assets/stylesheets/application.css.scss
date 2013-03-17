@@ -156,6 +156,15 @@ h1 {
   }
 }
 
+.add-to-queue {
+  font-size: 11px;
+  color: #A9A9A9;
+  &:hover{
+    cursor: pointer;
+    color: red;
+  }
+}
+
 .top_header {
   margin-left: 85px;
   background: transparent;
@@ -270,18 +279,29 @@ h1 {
   border-radius: 10px;
   margin: 5px;
   margin-bottom: 15px;
-  margin-left: 2%;
   background: white;
   width: 40%;
   float: left;
 }
 .right-side-wrapper {
-  background: #004366;
+  background: #13060E;
   width: 40%;
   float: left;
   border-radius: 10px;
   margin-top: 5px;
   margin-bottom: 15px;
+  /*overflow: hidden;*/
+}
+
+/*.third-wrapper {
+  float: left;
+}*/
+
+.below-player {
+  width: 544px;
+  background: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .user_info {
@@ -492,10 +512,44 @@ iframe {
 .remark-section {
   background: white;
   position: relative;
-  width: 544px;
+  width: 444px;
   height: 75%;
+  float: left;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  border-right: solid #0F2E27 1px;
+  /*border-radius: 10px;*/
+}
+
+.queue-holder {
+  width: 99px;
+  float: left;
+  min-height: 600px;
+  background: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.queue-header {
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.queue-songs {
+  font-family: arial;
+  font-size: 10px;
+}
+
+.queue-song {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom: solid #DDF4E8 1px;
+  a {
+    &:hover{
+      text-decoration: none;
+      color: #36A179;
+    }
+  }
 }
 
 .remark-header {
@@ -514,15 +568,15 @@ iframe {
 }
 
 .remark-input {
-  margin-left: 14px;
+  margin-left: 5px;
   resize: none;
   height: 40px;
-  width: 500px;
+  width: 80%;
 }
 
 .remark-input-btn {
   text-align: center;
-  margin-left: 175px;
+  margin-left: 55px;
 }
 
 .next-remark-btn {
@@ -543,7 +597,7 @@ iframe {
   margin-left: 5px;
   margin-right: 5px; 
   word-wrap: break-word;
-  height: 66px;
+  min-height: 66px;
   background: #F5F4FB;
   border-top: solid white 1px;
   border-bottom: solid white 1px;
@@ -582,7 +636,7 @@ iframe {
 }
 
 .refresh {
-  margin-right: 100px;
+  margin-right: 20px;
   font-family: arial;
   font-size: 13px;
   width: 100px;
@@ -625,6 +679,14 @@ iframe {
 }
 
 .delete-remark {
+  cursor: pointer;
+  font-size: 7px;
+  &:hover{
+    color: red;
+  }
+}
+
+.delete-queue {
   cursor: pointer;
   font-size: 7px;
   &:hover{

@@ -64,11 +64,8 @@ $(function(){
     if (link == undefined){
       var link = datum['song_link'];
     }
-    // if (datum['uphubbed'] == 0) {
-      // $('#songwrap').append('<li class="song" id="'+songID+'" data-uphub="true"></li>')
-    // } else {
+
     $('#songwrap').append('<li class="song" id="'+songID+'"></li>')
-    // }
     if (datum['voted'] == 0){
       $('#'+songID).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
     } else if (datum['voted'] == 1){
@@ -76,7 +73,7 @@ $(function(){
     } else {
       $('#'+songID).append('<a data_song_index="'+songs.indexOf(datum)+'" href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
     }
-    $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>')
+    $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>   <span class="add-to-queue">+Q </span>')
                  .append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
     $('#'+songID+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
                               .append('<span class="user">'+datum["author"]+'</span>')
@@ -137,15 +134,19 @@ $(function(){
   }
 
   var playNextSong = function(id){
-    numberOfSongs = $('.left-side-wrapper #song a').length
-    if (numberOfSongs && $('.testing1').attr('data-radio') == 'true'){
-      var randomNum = Math.floor(Math.random()*(numberOfSongs))
-      var song = $('.left-side-wrapper #song a')[randomNum]
-      while ($(song.parentNode.parentNode).attr('id') == id){
-        randomNum = Math.floor(Math.random()*(numberOfSongs))
-        song = $('.left-side-wrapper #song a')[randomNum]
+    if ($('.queue-songs #song a').length){
+      $($('.queue-songs #song a')[0]).trigger('click');
+    } else {
+      numberOfSongs = $('.left-side-wrapper #song a').length
+      if (numberOfSongs && $('.testing1').attr('data-radio') == 'true'){
+        var randomNum = Math.floor(Math.random()*(numberOfSongs))
+        var song = $('.left-side-wrapper #song a')[randomNum]
+        while ($(song.parentNode.parentNode).attr('id') == id){
+          randomNum = Math.floor(Math.random()*(numberOfSongs))
+          song = $('.left-side-wrapper #song a')[randomNum]
+        }
+        $(song).trigger('click');
       }
-      $(song).trigger('click');
     }
   }
 
@@ -239,7 +240,7 @@ $(function(){
     )
   })
 
-  $('.testing1').on('click', '.refresh', function(){
+  $('body').on('click', '.refresh', function(){
     $('.refresh').html('refreshing..');
     $('.next-remark-btn').attr('data-remark-filter', '');
     fetchRemarks(0, "", function(){
@@ -249,7 +250,7 @@ $(function(){
     });
   })
 
-  $('.testing1').on('click', '.remark-input-btn', function(ev){
+  $('body').on('click', '.remark-input-btn', function(ev){
     var input  = $('.remark-input').val();
     var filter = $('.next-remark-btn').attr('data-remark-filter');
 
@@ -275,7 +276,7 @@ $(function(){
     }
   })
 
-  $('.testing1').on('click', '.next-remark-btn', function(ev){
+  $('body').on('click', '.next-remark-btn', function(ev){
     idleSeconds = 0;
     $(this).append('---')
     var filter = $(this).attr('data-remark-filter');
@@ -448,6 +449,7 @@ $(function(){
     ev.stopImmediatePropagation();
     $('.player-holder').remove();
     $('.current-song-info').remove();
+    queueSong = $(this.parentNode).attr('data-queue');
 
     if ($('.radio-next-text').html() == 'begin'){
       $('.radio-next-text').html('>>|')
@@ -477,7 +479,31 @@ $(function(){
       youtubeApiCall();
     }
 
+    if (queueSong){
+      this.parentNode.parentNode.remove();
+    }
     document.title = $(this).html().replace(/&amp;/g, '&');
+  })
+
+  $('body').on('click', '.add-to-queue', function(){
+    queueSong = this.parentNode.children[0]
+    songName = $(this.parentNode.children[0].children[0]).html();
+    songLink = $(this.parentNode.children[0].children[0]).attr('href');
+    console.log(songName);
+    console.log(songLink);
+    console.log(queueSong);
+    if (!($('.queue-songs #song').length)){
+      $('.queue-songs').empty();
+    }
+    $('.queue-songs').append('<div class="queue-song"><span id="song" data-queue="1"><a href="'+songLink+
+                             '">'+songName+'</a> | <span class="delete-queue">delete</span> </span></div> ')
+  })
+
+  $('body').on('click', '.delete-queue', function(){
+    this.parentNode.parentNode.remove();
+    if (!($('.queue-songs #song a').length)){
+      $('.queue-songs').html('click on +Q to add a song to your Q')
+    }
   })
 
   $('.small_header_index').click(function(){
@@ -591,7 +617,7 @@ $(function(){
     $('#songwrap').empty();
     $('.nextbtn').hide();
     $('.backbtn').html('go home');
-    $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><i>"they ask me what I do and who I do it fo"</i><br>-Two Chainz<br><br>we do it because we think the people who share good music<br>are the most awesome people in the world<br><br><b>Jarvis</b><br>Jarvis is the reason that after every song finishes,<br>another song begins to play.<br>Jarvis will intelligently calculate an algorithm that will <br>play the song best matched to your needs, wants, desires.<br> (joking, he chooses a song randomly on the left side of the page)<br>Jarvis is just smart enough to know when you change the page<br>Jarvis loves you<br><br>on the song list, notice the "&" numbers.<br> type it in a remark and it will turn into a link<br> for example:  <span id="song"><a href="songs?d=6jhC6GjGC5M">&25</a></span><br><br>straight magical. <br><br><br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>leave jarvis on and party<br>.roseay</div>')
+    $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><i>"they ask me what I do and who I do it fo"</i><br>-Two Chainz<br><br>we do it because we think the people who share good music<br>are the most awesome people in the world<br><br><b>Jarvis</b><br>Jarvis is the reason that after every song finishes,<br>another song begins to play.<br>Jarvis will intelligently calculate an algorithm that will <br>play the song best matched to your needs, wants, desires.<br> (joking, he chooses a song randomly on the left side of the page)<br>if Jarvis sees that you have a song in your Q <br> he will play the top one. otherwise it\'s up to him to play a song<br>Jarvis is just smart enough to know when you change the page<br>Jarvis loves you<br><br>on the song list, notice the "&" numbers.<br> type it in a remark and it will turn into a link<br> for example:  <span id="song"><a href="songs?d=6jhC6GjGC5M">&25</a></span><br><br>straight magical. <br><br><br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>leave jarvis on and party<br>.roseay</div>')
   })
 
   $('#song-search').keyup(function(){
