@@ -73,7 +73,7 @@ $(function(){
     } else {
       $('#'+songID).append('<a data_song_index="'+songs.indexOf(datum)+'" href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
     }
-    $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>   <span class="add-to-queue">+Q </span>')
+    $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum["song_artist"]+" - "+datum["song_name"]+'</a></span>   <span data-songid="'+songID+'" class="add-to-queue">+Q </span>')
                  .append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
     $('#'+songID+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
                               .append('<span class="user">'+datum["author"]+'</span>')
@@ -449,7 +449,9 @@ $(function(){
     ev.stopImmediatePropagation();
     $('.player-holder').remove();
     $('.current-song-info').remove();
-    queueSong = $(this.parentNode).attr('data-queue');
+    var queueSong = $(this.parentNode).attr('data-queue');
+    $('.remark-header').append(queueSong);
+
 
     if ($('.radio-next-text').html() == 'begin'){
       $('.radio-next-text').html('>>|')
@@ -465,6 +467,7 @@ $(function(){
     if (link == undefined){
       var link = datum['song_link'];
     }
+    
 
     if (link.indexOf('soundcloud')+1){
       var link = link.replace(/%2F/g, '/').replace(/%3A/g, ':')
@@ -478,29 +481,27 @@ $(function(){
       $('.testing1').prepend('<div id="ytplayer'+playerNumber+'"></div>')
       youtubeApiCall();
     }
-
-    if (queueSong){
-      this.parentNode.parentNode.remove();
+    
+    if (queueSong == '1'){
+      $('.remark-header').append(queueSong);
+      $(this).parent().parent().remove();
     }
+
     document.title = $(this).html().replace(/&amp;/g, '&');
   })
 
   $('body').on('click', '.add-to-queue', function(){
-    queueSong = this.parentNode.children[0]
-    songName = $(this.parentNode.children[0].children[0]).html();
-    songLink = $(this.parentNode.children[0].children[0]).attr('href');
-    console.log(songName);
-    console.log(songLink);
-    console.log(queueSong);
+    var songID = $(this).attr('data-songid')
+    var songName = $('.song#'+songID+' #song a').html();
+    var songLink = $('.song#'+songID+' #song a').attr('href');
     if (!($('.queue-songs #song').length)){
       $('.queue-songs').empty();
     }
-    $('.queue-songs').append('<div class="queue-song"><span id="song" data-queue="1"><a href="'+songLink+
-                             '">'+songName+'</a> | <span class="delete-queue">delete</span> </span></div> ')
+    $('.queue-songs').append('<div class="queue-song"><span id="song" data-queue="1"><a href="'+songLink+'">'+songName+'</a> | <span class="delete-queue">delete</span> </span></div> ')
   })
 
   $('body').on('click', '.delete-queue', function(){
-    this.parentNode.parentNode.remove();
+    $(this.parentNode.parentNode).remove();
     if (!($('.queue-songs #song a').length)){
       $('.queue-songs').html('click on +Q to add a song to your Q')
     }
