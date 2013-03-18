@@ -63,9 +63,7 @@ class ApplicationController < ActionController::Base
         authored: remark.user == current_user,
         author_id: remark.user.id,
         time: distance_of_time_in_words(remark.created_at - Time.now),
-        author_total: remark.user.total,
-        author_avg: remark.user.avg,
-        author_submissions: remark.user.submissions.length
+        author_total: remark.user.total
       }
     end
   end

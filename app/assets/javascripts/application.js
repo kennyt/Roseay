@@ -127,7 +127,7 @@ $(function(){
     $('.remarks').append('<div class="remark" id="'+i+'"><span class="remark-text"><b><span class="user" href="/users/'+datum["author_id"]+
                          '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
                          '" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+
-                         '</span></b> | <span class="remark-info">'+datum['time']+' ago</span> <br><span class="remark-body">'+
+                         ' ('+datum['author_total']+')</span></b> | <span class="remark-info">'+datum['time']+' ago</span> <br><span class="remark-body">'+
                          datum['body']+'</span><span></div>')
     if (datum['authored']){
       $('.remarks #'+i+' .remark-info').append('&nbsp;| <span class="delete-remark" data-remark-id="'+datum['id']+'">delete</span>')
