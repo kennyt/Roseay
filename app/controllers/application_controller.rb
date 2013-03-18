@@ -87,16 +87,13 @@ class ApplicationController < ActionController::Base
         return converted
       else
         song = Song.find(word[1..-1])
+        song_name = song.song_artist + ' - ' + song.song_name
         if song.song_link.include?('youtube.com')
           link = song.song_link.split('watch?v=')[1]
         else
           link = song.song_link
         end
-        if current_user ? current_user.songhubs.include?(song) ? false : true : true
-          converted.sub!(original_word, '<span id="song"><a href="/songs?d='+link+'" data-uphubb="true">'+original_word+'</a></span>')
-        else 
-          converted.sub!(original_word, '<span id="song"><a href="/songs?d='+link+'">'+original_word+'</a></span>')
-        end
+        converted.sub!(original_word, '<span class="add-to-queue remark-queue" data-link="'+link+'" data-name="'+song_name+'">'+original_word+'</span>')
       end
     end
     converted

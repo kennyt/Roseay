@@ -113,6 +113,10 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
   }
 }
 
+.remark-queue {
+
+}
+
 .upvote {
   position: relative;
   top: 7px;
@@ -601,17 +605,13 @@ iframe {
   background: #F5F4FB;
   border-top: solid white 1px;
   border-bottom: solid white 1px;
-  a {
-    &:hover{
-      color: #C75769;
-      text-decoration: none;
-    }
+  .add-to-queue {
+    color: black;
   }
   &:hover {
     .remark-body {
-      a {
-        /*color: #A7D98C;*/
-        color: #E9BECE;
+      .add-to-queue {
+        color: #C75769;
       }
     }
   }
@@ -620,6 +620,14 @@ iframe {
     font-size: 10px;
     /*color: #1B2550;*/
   }
+}
+
+.remark-news {
+  font-family: arial;
+  font-size: 10px;
+  margin-left: 150px;
+  margin-bottom: -20px;
+  color: #8E2F53;
 }
 
 .remark-text {
