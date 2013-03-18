@@ -702,6 +702,7 @@ $(function(){
   // if ($('#logged_in').length){
   fetchRemarks(0, "")
   $('.backbtn').toggleClass('inactive');
+  SC.initialize({client_id:"8f1e619588b836d8f108bfe30977d6db"});
   // } else {
   //   signInRemarks();
   // }
