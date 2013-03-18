@@ -93,7 +93,7 @@ class ApplicationController < ActionController::Base
         else
           link = song.song_link
         end
-        converted.sub!(original_word, '<span class="add-to-queue remark-queue" data-link="'+link+'" data-name="'+song_name+'">'+original_word+'</span>')
+        converted.sub!(original_word, '<span class="add-to-queue remark-queue" data-link="/songs?d='+link+'" data-name="'+song_name+'">'+original_word+'</span>')
       end
     end
     converted
