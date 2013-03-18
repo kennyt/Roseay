@@ -170,9 +170,12 @@ h1 {
 }
 
 .top_header {
-  margin-left: 85px;
+  margin-left: -40px;
+  position: absolute;
   background: transparent;
+  color: grey;
   a {
+    color: #AFE4B6;
     &:hover {
       text-decoration: none;
       color: green;
@@ -185,6 +188,7 @@ h1 {
     color: green;
     cursor: pointer;
   }
+  visibility: hidden;
 }
 
 .about-text {
@@ -221,9 +225,14 @@ h1 {
 
 #logged_in {
   color: black;
+  visibility: hidden;
   &:hover {
-    color: green;
+    pointer: default;
   }
+}
+
+.logout {
+  position: absolute;
 }
 
 .user_page_top_header {
@@ -528,7 +537,7 @@ iframe {
 .queue-holder {
   width: 99px;
   float: left;
-  min-height: 600px;
+  min-height: 800px;
   background: white;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;

@@ -2,17 +2,13 @@
   <div class="left-side-wrapper">
     <div class="top_header">
       <% if current_user %>
-        <%= link_to "#{current_user.username}", user_path(current_user), {class: 'user',
-                                                                          id: 'logged_in',
-                                                data_author_total: current_user.total} %>
-        |
-        <%= link_to 'logout', session_path(current_user), method: :delete %>
+        <span id="logged_in"><%= current_user.username %></span>
+        <%= link_to 'logout', session_path(current_user), method: :delete, class: 'logout' %>
       <% else %>
-        <a id="login-modal" href="#newSessionModal" data-toggle="modal">login</a>
+        <!-- <a id="login-modal" href="#newSessionModal" data-toggle="modal">login</a>
         |
-        <a href="#newSessionModal" data-toggle="modal">join</a>
+        <a href="#newSessionModal" data-toggle="modal">join</a> -->
       <% end %>
-      |
       <span class="about">readme</span>
     </div>
 
@@ -26,7 +22,7 @@
         shuffle songs
       </span>
     </div>
-    <span class="next-song-btn"><span class="radio-next-text">begin</span></span>
+    <span class="next-song-btn"><span class="radio-next-text">play</span></span>
     <div id="12345" data-time="<%=@by_time%>">
       <div class="search">
         <input id="song-search" placeholder="search artist or title">
@@ -56,7 +52,7 @@
           <iframe  width="545" height="220" src=<%="http://www.youtube.com/embed/#{@embed}?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&fmt=18"%> frameborder="0"></iframe>
         <% end %>
       <% else %>
-        <div class="player-holder"><span class="player-holder-text"><br><br><br>click begin</span></div>
+        <div class="player-holder"><span class="player-holder-text"><br><br><br>click play</span></div>
       <% end %>
 
       <div class="below-player">
