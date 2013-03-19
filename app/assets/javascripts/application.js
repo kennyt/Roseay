@@ -202,7 +202,7 @@ $(function(){
     $('.left-side-wrapper').prepend('<span class="radio-tooltip">a random song on the page will play after every song finishes.</span>')
     setTimeout(function(){
       $('.radio-tooltip').remove();
-    }, 8000);
+    }, 6000);
   }
 
   $('.next-song-btn').click(function(ev){
@@ -475,7 +475,9 @@ $(function(){
 
     if ($('.radio-next-text').html() == 'play'){
       $('.radio-next-text').html('>>|')
-      createRadioTooltip();  
+      setTimeout(function(){
+        createRadioTooltip();  
+      }, 7000)
     }
 
     $('iframe').remove();
