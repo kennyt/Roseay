@@ -205,10 +205,18 @@ $(function(){
     }, 6000);
   }
 
+  var createPostSongTooltip = function(){
+    $('.left-side-wrapper').prepend('<span class="post-song-tooltip">post a song, help the human movement!</span>')
+    setTimeout(function(){
+      $('.post-song-tooltip').remove();
+    }, 6000)
+  }
+
   $('.next-song-btn').click(function(ev){
     if ($('.backbtn').html() == 'go home'){
       $('.backbtn').trigger('click');
     }
+
     $('.backbtn').show();
     $('.submit-button').show();
     $('.small_header_index').show();
@@ -478,6 +486,9 @@ $(function(){
       setTimeout(function(){
         createRadioTooltip();  
       }, 7000)
+      setTimeout(function(){
+        createPostSongTooltip();
+      }, 13500)
     }
 
     $('iframe').remove();
@@ -611,7 +622,7 @@ $(function(){
   $('h1 a').click(function(ev){
     ev.preventDefault();
     ev.stopImmediatePropagation();
-    
+
     fetchSongs(function(){
       $('.nextbtn').show();
       $('.backbtn').html('back');
@@ -690,9 +701,7 @@ $(function(){
     var username = $('#create_username').val();
     var password = $('#create_password').val();
     var password_confirmation = $('#create_password_confirmation').val();
-    console.log(username);
-    console.log(password);
-    console.log(password_confirmation);
+    $($('h2')[1]).html('loading...')
 
     $.post(
       '/users.json',
@@ -713,6 +722,7 @@ $(function(){
             $('h1 a').trigger('click');
           }
         } else {
+          $($('h2')[1]).html('join')
           $($('.new_user')[1]).prepend('<h4 style="color:red">something went wrong</h4>')
           $('#create_password').val('');
           $('#create_password_confirmation').val('');
@@ -726,6 +736,7 @@ $(function(){
     ev.stopImmediatePropagation();
     var username = $('#user_username').val();
     var password = $('#user_password').val();
+    $($('h2')[0]).html('loading...')
 
     $.post(
       '/sessions.json',
@@ -745,6 +756,7 @@ $(function(){
             $('h1 a').trigger('click');
           }
         } else {
+          $($('h2')[0]).html('sign in')
           $($('.new_user')[0]).prepend('<h4 style="color:red">wrong username or password</h4>')
           $('#user_password').val('');
           $('#user_username').val('');

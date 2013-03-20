@@ -367,6 +367,17 @@ body {
   z-index: 1;
 }
 
+.post-song-tooltip {
+  position: absolute;
+  background: #CDD2EE;
+  color: #0A111F;
+  border-radius: 10px;
+  text-align: center;
+  width: 80px;
+  margin-top: 50px;
+  z-index: 1;
+}
+
 .next-song-btn {
   text-align: center;
   margin-left: 26%;
