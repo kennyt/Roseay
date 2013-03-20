@@ -195,7 +195,7 @@ $(function(){
   }
 
   function onPlayerReady(event){
-    event.target.pauseVideo();
+    event.target.playVideo();
   }
   
   var createRadioTooltip = function(){
@@ -494,7 +494,6 @@ $(function(){
     var link   = this['href'].split('songs?d=')[1]
     var songId = $(this).parent().parent().attr('id')
     $('.testing1').attr('data-youtube-code', link + '?autoplay=1&controls=1&iv_load_policy=3&autohide=1&modestbranding=1&vq=hd360')
-    $('.testing1').attr('data-next-song', 'KHYJH_V-94s?autoplay=0&controls=1&iv_load_policy=3&autohide=1&modestbranding=1&vq=hd360')
     $('.testing1').attr('data-song-played', songId);
 
     if (link == undefined){
