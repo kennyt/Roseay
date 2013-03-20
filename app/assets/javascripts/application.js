@@ -684,6 +684,75 @@ $(function(){
       }
   })
 
+  $('body').on('click', '.join-session-modal', function(ev){
+    ev.preventDefault();
+    ev.stopImmediatePropagation();
+    var username = $('#create_username').val();
+    var password = $('#create_password').val();
+    var password_confirmation = $('#create_password_confirmation').val();
+    console.log(username);
+    console.log(password);
+    console.log(password_confirmation);
+
+    $.post(
+      '/users.json',
+      {'user' : {
+        'username': username,
+        'password': password,
+        'password_confirmation': password_confirmation
+      }}, function(response){
+        if (!(response['error'])){
+          fetchRemarks(page - 1, '', function(){
+            $('.refresh').html('home')
+            $('.next-remark-btn').show();
+            $('.refresh').show();
+            $('.remark-news').show();
+            $('.top_header').prepend('<span id="logged_in"></span><a href="/sessions/'+response['id']+'" class="logout" data-method="delete" rel="nofollow" style="margin-left:50px;">logout</a>');
+          })
+          if ($('.left-side-wrapper #song a').length){
+            $('h1 a').trigger('click');
+          }
+        } else {
+          $($('.new_user')[1]).prepend('<h4 style="color:red">something went wrong</h4>')
+          $('#create_password').val('');
+          $('#create_password_confirmation').val('');
+        }
+      }
+    )
+  })
+
+  $('body').on('click', '.login-session-modal', function(ev){
+    ev.preventDefault();
+    ev.stopImmediatePropagation();
+    var username = $('#user_username').val();
+    var password = $('#user_password').val();
+
+    $.post(
+      '/sessions.json',
+      {'user' : {
+        'username' : username,
+        'password' : password
+      }}, function(response){
+        if (!(response['error'])){
+          fetchRemarks(page - 1, '', function(){
+            $('.refresh').html('home')
+            $('.next-remark-btn').show();
+            $('.refresh').show();
+            $('.remark-news').show();
+            $('.top_header').prepend('<span id="logged_in"></span><a href="/sessions/'+response['id']+'" class="logout" data-method="delete" rel="nofollow" style="margin-left:50px;">logout</a>')
+          })
+          if ($('.left-side-wrapper #song a').length){
+            $('h1 a').trigger('click');
+          }
+        } else {
+          $($('.new_user')[0]).prepend('<h4 style="color:red">wrong username or password</h4>')
+          $('#user_password').val('');
+          $('#user_username').val('');
+        }
+      }
+    )
+  })
+
   
 
   // if (!($('#logged_in').length)){

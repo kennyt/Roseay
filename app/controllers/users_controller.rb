@@ -25,13 +25,13 @@ class UsersController < ApplicationController
     user = User.new(params[:user])
     user.username.downcase!
 
-    if user.save
-      build_cookie(user)
-      redirect_to songs_path
-    else
-      flash.now[:notice] = user.errors.full_messages.first
-      @user = user
-      render 'users/new', notice: 'oops!'
+    respond_to do |format|
+      if user.save
+        build_cookie(user)
+        format.json { render :json => current_user }
+      else
+        format.json { render :json => {'error' => 'yes' }.to_json}
+      end
     end
   end
 end

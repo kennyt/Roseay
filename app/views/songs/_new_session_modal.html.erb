@@ -22,13 +22,13 @@
       <h3>join</h3>
       <%= form_for(@user, url: users_path, method: :post) do |f| %>
         <%= f.label :username %>
-        <%= f.text_field :username %>
+        <%= f.text_field :username, id: 'create_username' %>
         <br>
         <%= f.label :password %>
-        <%= f.password_field :password %>
+        <%= f.password_field :password, id: 'create_password' %>
         <br>
         <%= f.label :password_confirmation %>
-        <%= f.password_field :password_confirmation %>
+        <%= f.password_field :password_confirmation, id: 'create_password_confirmation' %>
         <br>
         <br>
         <%= f.submit 'join', class: 'join-session-modal' %>

@@ -5,14 +5,15 @@ class SessionsController < ApplicationController
 
   def create
     @user = User.find_by_username(params[:user][:username])
+    @user = @user.try(:authenticate, params[:user][:password])
 
-    if @user
-      build_cookie(@user)
-      redirect_to songs_path
-    else
-      flash.now[:notice] = "Email/Password incorrect"
-      @user ||= User.new
-      render 'new'
+    respond_to do |format|
+      if @user
+        build_cookie(@user)
+        format.json { render :json => current_user }
+      else
+        format.json { render :json => {'error' => 'yes'}.to_json }
+      end
     end
   end
 
