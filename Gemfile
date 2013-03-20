@@ -7,6 +7,7 @@ gem 'rails', '3.2.11'
 
 gem 'launchy'
 gem 'soundcloud'
+gem 'twilio-ruby'
 
 group :test do
   gem 'capybara'
