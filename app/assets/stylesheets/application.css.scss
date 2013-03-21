@@ -722,6 +722,14 @@ iframe {
   }
 }
 
+.delete-song {
+  cursor: pointer;
+  font-size: 7px;
+  &:hover{
+    color: red;
+  }
+}
+
 .song-holder {
   margin-left: 32%;
   font-size: 30px;

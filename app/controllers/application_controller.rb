@@ -40,6 +40,7 @@ class ApplicationController < ActionController::Base
         # user_id: song.user_id,
         voted: current_user ? (current_user.liked_songs.include?(song) || current_user == song.author) ? 0 : 2 : 1,
         author: song.author.username,
+        authored: current_user ? current_user == song.author : false,
         # author_id: song.author.id,
         time: distance_of_time_in_words(song.created_at - Time.now)
         # uphubbed: current_user ? current_user.songhubs.include?(song) ? 1 : 0 : 0,

@@ -94,6 +94,9 @@ $(function(){
                               .append('<span class="user">'+datum["author"]+'</span>')
                               .append('&nbsp;|&nbsp;'+ datum['time'] +' ago &nbsp;| <span class="song-id-filter" data-id='+songID+'>&'+datum['id']+
                                       '</span>')
+    if (datum['authored']){
+      $('#'+songID+' .info_bar').append(' | <span class="delete-song" data-delete-id="'+songID+'">delete</span>')
+    }
   }
 
   var fetchRemarks = function(page, filter, callback) {
@@ -266,6 +269,25 @@ $(function(){
       { '_method': 'delete'},
       function(){
         fetchRemarks(page, '');
+      }
+    )
+  })
+
+  $('body').on('click', '.delete-song', function(){
+    var songId = $(this).attr('data-delete-id');
+    var origName = $('.song#'+songId+' a').html();
+
+    $('.song#'+songId+' a').html('deleteing...')
+    $.post(
+      '/songs/'+ songId + '.json',
+      {'_method': 'delete'},
+      function(response){
+        if (response['success']){
+          $('h1 a').trigger('click');
+        } else if (response['error']) {
+          $('.song#'+songId+' a').html(origName + '(couldn\'t delete for some reason)');
+        }
+        
       }
     )
   })

@@ -1,43 +1,8 @@
 class SongsController < ApplicationController
   def index
-
-    # if params[:random] == '1'
-    #   all_songs = Song.all
-    #   @songs = []
-    #   while @songs.length < 31 do
-    #     x = all_songs.sample
-    #     unless @songs.include?(x)
-    #       @songs << x
-    #     end
-    #   end
-    # else
-    #   if params[:by_time] == '0' || params[:by_time].nil? || params[:by_time] == ''
-    #   else
-    #     @songs = Song.includes(:author).order('created_at DESC').all
-    #     @by_time = true
-    #   end
-    # end
     @songs = Song.includes(:author).all
     @songs.sort! {|x,y| y.true_value <=> x.true_value }
     @song_with_users = @songs
-
-    # if params[:page].to_i >= -1
-    #   params[:page] = 0 if params[:page].to_i == -1
-    #   x = (params[:page].to_i * 30)
-    #   @songs = @songs[x..(x+29)]
-    # else
-    #   params[:page] = 0
-    #   @songs = @songs[0..5]
-    # end
-
-    # @next_page = params[:page].to_i + 1
-    # @start_num = ((params[:page].to_i * 30) + 1)
-
-    # if @songs.last == @song_with_users.last
-    #   @more = false
-    # else
-    #   @more = true
-    # end
 
     if params[:d]
       @embed = params[:d]
@@ -72,6 +37,19 @@ class SongsController < ApplicationController
     		flash.now[:notice] = @song.errors.full_messages.first
     		render 'songs/new'
     	end
+    end
+  end
+
+  def destroy
+    @song = Song.find(params[:id])
+
+    respond_to do |format|
+      if current_user == @song.author
+        @song.destroy
+        format.json { render :json => {'success' => 'yes'}.to_json }
+      else
+        format.json { render :json => {'error' => 'yes'}.to_json }
+      end
     end
   end
 
