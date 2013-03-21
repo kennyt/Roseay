@@ -233,10 +233,11 @@ $(function(){
     var songArtist = $('#song_song_artist').val();
     var songName   = $('#song_song_name').val();
     var songLink   = $('#song_song_link').val();
-    $('#song_song_artist').val('');
-    $('#song_song_name').val('');
-    $('#song_song_link').val('');
-    $('#close-modal').trigger('click');
+    $('#song_song_artist').val('uploading..');
+    $('#song_song_name').val('just wait..');
+    $('#song_song_link').val('a few seconds..');
+    $(this).hide();
+    $('#close-modal').hide();
 
     $.post(
       '/songs.json',
@@ -245,6 +246,14 @@ $(function(){
         'song_artist' : songArtist,
         'song_link': songLink
         }
+      }, function(){
+        $('#song_song_artist').val('');
+        $('#song_song_name').val('');
+        $('#song_song_link').val('');
+        $('#close-modal').trigger('click');
+        $('h1 a').trigger('click');
+        $(this).show();
+        $('#close-modal').show();
       }
     )
   })
