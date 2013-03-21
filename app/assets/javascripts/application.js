@@ -593,7 +593,7 @@ $(function(){
       songLink = $(this).attr('data-link');
       songName = $(this).attr('data-name');
     }
-    $('.queue-songs').append('<div class="queue-song"><span id="song" data-queue="1"><a href="'+songLink+'">'+songName+'</a> | <span class="delete-queue">delete</span> </span></div> ')
+    $('.queue-songs').append('<div class="queue-song" id="'+songID+'"><span id="song" data-queue="1"><a href="'+songLink+'">'+songName+'</a> | <span class="delete-queue">delete</span> </span></div> ')
   })
 
   $('body').on('click', '.delete-queue', function(){
