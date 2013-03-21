@@ -10,8 +10,7 @@ class User < ActiveRecord::Base
   has_many :hubsongs
   has_many :songhubs, through: :hubsongs, source: :song
   has_many :remarks
-  has_many :mentions, :as => :mentionable
-  has_many :targeted_remarks, :through => :mentions, source: :remark
+  has_many :song_listens
 
   validates_length_of :username, minimum: 4, message: "too short"
   validates_length_of :password, minimum: 4, message: "too short"

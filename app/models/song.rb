@@ -7,6 +7,7 @@ class Song < ActiveRecord::Base
   has_many :hubsongs
   has_many :mentions, :as => :mentionable
   has_many :remarks, :through => :mentions
+  has_many :song_listens
 
   validates_presence_of :song_link
   validates_presence_of :song_artist

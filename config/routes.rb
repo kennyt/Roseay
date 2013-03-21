@@ -9,6 +9,7 @@ Dotsongs::Application.routes.draw do
   end
   resources :sessions
   resources :remarks, only: [:index, :create, :destroy]
+  resources :song_listens, only: [:index, :create]
 
   root to: 'songs#index'
 end

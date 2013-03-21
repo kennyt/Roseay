@@ -215,6 +215,29 @@ $(function(){
     }, 6000)
   }
 
+  var checkValidListen = function(uniqueId, songId){
+    if ($('#logged_in').length){
+      var userId = $('.logout').attr('href').split('sessions/')[1]
+    } else {
+      var userId = 0;
+    }
+    setTimeout(function(){
+      if ($('.testing1').attr('data-song-number') == uniqueId){
+        createListen(songId, userId);
+      }
+    }, 90000)
+  }
+
+  var createListen = function(songId, userId){
+    $.post(
+      '/song_listens.json',
+      {'song_listen' : {
+        'user_id': userId,
+        'song_id': songId
+      }}
+    )
+  }
+
   $('.next-song-btn').click(function(ev){
     if ($('.backbtn').html() == 'go home'){
       $('.backbtn').trigger('click');
@@ -508,8 +531,10 @@ $(function(){
   $('body').on('click', '#song a', function(ev){
     ev.preventDefault();
     ev.stopImmediatePropagation();
+    playerNumber ++;
+    $('.testing1').attr('data-song-number', playerNumber);
     $('.player-holder').remove();
-     $('.next-song-btn').attr('class', 'next-song-btn');
+    $('.next-song-btn').attr('class', 'next-song-btn');
     var queueSong = $(this.parentNode).attr('data-queue');
 
     if ($('.radio-next-text').html() == 'play'){
@@ -541,7 +566,7 @@ $(function(){
         bindScPlayerFinish();
       })
     } else {
-      playerNumber ++;
+
       $('.testing1').prepend('<div id="ytplayer'+playerNumber+'"></div>')
       youtubeApiCall();
     }
@@ -553,6 +578,7 @@ $(function(){
       }
     }
 
+    checkValidListen(playerNumber, $(this).parent().parent().attr('id'));
     document.title = $(this).html().replace(/&amp;/g, '&');
   })
 
@@ -694,7 +720,7 @@ $(function(){
     $('.nextbtn').hide();
     $('.backbtn').html('go home');
     $('.backbtn').attr('class', 'backbtn');
-    $('#songwrap').append('<div class="about-text">we\'re leading the war against robots,<br>robots who decide what music we listen to<br>join the human music movement<br><br><strong>listening</strong><br><br>1. click play<br><br><br><br><strong>submitting</strong><br><br>1. <strong>you</strong> post a song (anyone can post) <br><br>2. the song <strong>instantly</strong> goes onto everyone\'s list <br><br> 3. people vote it up!</div>')
+    $('#songwrap').append('<div class="about-text">we\'re leading the war against robots,<br>robots who decide what music we listen to<br>join the human music movement<br><br><i>"she got a big booty so I call her big booty"</i><br>- Two Chainz<br><br>we aim to be that simple<br><br><strong>listening</strong><br><br>1. click play<br><br><br><strong>submitting</strong><br><br>1. <strong>you</strong> post a song (anyone can post) <br><br>2. the song <strong>instantly</strong> goes onto everyone\'s list <br><br> 3. people vote it up!</div>')
     // $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><i>"they ask me what I do and who I do it fo"</i><br>-Two Chainz<br><br>we do it because we think the people who share good music<br>are the most awesome people in the world<br><br><b>Jarvis</b><br>Jarvis is the reason that after every song finishes,<br>another song begins to play.<br>Jarvis will intelligently calculate an algorithm that will <br>play the song best matched to your needs, wants, desires.<br> (joking, he chooses a song randomly on the left side of the page)<br>if Jarvis sees that you have a song in your Q <br> he will play the top one. otherwise it\'s up to him to play a song<br>Jarvis is just smart enough to know when you change the page<br>Jarvis loves you<br><br>on the song list, notice the "&" numbers.<br> type it in a remark and it will allow people to queue that song up easily.<br>for example: queue this song up -> <span class="add-to-queue remark-queue" data-link="/songs?d=6jhC6GjGC5M" data-name="Knife Party - Internet Friends (AnonFM Remix)">&25</span><br><br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>leave jarvis on and party<br>.roseay</div>')
   })
 
