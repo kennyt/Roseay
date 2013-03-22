@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   has_many :song_listens
 
   validates_length_of :username, minimum: 4, message: "too short"
-  validates_length_of :password, minimum: 4, message: "too short"
+  # validates_length_of :password, minimum: 4, message: "too short"
 
   validates_uniqueness_of :username, case_sensitive: false,
                            message: "already taken"

@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
 
   def create
     @user = User.find_by_username(params[:user][:username])
-    @user = @user.try(:authenticate, params[:user][:password]) if @user.id != 11
+    @user = @user.try(:authenticate, params[:user][:password])
 
     respond_to do |format|
       if @user
