@@ -33,7 +33,7 @@ $(function(){
     $('.small_header_index').hide();
     $('#song-search').hide();
     $('.remarks').append('<div class="remarks-login" style="margin-left:50px"></div>')
-    $('.remarks-login').append('<h5>you need to sign in to see remarks</h5>')
+    $('.remarks-login').append('<h5>you need to sign in to see remarks<br>(won\'t leave page)</h5>')
     $('.remarks-login').append('<h2>sign in</h2>')
     $('.remarks-login').append($('.new_user')[0]);
     $('.remarks-login').append('<h2>join</h2>')
