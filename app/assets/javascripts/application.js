@@ -802,7 +802,7 @@ $(function(){
         'password' : password
       }}, function(response){
         if (!(response['error'])){
-          fetchRemarks(page - 1, '', function(){
+          fetchRemarks(0, '', function(){
             $('.refresh').html('home')
             $('.next-remark-btn').show();
             $('.refresh').show();
