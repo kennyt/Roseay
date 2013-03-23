@@ -38,4 +38,12 @@ class User < ActiveRecord::Base
   def total
     submissions.inject(0) {|x, y| x + y.points }
   end
+
+  def top_listened
+    listen_hash = Hash.new(0)
+    song_listens.each do |listen|
+      listen_hash[listen.song] += 1
+    end
+    listen_hash.sort_by{|k,v| v}[0..4].map{|key, value| key}
+  end
 end

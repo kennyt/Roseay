@@ -17,4 +17,17 @@ class Song < ActiveRecord::Base
   def true_value
     (points) / ((Time.now - created_at) + 50000)
   end
+
+  def related_songs
+    related_songs = Hash.new(0)
+    User.all.each do |user| 
+      if user.top_listened.include?(self)
+        user.top_listened.each do |song|
+          related_songs[song] += 1 unless song.nil?
+        end
+      end
+    end
+    related_songs.delete(self)
+    related_songs.sort_by {|key, value| value}.map{|key, value| key.song_artist + ' - ' + key.song_name}
+  end
 end

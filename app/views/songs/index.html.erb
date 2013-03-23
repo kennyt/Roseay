@@ -98,7 +98,11 @@
 
   var player;
   function onYouTubeIframeAPIReady() {
-    player = new YT.Player('ytplayer1', {
+    var num = 1;
+    while (!($('#ytplayer' + num).length)){
+      num ++
+    }
+    player = new YT.Player('ytplayer' + num, {
       height: '220',
       width: '545',
       videoId: $('.testing1').attr('data-youtube-code'),
