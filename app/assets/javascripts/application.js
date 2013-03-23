@@ -275,7 +275,7 @@ $(function(){
         $('#song_song_link').val('');
         $('#close-modal').trigger('click');
         $('h1 a').trigger('click');
-        $(this).show();
+        $('.song-modal-submit').show();
         $('#close-modal').show();
       }
     )
