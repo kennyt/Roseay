@@ -110,7 +110,7 @@ $(function(){
     }
 
     $('.other-songs-right-side').append('<span class="song"></span>')
-    $($('.other-songs-right-side .song')[i]).append('<span id="song"><a data-songid="'+songID+'" href="/songs?d='+link+'">'+song["song_artist"]+" - "+song["song_name"]+'</a></span><br>')
+    $($('.other-songs-right-side .song')[i]).append('<span id="song"><a data-songid="'+songID+'" href="/songs?d='+link+'">'+song["song_artist"]+" - "+song["song_name"]+'</a></span>&nbsp;<span data-song-name="'+song['song_artist']+ ' - ' + song['song_name']+'" data-songid="'+songID+'" class="add-to-queue">+Q </span><br>')
   }
 
   var fillOtherSongs = function(songId){
@@ -674,6 +674,9 @@ $(function(){
   $('body').on('click', '.add-to-queue', function(){
     var songID = $(this).attr('data-songid')
     var songName = $('.song#'+songID+' #song a').html();
+    if (!(songName)){
+      songName = $(this).attr('data-song-name');
+    }
     var songLink = $('.song#'+songID+' #song a').attr('href');
     if (!($('.queue-songs #song').length)){
       $('.queue-songs').empty();
