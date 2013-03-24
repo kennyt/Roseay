@@ -33,6 +33,9 @@ class SongsController < ApplicationController
   def create
     @song = false;
   	@song = current_user.submissions.new(params[:song]) if current_user
+    unless params[:song][:song_link].include?('youtube.com') || params[:song][:song_link].include?('soundcloud.com')
+      @song = false
+    end
 
     respond_to do |format|
     	if @song && @song.save

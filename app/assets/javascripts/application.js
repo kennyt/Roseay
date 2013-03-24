@@ -132,7 +132,7 @@ $(function(){
     if (song['song_link'].indexOf('soundcloud') != -1){
       var nameShortened = [];
       $.each((song['song_artist'] + ' ' + song['song_name']).split(' '), function(i, word){
-        if ((word.slice(0,1) == '(') || (word.slice(0,1) == '&')){
+        if ((word.slice(0,1) == '(') || (word.slice(0,1) == '&') || (word.slice(0,1) == parseInt(word.slice(0,1))) ){
           nameShortened.push('a')
         } else {
           nameShortened.push(word.slice(0,1))
@@ -374,7 +374,7 @@ $(function(){
         }
       }, function(response){
         if (response['error']){
-          $('#newSongModal h4').append('<br>--you have to login--')
+          $('#newSongModal h4').append('<br>--not logged in OR bad song link--')
         } else {
           $('#close-modal').trigger('click');
           $('h1 a').trigger('click');
