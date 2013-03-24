@@ -159,7 +159,7 @@ $(function(){
       }
     }
     if (chosenAuthored.length){
-      $('.other-songs-right-side').append('<div class="other-songs-title">more songs uploaded by '+song['author']+'</div>');
+      $('.other-songs-right-side').append('<div class="other-songs-title">more songs posted by '+song['author']+'</div>');
       $.each(chosenAuthored, function(i, song){
         setupSongBelowPlayer(i, song);
       })
@@ -594,9 +594,15 @@ $(function(){
     } else {
     $.post(path, function(response){
       songs[index]['voted'] = 0;
+      songs[index]['points'] ++;
       $(that).remove();
-      $('.left-side-wrapper .song#'+songID+ ' .upvote').remove();
-      $('.left-side-wrapper .song#'+songID).prepend('&nbsp;&nbsp;&nbsp;')
+      if ($('.left-side-wrapper .song#'+songID+' .upvote').length){
+        $('.left-side-wrapper .song#'+songID+ ' .upvote').remove();
+        $('.left-side-wrapper .song#'+songID).prepend('&nbsp;&nbsp;&nbsp;')
+        $('.upvote-player').empty()
+        $('.upvote-player').append('<div class="checkmark"></div>')
+        $('.upvote-player').append('<div class="upvote-text">voted</div>')
+      }
       $(parent).prepend('</b>&nbsp;&nbsp;&nbsp;<b>')
     })
     }
