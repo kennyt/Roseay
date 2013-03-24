@@ -134,7 +134,7 @@ $(function(){
       }
     })
     var index = similarAuthorSongs.indexOf(song)
-    
+
     if (index){
       similarAuthorSongs.splice(index, index);
     } else {
@@ -174,7 +174,7 @@ $(function(){
       $('.upvote-player').append('<div class="upvote-text">voted already</div>')
     } else if (song['voted'] == 1){
       $('.upvote-player').append('<a href="/sessions/new" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
-      $('.upvote-player').append('<div>need to login to vote</div>')
+      $('.upvote-player').append('<div class="upvote-text">need to login to vote</div>')
     } else {
       $('.upvote-player').append('<a data_song_index="'+songs.indexOf(song)+'" href="/songs/'+song['id']+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
       $('.upvote-player').append('<div class="upvote-text">vote \''+song['song_name']+'\'</div>')
