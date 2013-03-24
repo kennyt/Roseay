@@ -27,15 +27,14 @@ class SongsController < ApplicationController
   end
 
   def create
-  	@song = current_user.submissions.new(params[:song])
+    @song = false;
+  	@song = current_user.submissions.new(params[:song]) if current_user
 
     respond_to do |format|
-    	if @song.save
-    		# redirect_to songs_path
+    	if @song && @song.save
         format.json { render :json => @song}
     	else
-    		flash.now[:notice] = @song.errors.full_messages.first
-    		render 'songs/new'
+    		format.json { render :json => {'error' => 'yes'}.to_json }
     	end
     end
   end

@@ -353,14 +353,18 @@ $(function(){
         'song_artist' : songArtist,
         'song_link': songLink
         }
-      }, function(){
+      }, function(response){
+        if (response['error']){
+          $('#newSongModal h4').append('<br>--you have to login--')
+        } else {
+          $('#close-modal').trigger('click');
+          $('h1 a').trigger('click');
+        }
+        $('.song-modal-submit').show();
+        $('#close-modal').show();
         $('#song_song_artist').val('');
         $('#song_song_name').val('');
         $('#song_song_link').val('');
-        $('#close-modal').trigger('click');
-        $('h1 a').trigger('click');
-        $('.song-modal-submit').show();
-        $('#close-modal').show();
       }
     )
   })
@@ -882,6 +886,7 @@ $(function(){
           if ($('.left-side-wrapper #song a').length){
             $('h1 a').trigger('click');
           }
+          $('#newSongModal h4').html('youtube/soundcloud links');
         } else {
           $($('h2')[1]).html('join')
           $($('.new_user')[1]).prepend('<h4 style="color:red">something went wrong</h4>')
@@ -906,6 +911,7 @@ $(function(){
         'password' : password
       }}, function(response){
         if (!(response['error'])){
+          $('#newSongModal h4').html('youtube/soundcloud links');
           fetchRemarks(0, '', function(){
             $('.refresh').html('home')
             $('.next-remark-btn').show();
