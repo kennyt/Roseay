@@ -132,8 +132,8 @@ $(function(){
     if (song['song_link'].indexOf('soundcloud') != -1){
       var nameShortened = [];
       $.each((song['song_artist'] + ' ' + song['song_name']).split(' '), function(i, word){
-        if (word.slice(0,1) == '('){
-          nameShortened.push(word.slice(1,2))
+        if ((word.slice(0,1) == '(') || (word.slice(0,1) == '&')){
+          nameShortened.push('a')
         } else {
           nameShortened.push(word.slice(0,1))
         }
@@ -1017,6 +1017,7 @@ $(function(){
       $('.submit-button').show();
       $('.small_header_index').show();
       fillOtherSongs($('iframe').attr('data-id'));
+      $('.next-song-btn').attr('class', 'next-song-btn');
     });
     
   }
