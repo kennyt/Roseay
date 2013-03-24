@@ -1014,6 +1014,8 @@ $(function(){
     });
   } else {
     fetchSongs(function(){
+      $('.submit-button').show();
+      $('.small_header_index').show();
       fillOtherSongs($('iframe').attr('data-id'));
     });
     
