@@ -575,6 +575,64 @@ iframe {
   }
 }
 
+.other-songs-holder {
+  min-height: 245px;
+  background: white;
+  border-bottom: solid #CCCCCC 1px;
+}
+
+.other-songs-left-side {
+  height: 245px;
+  width: 130px;
+  border-right: solid #CCCCCC 1px;
+  float: left;
+}
+
+.upvote-player {
+  height: 50%;
+  text-align: center;
+  border-bottom: solid #CCCCCC 1px;
+  font-family: arial;
+  font-size: 12px;
+  .upvote{
+    font-size: 50px;
+    top: 50px;
+    &:hover{
+      color: red;
+      text-decoration: none;
+    }
+  }
+}
+
+.upvote-text {
+  margin-top: 50px;
+}
+
+.other-songs-right-side {
+  font-family: arial;
+  text-align: left;
+  a {
+    font-family: arial;
+    font-size: 12px;
+  }
+  .song{
+    margin: 2px;
+    margin-left: 20px;
+  }
+}
+
+.other-songs-title{
+  font-family: arial;
+  font-size: 14px;
+  left: 10px;
+}
+
+.player-info{
+  font-family: arial;
+  font-size: 12px;
+  text-align: center;
+}
+
 .remark-header {
   text-align: center;
   margin-right: 20px;
@@ -620,7 +678,7 @@ iframe {
   margin-left: 5px;
   margin-right: 5px; 
   word-wrap: break-word;
-  min-height: 66px;
+  min-height: 50px;
   background: #F5F4FB;
   border-top: solid white 1px;
   border-bottom: solid white 1px;

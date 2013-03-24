@@ -19,7 +19,7 @@ class RemarksController < ApplicationController
 
 	def create
 		@remark = current_user.remarks.build(params[:remark])
-		@remark.body = @remark.body[0..165]
+		@remark.body = @remark.body
 		@remark.save!
 		@remarks = Remark.order('created_at DESC').all[0..15]
 
