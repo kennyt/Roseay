@@ -576,13 +576,13 @@ iframe {
 }
 
 .other-songs-holder {
-  min-height: 245px;
+  min-height: 275px;
   background: white;
   border-bottom: solid #CCCCCC 1px;
 }
 
 .other-songs-left-side {
-  height: 245px;
+  height: 275px;
   width: 130px;
   border-right: solid #CCCCCC 1px;
   float: left;
@@ -606,6 +606,11 @@ iframe {
 
 .upvote-text {
   margin-top: 50px;
+}
+
+.song_link {
+  font-size: 9px;
+  font-family: arial
 }
 
 .checkmark {

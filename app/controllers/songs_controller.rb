@@ -6,6 +6,10 @@ class SongsController < ApplicationController
 
     if params[:d]
       @embed = params[:d]
+      @id = Song.all.select{|song| song.song_link.include?(params[:d])}[0].id
+    elsif params[:s]
+      @soundcloud_embed = Song.find(params[:s].scan(/[0-9]/).join('').to_i).song_link
+      @id = params[:s].scan(/[0-9]/).join('').to_i
     end
 
     @client = Soundcloud.new(:client_id => '8f1e619588b836d8f108bfe30977d6db')

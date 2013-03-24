@@ -128,6 +128,24 @@ $(function(){
         song = checkSong;
       }
     })
+
+    if (song['song_link'].indexOf('soundcloud') != -1){
+      var nameShortened = [];
+      $.each((song['song_artist'] + ' ' + song['song_name']).split(' '), function(i, word){
+        if (word.slice(0,1) == '('){
+          nameShortened.push(word.slice(1,2))
+        } else {
+          nameShortened.push(word.slice(0,1))
+        }
+      })
+      var nameShortened = nameShortened.join('')
+      var IdString = song['id'] + ''
+      var embedSongLink = 's='+IdString.slice(0, IdString.length/2+1) + nameShortened + IdString.slice(IdString.length/2+1, IdString.length)
+    } else {
+      var embedSongLink = 'd='+song['song_link'].split('?v=')[1]
+    }
+    $('.other-songs-right-side').append('<span class="song_link">link ~ roseay.com/songs?'+embedSongLink+'</span><br>');
+
     $.each(songs, function(i, checkSong){
       if (checkSong['author'] == song['author']){
         similarAuthorSongs.push(checkSong);
@@ -164,7 +182,7 @@ $(function(){
         setupSongBelowPlayer(i, song);
       })
     }
-    $('.other-songs-right-side').append('<br><div class="other-songs-title">other songs</div>')
+    $('.other-songs-right-side').append('<div class="other-songs-title">other songs</div>')
     $.each(oldSongsShow, function(i, song){
       setupSongBelowPlayer(i+chosenAuthored.length,song);
     })
@@ -179,7 +197,8 @@ $(function(){
       $('.upvote-player').append('<a data_song_index="'+songs.indexOf(song)+'" href="/songs/'+song['id']+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
       $('.upvote-player').append('<div class="upvote-text">vote \''+song['song_name']+'\'</div>')
     }
-    $('.player-info').append('<br>'+song['points'] + ' points<br>' + 'posted ~ '+ song['author'] + '<br>' + song['time'] + ' ago');
+
+    $('.player-info').append('<br><br>'+song['points'] + ' points<br>' + 'posted ~ '+ song['author'] + '<br>' + song['time'] + ' ago');
     $('.other-songs-holder').show();
   }
 
@@ -984,12 +1003,19 @@ $(function(){
     signInRemarks();
   }
 
-  $('.submit-button').hide();
-  $('.small_header_index').hide();
-  $('#song-search').hide();
-  $('.other-songs-holder').hide();
-  fetchSongs(function(){
-    $('.backbtn').hide();
-    $('.about').trigger('click');
-  });
+  if ($('.player-holder').length){
+    $('.submit-button').hide();
+    $('.small_header_index').hide();
+    $('#song-search').hide();
+    $('.other-songs-holder').hide();
+    fetchSongs(function(){
+      $('.backbtn').hide();
+      $('.about').trigger('click');
+    });
+  } else {
+    fetchSongs(function(){
+      fillOtherSongs($('iframe').attr('data-id'));
+    });
+    
+  }
 })
