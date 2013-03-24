@@ -126,9 +126,6 @@ $(function(){
     $.each(songs, function(i, checkSong){
       if (checkSong['id'] == songId){
         song = checkSong;
-        console.log(checkSong['id']);
-        console.log(checkSong);
-
       }
     })
     $.each(songs, function(i, checkSong){
@@ -141,7 +138,7 @@ $(function(){
     if (similarAuthorSongs.length >= 3){
       while(!(chosenAuthored.length == 3)){
         var uniqueSong = similarAuthorSongs[Math.floor(Math.random()*(similarAuthorSongs.length))]
-        if (chosenAuthored.indexOf(song) == -1){
+        if (chosenAuthored.indexOf(uniqueSong) == -1){
           chosenAuthored.push(uniqueSong)
         }
       }
