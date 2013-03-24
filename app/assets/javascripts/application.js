@@ -163,7 +163,8 @@ $(function(){
       setupSongBelowPlayer(i+chosenAuthored.length,song);
     })
     if (song['voted'] == 0){
-      $('.upvote-player').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
+      // $('.upvote-player').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
+      $('.upvote-player').append('<div class="checkmark"></div>');
       $('.upvote-player').append('<div class="upvote-text">voted already</div>')
     } else if (song['voted'] == 1){
       $('.upvote-player').append('<a href="/sessions/new" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
@@ -588,6 +589,8 @@ $(function(){
     $.post(path, function(response){
       songs[index]['voted'] = 0;
       $(that).remove();
+      $('.left-side-wrapper .song#'+songID+ ' .upvote').remove();
+      $('.left-side-wrapper .song#'+songID).prepend('&nbsp;&nbsp;&nbsp;')
       $(parent).prepend('</b>&nbsp;&nbsp;&nbsp;<b>')
     })
     }
