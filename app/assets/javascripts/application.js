@@ -133,7 +133,13 @@ $(function(){
         similarAuthorSongs.push(checkSong);
       }
     })
-    similarAuthorSongs.splice(similarAuthorSongs.indexOf(song), similarAuthorSongs.indexOf(song) + 1);
+    var index = similarAuthorSongs.indexOf(song)
+    
+    if (index){
+      similarAuthorSongs.splice(index, index);
+    } else {
+      similarAuthorSongs.splice(index, index + 1);
+    }
 
     if (similarAuthorSongs.length >= 3){
       while(!(chosenAuthored.length == 3)){
