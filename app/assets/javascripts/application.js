@@ -626,6 +626,13 @@ $(function(){
         $('.upvote-player').append('<div class="checkmark"></div>')
         $('.upvote-player').append('<div class="upvote-text">voted</div>')
       }
+      if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]){
+        if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]['id'] == songID){
+          $('.upvote-player').empty()
+          $('.upvote-player').append('<div class="checkmark"></div>')
+          $('.upvote-player').append('<div class="upvote-text">voted</div>')
+        }
+      } 
       $(parent).prepend('</b>&nbsp;&nbsp;&nbsp;<b>')
     })
     }
