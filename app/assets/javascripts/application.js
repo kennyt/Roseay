@@ -1009,15 +1009,23 @@ $(function(){
     signInRemarks();
   }
 
-  if ($('.player-holder').length){
-    $('.submit-button').hide();
-    $('.small_header_index').hide();
-    $('#song-search').hide();
+  if ($('.player-holder').length) {
+    if ($('#logged_in').length){
+      fetchSongs(function(){
+        $('.submit-button').show();
+        $('.small_header_index').show();
+        $('.next-song-btn').attr('class', 'next-song-btn');
+      });
+    } else {
+      $('.submit-button').hide();
+      $('.small_header_index').hide();
+      $('#song-search').hide();
+      fetchSongs(function(){
+        $('.backbtn').hide();
+        $('.about').trigger('click');
+      });
+    }
     $('.other-songs-holder').hide();
-    fetchSongs(function(){
-      $('.backbtn').hide();
-      $('.about').trigger('click');
-    });
   } else {
     fetchSongs(function(){
       $('.submit-button').show();
@@ -1025,6 +1033,5 @@ $(function(){
       fillOtherSongs($('iframe').attr('data-id'));
       $('.next-song-btn').attr('class', 'next-song-btn');
     });
-    
   }
 })
