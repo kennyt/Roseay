@@ -20,9 +20,9 @@ class SessionsController < ApplicationController
   def destroy
     @user = current_user
 
-    @user.update_attribute(:session_token, nil)
-    cookies.delete(:token)
-    cookies.delete(:user_id)
+    @user.update_attributes(session_token: nil)
+    cookies[:token] = nil
+    cookies[:user_id] = nil
 
     redirect_to root_path
   end
