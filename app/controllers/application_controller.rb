@@ -4,15 +4,22 @@ class ApplicationController < ActionController::Base
   include ActionView::Helpers::DateHelper
 
   def build_cookie(user)
-    cookies[:user_id] = user.id
-    cookies[:token] = SecureRandom.uuid
+    cookies[:user_id] = {
+      :value => user.id,
+      :expires => 1.year.from_now,
+      :domain => :all
+    }
+    cookies[:token] = {
+      :value => SecureRandom.uuid,
+      :expires => 1.year.from_now,
+      :domain => :all
+    }
     user.session_token = cookies[:token]
     user.save
   end
 
   def current_user
-    return nil if cookies[:user_id] == ''
-    return nil if cookies[:token] == ''
+    return nil if cookies[:user_id].blank? || cookies[:token].blank?
     User.find(cookies[:user_id]) if cookies[:user_id]
   end
 
