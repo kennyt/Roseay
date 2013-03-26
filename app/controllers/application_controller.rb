@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    return nil if cookies[:user_id].blank? || cookies[:token].blank?
+    return nil if cookies[:user_id] == '' || cookies[:token] == ''
     User.find(cookies[:user_id]) if cookies[:user_id]
   end
 

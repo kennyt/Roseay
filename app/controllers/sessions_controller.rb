@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
   def destroy
     @user = current_user
 
-    @user.update_attributes(session_token: nil)
+    @user.update_attribute(:session_token, nil)
     cookies[:token] = nil
     cookies[:user_id] = nil
 
