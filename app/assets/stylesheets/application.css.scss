@@ -105,6 +105,7 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
       text-decoration: none;
       color: #36A179;
     }
+    font-size: 12px;
   }
   .upvote {
     &:hover {
@@ -233,6 +234,7 @@ h1 {
 
 .logout {
   position: absolute;
+  margin-left: 30px;
 }
 
 .user_page_top_header {
@@ -331,9 +333,8 @@ h1 {
 }
 
 body {
-  /*background: #004366;*/
-  /*background: black;*/
   background: #13060E;
+  /*background: #DDE1F4;*/
 }
 
 .radio-button {
