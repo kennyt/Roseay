@@ -21,8 +21,8 @@ class SessionsController < ApplicationController
     @user = current_user
 
     @user.update_attribute(:session_token, nil)
-    cookies[:token] = nil
-    cookies[:user_id] = nil
+    cookies.delete(:token)
+    cookies.delete(:user_id)
 
     redirect_to root_path
   end
