@@ -6,13 +6,11 @@ class ApplicationController < ActionController::Base
   def build_cookie(user)
     cookies[:user_id] = {
       :value => user.id,
-      :expires => 1.year.from_now,
-      :domain => :all
+      :expires => 1.year.from_now
     }
     cookies[:token] = {
       :value => SecureRandom.uuid,
-      :expires => 1.year.from_now,
-      :domain => :all
+      :expires => 1.year.from_now
     }
     user.session_token = cookies[:token]
     user.save
