@@ -43,48 +43,59 @@
   </div>
 
   <div class="right-side-wrapper">
-    <div class="testing1" data-radio="true">
-      <% if @embed || @soundcloud_embed %>
-        <% if @soundcloud_embed %>
-          <% embed_info = @client.get('/oembed', :url => @soundcloud_embed) %>
-          <%= embed_info['html'].gsub('%2F', '/').gsub('%3A', ':').gsub('<iframe ', '<iframe data-id='+@id.to_s+ ' ').html_safe %>
+    <span class="left-songlist">
+      <div class="testing1" data-radio="true">
+        <% if @embed || @soundcloud_embed %>
+          <% if @soundcloud_embed %>
+            <% embed_info = @client.get('/oembed', :url => @soundcloud_embed) %>
+            <%= embed_info['html'].gsub('%2F', '/').gsub('%3A', ':').gsub('<iframe ', '<iframe data-id='+@id.to_s+ ' ').html_safe %>
+          <% else %>
+            <iframe  width="545" height="220" src=<%="http://www.youtube.com/embed/#{@embed}?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&fmt=18"%> frameborder="0" data-id="<%= @id %>"></iframe>
+          <% end %>
         <% else %>
-          <iframe  width="545" height="220" src=<%="http://www.youtube.com/embed/#{@embed}?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&fmt=18"%> frameborder="0" data-id="<%= @id %>"></iframe>
+          <div class="player-holder"><span class="player-holder-text"><br><br><br>click play</span></div>
         <% end %>
-      <% else %>
-        <div class="player-holder"><span class="player-holder-text"><br><br><br>click play</span></div>
-      <% end %>
 
-      <div class="below-player">
-        <div class="other-songs-holder">
-          <div class="other-songs-left-side">
-            <div class="upvote-player"></div>
-            <div class="player-info"></div>
+        <div class="below-player">
+          <div class="other-songs-holder">
+            <div class="other-songs-left-side">
+              <div class="upvote-player"></div>
+              <div class="player-info"></div>
+            </div>
+            <div class="other-songs-right-side">
+            </div>
           </div>
-          <div class="other-songs-right-side">
+          <div class="queue-holder">
+            <div class="queue-header">your Q</div>
+            <span class="queue-songs">
+              click on +Q to add a song to your Q. songs stay in your Q for a single play
+            </span>
           </div>
-        </div>
-        <div class="remark-section">
-          <div class="remark-header" data-filer="">
-            remarks<br>
+          <div class="topsongs-section">
+            <div class="remark-header">
+              remarks------------>
+            </div>
+            <textarea class="remark-input"></textarea>
+            <button class="remark-input-btn">post</button>
+            <div class="remark-news">&links add the song to your Q</div>
+            <div class="topsongs-holder">
+            </div>
           </div>
-          <textarea class="remark-input"></textarea>
-          <button class="remark-input-btn">post</button>
-          <span class="refresh">home</span>
-          <div class="remark-news">&links add the song to your Q</div>
-          <span class="remarks">
-          </span>
-          <span class="pagination"><a class="next-remark-btn" data-remark-page="1" data-remark-filter>more</a></span>
-          <br>
-        </div>
-        <div class="queue-holder">
-          <div class="queue-header">your Q</div>
-          <span class="queue-songs">
-            click on +Q to add a song to your Q. songs stay in your Q for a single play
-          </span>
         </div>
       </div>
-    </div>
+    </span>
+    <span class="right-remarks">
+      <div class="remark-section">
+        <div class="remark-header" data-filer="">
+          remarks<br>
+        </div>
+        <span class="refresh">home</span>
+        <span class="remarks">
+        </span>
+        <span class="pagination"><a class="next-remark-btn" data-remark-page="1" data-remark-filter>more</a></span>
+        <br>
+      </div>
+    </span>
   </div>
 </div>
 

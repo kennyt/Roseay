@@ -42,7 +42,8 @@ class ApplicationController < ActionController::Base
         author: song.author.username,
         authored: current_user ? current_user == song.author : false,
         # author_id: song.author.id,
-        time: distance_of_time_in_words(song.created_at - Time.now)
+        time: distance_of_time_in_words(song.created_at - Time.now),
+        listen_count: song.song_listens.length
         # uphubbed: current_user ? current_user.songhubs.include?(song) ? 1 : 0 : 0,
         # author_avg: song.author.avg,
         # author_total: song.author.total,

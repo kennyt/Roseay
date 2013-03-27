@@ -25,24 +25,14 @@ $(function(){
   page = 0;
 
   var signInRemarks = function(){
-    $('.remark-news').hide();
-    $('.next-remark-btn').hide();
-    $('.refresh').hide();
     $('.about').hide();
     $('.submit-button').hide();
     $('.small_header_index').hide();
     $('#song-search').hide();
-    $('.remarks').append('<div class="remarks-login" style="margin-left:50px"></div>')
-    $('.remarks-login').append('<h5>you need to sign in to see remarks<br>(won\'t leave page)</h5>')
-    $('.remarks-login').append('<h2>sign in</h2>')
-    $('.remarks-login').append($('.new_user')[0]);
-    $('.remarks-login').append('<h2>join</h2>')
-    $('.remarks-login').append($('.new_user')[1]);
   }
 
   var fetchSongs = function(callback){
-    $('h1').append('<span class="song-refreshing"> | loading...</span>')
-    // $('#songwrap').html('<br><span class="song-holder">loading</span>')
+    $('h1 a').append('<span class="song-refreshing">loading</span>');
     songs = [];
     names = [];
     page = 0;
@@ -63,6 +53,7 @@ $(function(){
         $.each(firstpage, function(i, song){
           setupSong(song);
         })
+        // setupTopSongs();
         if (callback){
           callback();
         }
@@ -111,6 +102,20 @@ $(function(){
 
     $('.other-songs-right-side').append('<span class="song"></span>')
     $($('.other-songs-right-side .song')[i]).append('<span id="song"><a data-songid="'+songID+'" href="/songs?d='+link+'">'+song["song_artist"]+" - "+song["song_name"]+'</a></span>&nbsp;<span data-song-name="'+song['song_artist']+ ' - ' + song['song_name']+'" data-songid="'+songID+'" class="add-to-queue">+Q </span><br>')
+  }
+
+  var setupTopSong = function(i, song){
+    var songID = song['id']
+    var link = song['song_link'].split('watch?v=')[1]
+    var points = song['points']
+    var createdAt = song['created_at']
+
+    if (link == undefined){
+      var link = song['song_link'];
+    }
+
+    $('.topsongs').append('<span class="song"></span>')
+    $($('.topsongs .song')[i]).append('<li id="song"><a data-songid="'+songID+'" href="/songs?d='+link+'">'+song["song_artist"]+" - "+song["song_name"]+'</a></span>&nbsp;<span data-song-name="'+song['song_artist']+ ' - ' + song['song_name']+'" data-songid="'+songID+'" class="add-to-queue">+Q </li>')
   }
 
   var fillOtherSongs = function(songId){
@@ -202,6 +207,17 @@ $(function(){
     $('.other-songs-holder').show();
   }
 
+  var setupTopSongs = function(){
+    var dupSongs = songs.slice();
+    var topSongs = dupSongs.sort(function(a,b){return b['listen_count']-a['listen_count']}).slice(0, 10);
+    $('.topsongs-holder').empty();
+    $('.topsongs-holder').append('<h3 style="margin-left:60px; margin-bottom:-50px;">most listened</h3><br>')
+    $('.topsongs-holder').append('<ol class="topsongs"></ol>')
+    $.each(topSongs, function(i, song){
+      setupTopSong(i, song);
+    })
+  }
+
   var fetchRemarks = function(page, filter, callback) {
     idleSeconds = 0
     if (!(page)) {
@@ -212,7 +228,7 @@ $(function(){
     $.getJSON(
       '/remarks.json?page='+page+'&filter='+filter,
       function(response){
-        $('.remark-header').html('remarks');
+        // $('.remark-header').html('remarks');
         $('.remarks').empty();
         if (response.length){
           $.each(response, function(i, datum){
@@ -233,7 +249,7 @@ $(function(){
     $('.remarks').append('<div class="remark" id="'+i+'"><span class="remark-text"><b><span class="user" href="/users/'+datum["author_id"]+
                          '" data_author_total="'+datum["author_total"]+'" data_author_avg="'+datum["author_avg"]+
                          '" data_author_submissions="'+datum["author_submissions"]+'">'+datum["author"]+
-                         ' ('+datum['author_total']+')</span></b> | <span class="remark-info">'+datum['time']+' ago</span> <br><span class="remark-body">'+
+                         ' ('+datum['author_total']+')</span></b><span class="remark-info"></span> <br><span class="remark-body">'+
                          datum['body']+'</span><span></div>')
     if (datum['authored']){
       $('.remarks #'+i+' .remark-info').append('&nbsp;| <span class="delete-remark" data-remark-id="'+datum['id']+'">delete</span>')
@@ -345,7 +361,9 @@ $(function(){
     if ($('.backbtn').html() == 'go home'){
       $('.backbtn').trigger('click');
     }
-
+    $('.right-side-wrapper').show();
+    $('.left-side-wrapper').attr('style', '');
+    $('.next-song-btn').attr('style', '');
     $('.backbtn').show();
     $('.submit-button').show();
     $('.small_header_index').show();
@@ -814,26 +832,43 @@ $(function(){
     ev.preventDefault();
     ev.stopImmediatePropagation();
 
-    fetchSongs(function(){
-      $('.nextbtn').show();
-      $('.backbtn').html('back');
-      $('.backbtn').show();
-      $('.submit-button').show();
-      $('.small_header_index').show();
-      $('#song-search').show();
-    })
-    // $.getJSON(
-    //   '/songs.json?page=-1',
-    //   function(data){
-    //     $('#songwrap').remove();
-    //     $('#12345').attr('data-time', '')
-    //     $('#12345').append('<ol start="1" id="songwrap"></ol>')
-    //     $.each(data, function(i, datum){
-    //       setupSong(datum);
-    //     })
-    //     $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page=1">more</a></span></span>')
-    //   }
-    // )
+    if ($('#logged_in').length){
+      fetchSongs(function(){
+        $('.right-side-wrapper').show();
+        $('.left-side-wrapper').attr('style', '');
+        $('.next-song-btn').attr('style', '');
+        $('.nextbtn').show();
+        $('.backbtn').html('back');
+        $('.backbtn').show();
+        $('.submit-button').show();
+        $('.small_header_index').show();
+        $('#song-search').show();
+        setupTopSongs();
+      })
+    } else {
+      fetchSongs(function(){
+        var login = $('.new_user')[0];
+        var join = $('.new_user')[1];
+        setupTopSongs();
+        $('.right-side-wrapper').show();
+        $('.left-side-wrapper').attr('style', '');
+        $('.next-song-btn').attr('style', '');
+        $('.nextbtn').show();
+        $('.backbtn').html('back');
+        $('.backbtn').show();
+        $('.submit-button').show();
+        $('.small_header_index').show();
+        $('#song-search').show();
+
+        $('.topsongs .song').slice(3,10).hide();
+        $('.topsongs-holder').append('<div class="remarks-login"></div>')
+        $('.remarks-login').append('<h5>sign in to see rest<br>(won\'t leave page)</h5>')
+        $('.remarks-login').append('<h2>sign in</h2>')
+        $('.remarks-login').append(login);
+        $('.remarks-login').append('<h2>join</h2>')
+        $('.remarks-login').append(join);
+      })
+    }
   })
 
   // $('body').on('click', ' .song-id-filter', function(){
@@ -854,7 +889,7 @@ $(function(){
     $('.nextbtn').hide();
     $('.backbtn').html('go home');
     $('.backbtn').attr('class', 'backbtn');
-    $('#songwrap').append('<div class="about-text">we\'re leading the war against robots,<br>robots who decide what music we listen to<br>join the human music movement<br><br>it really sucks how we currently discover music.<br>constantly listening to \'related videos\' - <br>ain\'t nobody got time for that<br><br><br><strong>listening</strong><br><br>1. click play<br><br><br><strong>submitting</strong><br><br>1. <strong>you</strong> post a song (anyone can post) <br><br>2. the song <strong>instantly</strong> goes onto everyone\'s list <br><br> 3. people vote it up!</div>')
+    $('#songwrap').append('<div class="about-text">we\'re leading the war against robots,<br>robots who decide what music we listen to<br>join the human music movement<br><br>discovering music sucks.<br>constantly clicking through \'related videos\' - <br>ain\'t nobody got time for that<br><br><br><strong>listening</strong><br><br>1. click play<br><br><br><strong>submitting</strong><br><br>1. <strong>you</strong> post a song (anyone can post) <br><br>2. the song <strong>instantly</strong> goes onto everyone\'s list <br><br> 3. people vote it up!</div>')
     // $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><i>"they ask me what I do and who I do it fo"</i><br>-Two Chainz<br><br>we do it because we think the people who share good music<br>are the most awesome people in the world<br><br><b>Jarvis</b><br>Jarvis is the reason that after every song finishes,<br>another song begins to play.<br>Jarvis will intelligently calculate an algorithm that will <br>play the song best matched to your needs, wants, desires.<br> (joking, he chooses a song randomly on the left side of the page)<br>if Jarvis sees that you have a song in your Q <br> he will play the top one. otherwise it\'s up to him to play a song<br>Jarvis is just smart enough to know when you change the page<br>Jarvis loves you<br><br>on the song list, notice the "&" numbers.<br> type it in a remark and it will allow people to queue that song up easily.<br>for example: queue this song up -> <span class="add-to-queue remark-queue" data-link="/songs?d=6jhC6GjGC5M" data-name="Knife Party - Internet Friends (AnonFM Remix)">&25</span><br><br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>leave jarvis on and party<br>.roseay</div>')
   })
 
@@ -902,12 +937,12 @@ $(function(){
         'password_confirmation': password_confirmation
       }}, function(response){
         if (!(response['error'])){
-          fetchRemarks(page - 1, '', function(){
+          $('.top_header').prepend('<span id="logged_in"></span><a href="/sessions/'+response['id']+'" class="logout" data-method="delete" rel="nofollow" style="margin-left:50px;">logout</a>');
+          fetchRemarks(0, '', function(){
             $('.refresh').html('home')
             $('.next-remark-btn').show();
             $('.refresh').show();
             $('.remark-news').show();
-            $('.top_header').prepend('<span id="logged_in"></span><a href="/sessions/'+response['id']+'" class="logout" data-method="delete" rel="nofollow" style="margin-left:50px;">logout</a>');
           })
           if ($('.left-side-wrapper #song a').length){
             $('h1 a').trigger('click');
@@ -937,13 +972,13 @@ $(function(){
         'password' : password
       }}, function(response){
         if (!(response['error'])){
+          $('.top_header').prepend('<span id="logged_in"></span><a href="/sessions/'+response['id']+'" class="logout" data-method="delete" rel="nofollow" style="margin-left:50px;">logout</a>')
           $('#newSongModal h4').html('youtube/soundcloud links');
           fetchRemarks(0, '', function(){
             $('.refresh').html('home')
             $('.next-remark-btn').show();
             $('.refresh').show();
             $('.remark-news').show();
-            $('.top_header').prepend('<span id="logged_in"></span><a href="/sessions/'+response['id']+'" class="logout" data-method="delete" rel="nofollow" style="margin-left:50px;">logout</a>')
           })
           if ($('.left-side-wrapper #song a').length){
             $('h1 a').trigger('click');
@@ -958,13 +993,6 @@ $(function(){
     )
   })
  
-
-  // if (!($('#logged_in').length)){
-  //   $('#login-modal').trigger('click');
-  // }
-
-
-  // $('.backbtn').toggleClass('inactive');
   SC.initialize({client_id:"8f1e619588b836d8f108bfe30977d6db"});
   if ($('#logged_in').length){
     fetchRemarks(0, "")
@@ -1007,6 +1035,7 @@ $(function(){
     }, 4000)
   } else {
     signInRemarks();
+    fetchRemarks(0, "")
   }
 
   if ($('.player-holder').length) {
@@ -1015,14 +1044,26 @@ $(function(){
         $('.submit-button').show();
         $('.small_header_index').show();
         $('.next-song-btn').attr('class', 'next-song-btn');
+        setupTopSongs();
       });
     } else {
+      $('.left-side-wrapper').attr('style', 'margin-left: 28%; width: 40%;')
+      $('.next-song-btn').attr('style', 'margin-top: 200px; margin-left: 15%;')
+      $('.right-side-wrapper').hide();
       $('.submit-button').hide();
       $('.small_header_index').hide();
       $('#song-search').hide();
       fetchSongs(function(){
         $('.backbtn').hide();
         $('.about').trigger('click');
+        setupTopSongs();
+        $('.topsongs .song').slice(3,10).hide();
+        $('.topsongs-holder').append('<div class="remarks-login"></div>')
+        $('.remarks-login').append('<h5>sign in to see rest<br>(won\'t leave page)</h5>')
+        $('.remarks-login').append('<h2>sign in</h2>')
+        $('.remarks-login').append($('.new_user')[0]);
+        $('.remarks-login').append('<h2>join</h2>')
+        $('.remarks-login').append($('.new_user')[1]);
       });
     }
     $('.other-songs-holder').hide();
@@ -1032,6 +1073,7 @@ $(function(){
       $('.small_header_index').show();
       fillOtherSongs($('iframe').attr('data-id'));
       $('.next-song-btn').attr('class', 'next-song-btn');
+      setupTopSongs();
     });
   }
 })
