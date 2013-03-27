@@ -455,7 +455,7 @@ $(function(){
     fetchRemarks(0, "", function(){
       $('.remark-input').val('');
       $('.remark-header').attr('data-remark-user-page', '');
-      $('.refresh').html('home');
+      $('.refresh').html('first');
     });
   })
 
@@ -939,7 +939,7 @@ $(function(){
         if (!(response['error'])){
           $('.top_header').prepend('<span id="logged_in"></span><a href="/sessions/'+response['id']+'" class="logout" data-method="delete" rel="nofollow" style="margin-left:50px;">logout</a>');
           fetchRemarks(0, '', function(){
-            $('.refresh').html('home')
+            $('.refresh').html('first')
             $('.next-remark-btn').show();
             $('.refresh').show();
             $('.remark-news').show();
@@ -975,7 +975,7 @@ $(function(){
           $('.top_header').prepend('<span id="logged_in"></span><a href="/sessions/'+response['id']+'" class="logout" data-method="delete" rel="nofollow" style="margin-left:50px;">logout</a>')
           $('#newSongModal h4').html('youtube/soundcloud links');
           fetchRemarks(0, '', function(){
-            $('.refresh').html('home')
+            $('.refresh').html('first')
             $('.next-remark-btn').show();
             $('.refresh').show();
             $('.remark-news').show();
@@ -1005,7 +1005,7 @@ $(function(){
         var page = parseInt($('.next-remark-btn').attr('data-remark-page') - 1);
         var filter = $('.next-remark-btn').attr('data-remark-filter');
         fetchRemarks(page, filter, function(){
-          $('.refresh').html('home')
+          $('.refresh').html('first')
         })
       }
     }, 4000)
@@ -1017,7 +1017,7 @@ $(function(){
         var page = parseInt($('.next-remark-btn').attr('data-remark-page') - 1);
         var filter = $('.next-remark-btn').attr('data-remark-filter');
         fetchRemarks(page, filter, function(){
-          $('.refresh').html('home')
+          $('.refresh').html('first')
         })
       }
       blurSeconds = 0;
