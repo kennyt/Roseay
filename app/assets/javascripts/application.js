@@ -363,7 +363,6 @@ $(function(){
     }
     $('.right-side-wrapper').show();
     $('.left-side-wrapper').attr('style', '');
-    $('.next-song-btn').attr('style', '');
     $('.backbtn').show();
     $('.submit-button').show();
     $('.small_header_index').show();
@@ -836,7 +835,6 @@ $(function(){
       fetchSongs(function(){
         $('.right-side-wrapper').show();
         $('.left-side-wrapper').attr('style', '');
-        $('.next-song-btn').attr('style', '');
         $('.nextbtn').show();
         $('.backbtn').html('back');
         $('.backbtn').show();
@@ -1048,7 +1046,6 @@ $(function(){
       });
     } else {
       $('.left-side-wrapper').attr('style', 'margin-left: 28%; width: 40%;')
-      $('.next-song-btn').attr('style', 'margin-top: 200px; margin-left: 15%;')
       $('.right-side-wrapper').hide();
       $('.submit-button').hide();
       $('.small_header_index').hide();
