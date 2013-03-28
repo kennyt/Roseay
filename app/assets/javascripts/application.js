@@ -1071,6 +1071,13 @@ $(function(){
       fillOtherSongs($('iframe').attr('data-id'));
       $('.next-song-btn').attr('class', 'next-song-btn');
       setupTopSongs();
+      $('.topsongs .song').slice(3,10).hide();
+      $('.topsongs-holder').append('<div class="remarks-login"></div>')
+      $('.remarks-login').append('<h5>sign in to see rest<br>(won\'t leave page)</h5>')
+      $('.remarks-login').append('<h2>sign in</h2>')
+      $('.remarks-login').append($('.new_user')[0]);
+      $('.remarks-login').append('<h2>join</h2>')
+      $('.remarks-login').append($('.new_user')[1]);
     });
   }
 })
