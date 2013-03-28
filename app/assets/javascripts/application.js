@@ -149,7 +149,7 @@ $(function(){
     } else {
       var embedSongLink = 'd='+song['song_link'].split('?v=')[1]
     }
-    $('.other-songs-right-side').append('<span class="song_link">link ~ roseay.com/songs?'+embedSongLink+'</span><br>');
+    $('.other-songs-right-side').append('<span class="song_link">share this song! ~ roseay.com/songs?'+embedSongLink+'</span><br>');
 
     $.each(songs, function(i, checkSong){
       if (checkSong['author'] == song['author']){
