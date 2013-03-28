@@ -59,7 +59,7 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
       text-decoration: none;
       color: #36A179;
     }
-    font-size: 11px;
+    font-size: 12px;
   }
   .upvote {
     &:hover {
@@ -255,7 +255,7 @@ h1 {
 }
 .right-side-wrapper {
   background: #13060E;
-  width: 665px;
+  width: 700px;
   float: left;
   /*border-radius: 10px;*/
   margin-top: 5px;
@@ -365,7 +365,7 @@ body {
 }
 
 .page-wrapper {
-  margin-left: 1%;
+  margin-left: 0%;
 }
 
 .player-holder-text {
@@ -496,7 +496,7 @@ iframe {
   background: white;
   background: #13060E;
   position: relative;
-  width: 110px;
+  width: 145px;
   height: 75%;
   float: left;
   /*margin-top: 100px;*/
@@ -506,6 +506,7 @@ iframe {
 }
 
 .topsongs-section {
+  margin-top: 4px;
   background: white;
   position: relative;
   float: left;
@@ -518,6 +519,7 @@ iframe {
   float: left;
   min-height: 600px;
   background: white;
+  margin-top: 4px;
   /*border-bottom-left-radius: 10px;*/
   /*border-bottom-right-radius: 10px;*/
 }
@@ -548,7 +550,6 @@ iframe {
   min-height: 275px;
   background: #205560;
   color: white;
-  border-bottom: solid #CCCCCC 1px;
   a {
     color: white;
   }
@@ -683,7 +684,7 @@ iframe {
   border-radius: 4px;
   background: #49182C;
   color: white;
-  margin-left: -170px;
+  margin-left: -150px;
 
   &:hover{
     background: #C75769;
@@ -743,7 +744,7 @@ iframe {
 }
 
 .refresh {
-  margin-left: 30px;
+  margin-left: 50px;
   font-family: arial;
   font-size: 13px;
   width: 100px;
