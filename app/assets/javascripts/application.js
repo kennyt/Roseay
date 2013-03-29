@@ -417,7 +417,7 @@ $(function(){
     }
   })
 
-  $('.testing1').on('click', '.delete-remark', function(){
+  $('body').on('click', '.delete-remark', function(){
     var remark_id = $(this).attr('data-remark-id')
     var page      = parseInt($('.next-remark-btn').attr('data-remark-page'))-1
     $.post(
