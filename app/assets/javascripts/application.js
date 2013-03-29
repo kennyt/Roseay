@@ -32,6 +32,15 @@ $(function(){
   }
 
   var fetchSongs = function(callback){
+    var beingPlayed = false;
+    $.each(songs, function(i, song){
+      if (song['being-played']){
+        console.log('hi ken')
+        beingPlayed = song;
+        console.log(beingPlayed)
+      }
+    })
+    console.log(beingPlayed);
     $('h1 a').append('<span class="song-refreshing">loading</span>');
     songs = [];
     names = [];
@@ -46,6 +55,9 @@ $(function(){
         $('.nextbtn').attr('class', 'nextbtn');
 
         $.each(response, function(i, datum){
+          if (datum['id'] == beingPlayed['id']){
+            datum['being-played'] = true;
+          }
           songs.push(datum);
           names.push(datum['song_artist'].toLowerCase() + ' - ' +  datum['song_name'].toLowerCase())
         })
