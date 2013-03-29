@@ -35,12 +35,9 @@ $(function(){
     var beingPlayed = false;
     $.each(songs, function(i, song){
       if (song['being-played']){
-        console.log('hi ken')
         beingPlayed = song;
-        console.log(beingPlayed)
       }
     })
-    console.log(beingPlayed);
     $('h1 a').append('<span class="song-refreshing">loading</span>');
     songs = [];
     names = [];
