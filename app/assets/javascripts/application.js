@@ -66,12 +66,17 @@ $(function(){
     var link = datum['song_link'].split('watch?v=')[1]
     var points = datum['points']
     var createdAt = datum['created_at']
+    if (datum['being-played']){
+      var beingPlayed = ' being-played';
+    } else {
+      var beingPlayed = '';
+    }
 
     if (link == undefined){
       var link = datum['song_link'];
     }
 
-    $('#songwrap').append('<li class="song" id="'+songID+'"></li>')
+    $('#songwrap').append('<li class="song'+beingPlayed+'" id="'+songID+'"></li>')
     if (datum['voted'] == 0){
       $('#'+songID).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
     } else if (datum['voted'] == 1){
@@ -671,14 +676,23 @@ $(function(){
   })
 
   $('body').on('click', '#song a', function(ev){
+    $('.being-played').attr('class', 'song')
     var clickedId = $(this).parent().parent().attr('id');
     if (!(clickedId)){
       clickedId = $(this).attr('data-songid');
     }
+    $('.song#'+clickedId).attr('class', 'song being-played');
     ev.preventDefault();
     ev.stopImmediatePropagation();
     fillOtherSongs(clickedId);
     playerNumber ++;
+
+    $.each(songs, function(i, checkSong){
+      checkSong['being-played'] = false;
+      if (checkSong['id'] == clickedId){
+        checkSong['being-played'] = true;
+      }
+    })
 
     $('.testing1').attr('data-song-number', playerNumber);
     $('.player-holder').remove();
