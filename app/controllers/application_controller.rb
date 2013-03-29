@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   include ActionView::Helpers::DateHelper
 
   def build_cookie(user)
-    cookies[:user_id] = user.id
-    cookies[:token] = SecureRandom.uuid
+    cookies.permanent[:user_id] = user.id
+    cookies.permanent[:token] = SecureRandom.uuid
     user.session_token = cookies[:token]
     user.save
   end
