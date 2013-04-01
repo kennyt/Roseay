@@ -849,6 +849,21 @@ iframe {
 
 .clash {
   background: #81B2D5;
-  /*color: black;*/
-  /*background: #FF3300;*/
+}
+
+#songwrap {
+  .song {
+    &:hover{
+      border-right: solid #205560 5px;
+    }
+  }
+}
+
+.queue-add-successful {
+  background: #81D593;
+  color: black;
+  width: 50px;
+  position: absolute;
+  border-radius: 3px;
+  text-align: center;
 }

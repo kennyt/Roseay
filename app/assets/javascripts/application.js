@@ -331,6 +331,7 @@ $(function(){
   }
 
   function onPlayerReady(event){
+    $($('iframe')[1]).remove();
     event.target.playVideo();
   }
   
@@ -369,6 +370,15 @@ $(function(){
         'song_id': songId
       }}
     )
+  }
+
+  var createAddedQueueTooltip = function(y, x){
+    $('body').append('<span class="queue-add-successful" id="'+x+'-'+y+'">added</span>')
+    $('#'+x+'-'+y).css('top', y - 10);
+    $('#'+x+'-'+y).css('left', x + 30);
+    setTimeout(function(){
+      $('#'+x+'-'+y).remove();
+    }, 1500)
   }
 
   $('.next-song-btn').click(function(ev){
@@ -712,7 +722,6 @@ $(function(){
       }, 13500)
     }
 
-    $('iframe').remove();
     var link   = this['href'].split('songs?d=')[1]
     var songId = $(this).parent().parent().attr('id')
     $('.testing1').attr('data-youtube-code', link + '?autoplay=1&controls=1&iv_load_policy=3&autohide=1&modestbranding=1&vq=hd360')
@@ -747,7 +756,7 @@ $(function(){
     document.title = $(this).html().replace(/&amp;/g, '&');
   })
 
-  $('body').on('click', '.add-to-queue', function(){
+  $('body').on('click', '.add-to-queue', function(ev){
     var songID = $(this).attr('data-songid')
     var songName = $('.song#'+songID+' #song a').html();
     if (!(songName)){
@@ -761,6 +770,7 @@ $(function(){
       songLink = $(this).attr('data-link');
       songName = $(this).attr('data-name');
     }
+    createAddedQueueTooltip(ev.pageY, ev.pageX);
     $('.queue-songs').append('<div class="queue-song" id="'+songID+'"><span id="song" data-queue="1"><a href="'+songLink+'">'+songName+'</a> | <span class="delete-queue">delete</span> </span></div> ')
   })
 
