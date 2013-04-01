@@ -6,8 +6,9 @@ class ApplicationController < ActionController::Base
   def build_cookie(user)
     cookies.permanent[:user_id] = user.id
     cookies.permanent[:token] = SecureRandom.uuid
-    user.session_token = cookies[:token]
-    user.save
+    user.update_attribute(:session_token, cookies[:token])
+    # user.session_token = cookies[:token]
+    # user.save
   end
 
   def current_user
@@ -43,7 +44,7 @@ class ApplicationController < ActionController::Base
         authored: current_user ? current_user == song.author || current_user.id == 8 || current_user.id == 11 : false,
         # author_id: song.author.id,
         time: distance_of_time_in_words(song.created_at - Time.now),
-        listen_count: song.trailing_seven_listens.length
+        listen_count: song.song_listens.length
         # uphubbed: current_user ? current_user.songhubs.include?(song) ? 1 : 0 : 0,
         # author_avg: song.author.avg,
         # author_total: song.author.total,

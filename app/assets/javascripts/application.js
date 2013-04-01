@@ -66,6 +66,13 @@ $(function(){
         if (callback){
           callback();
         }
+        var counter = 0;
+        while (counter < 30){
+         if ($($('#songwrap .song')[counter]).attr('class') == 'song'){
+          $($('#songwrap .song')[counter]).attr('style', 'background:#F4F5E0;');
+         }
+         counter += 2;
+        }
       }
     )
   }
@@ -102,6 +109,9 @@ $(function(){
     if (datum['authored']){
       $('#'+songID+' .info_bar').append(' | <span class="delete-song" data-delete-id="'+songID+'">delete</span>')
     }
+    // if ((i) && (i%2 == 0)){
+    //   $('#' + songID).attr('class', $('#'+songID).attr('class')+' even-song');
+    // }
   }
 
   var setupSongBelowPlayer = function(i, song){
@@ -553,6 +563,13 @@ $(function(){
         $('.backbtn').toggleClass('inactive');
       }
     }
+    var counter = 0;
+    while (counter < 30){
+     if ($($('#songwrap .song')[counter]).attr('class') == 'song'){
+      $($('#songwrap .song')[counter]).attr('style', 'background:#F4F5E0;');
+     }
+     counter += 2;
+    }
   })
 
   $('#12345').on('click', '.nextbtn', function(ev){
@@ -572,6 +589,13 @@ $(function(){
       $.each(songs.slice(page*30, page*30+30), function(i, song){
         setupSong(song);
       })
+      var counter = 0;
+      while (counter < 30){
+       if ($($('#songwrap .song')[counter]).attr('class') == 'song'){
+        $($('#songwrap .song')[counter]).attr('style', 'background:#F4F5E0;');
+       }
+       counter += 2;
+      }
     }
 
     ev.stopImmediatePropagation()
@@ -694,6 +718,7 @@ $(function(){
       clickedId = $(this).attr('data-songid');
     }
     $('.song#'+clickedId).attr('class', 'song being-played');
+    $('.song#'+clickedId).attr('style', '');
     ev.preventDefault();
     ev.stopImmediatePropagation();
     fillOtherSongs(clickedId);
@@ -750,6 +775,13 @@ $(function(){
       if (!($('.queue-songs a').length)){
         $('.queue-songs').html('click on +Q to add a song to your Q. songs stay in your Q for a single play')
       }
+    }
+    var counter = 0;
+    while (counter < 30){
+     if ($($('#songwrap .song')[counter]).attr('class') == 'song'){
+      $($('#songwrap .song')[counter]).attr('style', 'background:#F4F5E0;');
+     }
+     counter += 2;
     }
 
     checkValidListen(playerNumber, clickedId);
@@ -812,6 +844,13 @@ $(function(){
       $.each(randomSongs, function(i, song){
         setupSong(song);
       })
+      var counter = 0;
+      while (counter < 30){
+        if ($($('#songwrap .song')[counter]).attr('class') == 'song'){
+          $($('#songwrap .song')[counter]).attr('style', 'background:#F4F5E0;');
+        }
+        counter += 2;
+      }
     }
   })
 
