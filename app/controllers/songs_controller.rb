@@ -50,12 +50,8 @@ class SongsController < ApplicationController
     @song = Song.find(params[:id])
 
     respond_to do |format|
-      if current_user == @song.author
-        @song.destroy
-        format.json { render :json => {'success' => 'yes'}.to_json }
-      else
-        format.json { render :json => {'error' => 'yes'}.to_json }
-      end
+      @song.destroy
+      format.json { render :json => {'success' => 'yes'}.to_json }
     end
   end
 

@@ -452,12 +452,7 @@ $(function(){
       '/songs/'+ songId + '.json',
       {'_method': 'delete'},
       function(response){
-        if (response['success']){
-          $('h1 a').trigger('click');
-        } else if (response['error']) {
-          $('.song#'+songId+' a').html(origName + '(couldn\'t delete for some reason)');
-        }
-        
+        $('h1 a').trigger('click');
       }
     )
   })
@@ -466,7 +461,6 @@ $(function(){
     $('.refresh').html('refreshing..');
     $('.next-remark-btn').attr('data-remark-filter', '');
     fetchRemarks(0, "", function(){
-      $('.remark-input').val('');
       $('.remark-header').attr('data-remark-user-page', '');
       $('.refresh').html('first');
     });
