@@ -331,7 +331,6 @@ $(function(){
   }
 
   function onPlayerReady(event){
-    $($('iframe')[1]).remove();
     event.target.playVideo();
   }
   
@@ -726,6 +725,7 @@ $(function(){
     var songId = $(this).parent().parent().attr('id')
     $('.testing1').attr('data-youtube-code', link + '?autoplay=1&controls=1&iv_load_policy=3&autohide=1&modestbranding=1&vq=hd360')
     $('.testing1').attr('data-song-played', songId);
+    $('iframe').remove();
 
     if (link == undefined){
       var link = datum['song_link'];
