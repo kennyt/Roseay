@@ -1146,4 +1146,9 @@ $(function(){
       $('.remarks-login').append($('.new_user')[1]);
     });
   }
+  $('html').keydown(function(event) {
+    if (event.keyCode == 39){
+      $('.next-song-btn').trigger('click');
+    }
+  })
 })

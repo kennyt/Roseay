@@ -69,10 +69,6 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
   }
 }
 
-.remark-queue {
-
-}
-
 .upvote {
   position: relative;
   top: 7px;
@@ -869,4 +865,11 @@ iframe {
   &:hover{
     pointer: default;
   }
+}
+
+.right-arrow-info {
+  position: absolute;
+  margin-left: 100px;
+  font-size: 10px;
+  font-family: arial;
 }
