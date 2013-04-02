@@ -862,9 +862,7 @@ iframe {
   position: absolute;
   border-radius: 3px;
   text-align: center;
-  &:hover{
-    pointer: default;
-  }
+  cursor: default;
 }
 
 .right-arrow-info {
@@ -872,4 +870,5 @@ iframe {
   margin-left: 100px;
   font-size: 10px;
   font-family: arial;
+  cursor: default;
 }

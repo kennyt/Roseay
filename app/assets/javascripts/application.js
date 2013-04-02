@@ -809,7 +809,7 @@ $(function(){
   $('body').on('click', '.delete-queue', function(){
     $(this.parentNode.parentNode).remove();
     if (!($('.queue-songs #song a').length)){
-      $('.queue-songs').html('click on +Q to add a song to your Q. songs stay in your Q for a single play')
+      $('.queue-songs').html('click on +Q to add a song to your Q. songs stay in your Q for a single play<br><br>talk to us.<br>roseayapp@gmail.com<br> we need your help to make this place better.')
     }
   })
 
