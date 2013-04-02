@@ -31,7 +31,7 @@ class Song < ActiveRecord::Base
     related_songs.sort_by {|key, value| value}.map{|key, value| key.song_artist + ' - ' + key.song_name}
   end
 
-  def trailing_seven_listens
-    song_listens.select{|listen| Time.now - listen.created_at > 604800 }
+  def trailing_two_day_listens
+    song_listens.select{|listen| Time.now - listen.created_at < 172800 }
   end
 end

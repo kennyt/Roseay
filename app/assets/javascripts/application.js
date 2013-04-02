@@ -235,7 +235,7 @@ $(function(){
     var dupSongs = songs.slice();
     var topSongs = dupSongs.sort(function(a,b){return b['listen_count']-a['listen_count']}).slice(0, 10);
     $('.topsongs-holder').empty();
-    $('.topsongs-holder').append('<h3 style="margin-left:60px; margin-bottom:-50px;">most listened</h3><br>')
+    $('.topsongs-holder').append('<h5 style="margin-left:60px; margin-bottom:-50px;">most listened (past 48 hours)</h5><br>')
     $('.topsongs-holder').append('<ol class="topsongs"></ol>')
     $.each(topSongs, function(i, song){
       setupTopSong(i, song);
