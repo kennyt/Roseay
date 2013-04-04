@@ -39,12 +39,13 @@ $(function(){
       }
     })
     $('h1 a').append('<span class="song-refreshing">loading</span>');
-    songs = [];
-    names = [];
-    page = 0;
+
     $.getJSON(
       '/songs.json',
       function(response){
+        songs = [];
+        names = [];
+        page = 0;
         $('#songwrap').empty();
         $('#songwrap').attr('start', 1)
         $('.song-refreshing').remove();
