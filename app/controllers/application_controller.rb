@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
         # author_submissions: song.author.submissions.length
       }
     end
-
+    
     songlist
   end
 

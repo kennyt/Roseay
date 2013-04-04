@@ -82,6 +82,7 @@ $(function(){
     var link = datum['song_link'].split('watch?v=')[1]
     var points = datum['points']
     var createdAt = datum['created_at']
+    var time = datum['time'].replace('about ', '');
     if (datum['being-played']){
       var beingPlayed = ' being-played';
     } else {
@@ -104,8 +105,9 @@ $(function(){
                  .append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
     $('#'+songID+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
                               .append('<span class="user">'+datum["author"]+'</span>')
-                              .append('&nbsp;|&nbsp;'+ datum['time'] +' ago &nbsp;| <span class="song-id-filter" data-id='+songID+'>&'+datum['id']+
+                              .append('&nbsp;|&nbsp;<span class="song-id-filter" data-id='+songID+'>&'+datum['id']+
                                       '</span>')
+    $('#'+songID+' .info_bar').append('<span class="song-timestamp">'+time +'</span>')
     if (datum['authored']){
       $('#'+songID+' .info_bar').append(' | <span class="delete-song" data-delete-id="'+songID+'">delete</span>')
     }
@@ -235,7 +237,7 @@ $(function(){
     var dupSongs = songs.slice();
     var topSongs = dupSongs.sort(function(a,b){return b['listen_count']-a['listen_count']}).slice(0, 10);
     $('.topsongs-holder').empty();
-    $('.topsongs-holder').append('<h5 style="margin-left:60px; margin-bottom:-50px;">most listened (past 48 hours)</h5><br>')
+    $('.topsongs-holder').append('<h5 style="margin-left:60px; margin-bottom:-50px;">recently most listened</h5><br>')
     $('.topsongs-holder').append('<ol class="topsongs"></ol>')
     $.each(topSongs, function(i, song){
       setupTopSong(i, song);
