@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   end
 
   def total
-    submissions.inject(0) {|x, y| x + y.points }
+    id == 95 ? 'chief' : submissions.inject(0) {|x, y| x + y.points }
   end
 
   def top_listened
