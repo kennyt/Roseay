@@ -766,9 +766,13 @@ $(function(){
     if (link.indexOf('soundcloud')+1){
       var link = link.replace(/%2F/g, '/').replace(/%3A/g, ':')
       SC.oEmbed(link,{auto_play:true, maxwidth:545, height:300, show_comments: true, color:'602220' }, function(track){
-        track.html['height'] = 300
-        $('.testing1').prepend(track.html);
-        bindScPlayerFinish();
+        if (track){
+          track.html['height'] = 300
+          $('.testing1').prepend(track.html);
+          bindScPlayerFinish();
+        } else {
+          $('.next-song-btn').trigger('click');
+        }
       })
     } else {
 
@@ -1134,6 +1138,7 @@ $(function(){
         $('.small_header_index').show();
         $('.next-song-btn').attr('class', 'next-song-btn');
         setupTopSongs();
+        $('.next-song-btn').show();
       });
     } else {
       $('.left-side-wrapper').attr('style', 'margin-left: 28%; width: 40%;')
@@ -1145,6 +1150,7 @@ $(function(){
         $('.backbtn').hide();
         $('.about').trigger('click');
         setupTopSongs();
+        $('.next-song-btn').show();
         $('.topsongs .song').slice(3,10).hide();
         $('.topsongs-holder').append('<div class="remarks-login"></div>')
         $('.remarks-login').append('<h5>sign in to see rest<br>(won\'t leave page)</h5>')
@@ -1163,6 +1169,7 @@ $(function(){
       $('.next-song-btn').attr('class', 'next-song-btn');
       setupTopSongs();
       $('.topsongs .song').slice(3,10).hide();
+      $('.next-song-btn').show();
       $('.topsongs-holder').append('<div class="remarks-login"></div>')
       $('.remarks-login').append('<h5>sign in to see rest<br>(won\'t leave page)</h5>')
       $('.remarks-login').append('<h2>sign in</h2>')
@@ -1176,4 +1183,5 @@ $(function(){
       $('.next-song-btn').trigger('click');
     }
   })
+  $('.next-song-btn').hide();
 })
