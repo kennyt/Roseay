@@ -46,4 +46,8 @@ class User < ActiveRecord::Base
     end
     listen_hash.sort_by{|k,v| v}[0..4].map{|key, value| key}
   end
+
+  def songs_made_twelve_hours
+    submissions.select{|song| Time.now - song.created_at < 43200 }
+  end
 end

@@ -430,7 +430,7 @@ $(function(){
         }
       }, function(response){
         if (response['error']){
-          $('#newSongModal h4').append('<br>--not logged in OR bad song link--')
+          $('#newSongModal h4').append('<br>--not logged in OR bad song link OR reached limit--')
         } else {
           $('#close-modal').trigger('click');
           $('h1 a').trigger('click');

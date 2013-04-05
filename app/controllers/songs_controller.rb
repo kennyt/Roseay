@@ -38,7 +38,7 @@ class SongsController < ApplicationController
     end
 
     respond_to do |format|
-    	if @song && @song.save
+    	if @song && @song.save && current_user.songs_made_twelve_hours.length < 6
         format.json { render :json => @song}
     	else
     		format.json { render :json => {'error' => 'yes'}.to_json }
