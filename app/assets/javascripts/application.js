@@ -1110,7 +1110,7 @@ $(function(){
 
   setInterval(function(){
     songIdle ++;
-    if (songIdle >= 20){
+    if ((songIdle >= 20)&&($('.left-side-wrapper').attr('style') == '')){
       songIdle = 0;
       fetchSongs(function(){
         var onPage = 0;
