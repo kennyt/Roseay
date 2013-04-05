@@ -17,6 +17,7 @@
 
 $(function(){
   idleSeconds = 0;
+  songIdle = 0;
   blurSeconds = 0;
   onTab = true;
   playerNumber = 0;
@@ -32,6 +33,7 @@ $(function(){
   }
 
   var fetchSongs = function(callback){
+    songIdle = 0;
     var beingPlayed = false;
     $.each(songs, function(i, song){
       if (song['being-played']){
@@ -45,6 +47,7 @@ $(function(){
       function(response){
         songs = [];
         names = [];
+        oldPage = page;
         page = 0;
         $('#songwrap').empty();
         $('#songwrap').attr('start', 1)
@@ -63,7 +66,7 @@ $(function(){
         $.each(firstpage, function(i, song){
           setupSong(song);
         })
-        // setupTopSongs();
+
         if (callback){
           callback();
         }
@@ -1100,6 +1103,21 @@ $(function(){
         blurSeconds += 1;
       }
     }, 4000)
+
+    setInterval(function(){
+      songIdle ++;
+      if (songIdle >= 20){
+        songIdle = 0;
+        fetchSongs(function(){
+          var onPage = 0;
+          while(onPage < oldPage){
+            $('.nextbtn').trigger('click');
+            onPage ++;
+          }
+          setupTopSongs();
+        })
+      }
+    }, 15000);
   } else {
     signInRemarks();
     fetchRemarks(0, "")
