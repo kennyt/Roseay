@@ -1114,14 +1114,18 @@ $(function(){
       songIdle = 0;
       fetchSongs(function(){
         var onPage = 0;
-        while(onPage < oldPage){
-          $('.nextbtn').trigger('click');
-          onPage ++;
+        if ($('.backbtn span').html() == 'unshuffle'){
+          $('.small_header_index').trigger('click');
+        } else {
+          while(onPage < oldPage){
+            $($('.nextbtn')[0]).trigger('click');
+            onPage ++;
+          }
         }
         setupTopSongs();
       })
     }
-  }, 15000);
+  }, 1000);
 
   if ($('.player-holder').length) {
     if ($('#logged_in').length){
