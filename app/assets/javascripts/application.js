@@ -1066,62 +1066,62 @@ $(function(){
   SC.initialize({client_id:"8f1e619588b836d8f108bfe30977d6db"});
   if ($('#logged_in').length){
     fetchRemarks(0, "")
-    setInterval(function(){
-      if (onTab){
-        idleSeconds += 1;
-      }
-      if ((idleSeconds  >= 20) && ($('.next-remark-btn').attr('data-remark-page'))){
-        $('.refresh').html('refreshing..');
-        var page = parseInt($('.next-remark-btn').attr('data-remark-page') - 1);
-        var filter = $('.next-remark-btn').attr('data-remark-filter');
-        fetchRemarks(page, filter, function(){
-          $('.refresh').html('first')
-        })
-      }
-    }, 4000)
-
-    window.onfocus = function(){
-      onTab = true
-      if (blurSeconds >= 15){
-        $('.refresh').html('refreshing..');
-        var page = parseInt($('.next-remark-btn').attr('data-remark-page') - 1);
-        var filter = $('.next-remark-btn').attr('data-remark-filter');
-        fetchRemarks(page, filter, function(){
-          $('.refresh').html('first')
-        })
-      }
-      blurSeconds = 0;
-    }
-
-    window.onblur = function(){
-      onTab = false
-
-    }
-
-    setInterval(function(){
-      if (!(onTab)) {
-        blurSeconds += 1;
-      }
-    }, 4000)
-
-    setInterval(function(){
-      songIdle ++;
-      if (songIdle >= 20){
-        songIdle = 0;
-        fetchSongs(function(){
-          var onPage = 0;
-          while(onPage < oldPage){
-            $('.nextbtn').trigger('click');
-            onPage ++;
-          }
-          setupTopSongs();
-        })
-      }
-    }, 15000);
   } else {
     signInRemarks();
     fetchRemarks(0, "")
   }
+  setInterval(function(){
+    if (onTab){
+      idleSeconds += 1;
+    }
+    if ((idleSeconds  >= 20) && ($('.next-remark-btn').attr('data-remark-page'))){
+      $('.refresh').html('refreshing..');
+      var page = parseInt($('.next-remark-btn').attr('data-remark-page') - 1);
+      var filter = $('.next-remark-btn').attr('data-remark-filter');
+      fetchRemarks(page, filter, function(){
+        $('.refresh').html('first')
+      })
+    }
+  }, 4000)
+
+  window.onfocus = function(){
+    onTab = true
+    if (blurSeconds >= 15){
+      $('.refresh').html('refreshing..');
+      var page = parseInt($('.next-remark-btn').attr('data-remark-page') - 1);
+      var filter = $('.next-remark-btn').attr('data-remark-filter');
+      fetchRemarks(page, filter, function(){
+        $('.refresh').html('first')
+      })
+    }
+    blurSeconds = 0;
+  }
+
+  window.onblur = function(){
+    onTab = false
+
+  }
+
+  setInterval(function(){
+    if (!(onTab)) {
+      blurSeconds += 1;
+    }
+  }, 4000)
+
+  setInterval(function(){
+    songIdle ++;
+    if (songIdle >= 20){
+      songIdle = 0;
+      fetchSongs(function(){
+        var onPage = 0;
+        while(onPage < oldPage){
+          $('.nextbtn').trigger('click');
+          onPage ++;
+        }
+        setupTopSongs();
+      })
+    }
+  }, 15000);
 
   if ($('.player-holder').length) {
     if ($('#logged_in').length){
