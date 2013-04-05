@@ -98,10 +98,10 @@ $(function(){
     }
 
     $('#songwrap').append('<li class="song'+beingPlayed+'" id="'+songID+'"></li>')
-    if (datum['voted'] == 0){
+    if ((datum['voted'] == 0)||(datum['voted'] == 1)){
       $('#'+songID).append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
-    } else if (datum['voted'] == 1){
-      $('#'+songID).append('<a href="/sessions/new" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
+    // } else if (datum['voted'] == 1){
+    //   $('#'+songID).append('<a href="/sessions/new" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
     } else {
       $('#'+songID).append('<a data_song_index="'+songs.indexOf(datum)+'" href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
     }
@@ -936,7 +936,7 @@ $(function(){
 
         $('.topsongs .song').slice(3,10).hide();
         $('.topsongs-holder').append('<div class="remarks-login"></div>')
-        $('.remarks-login').append('<h5>sign in to see rest<br>(won\'t leave page)</h5>')
+        $('.remarks-login').append('<h5>sign in to see rest and to upvote<br>(won\'t leave page)</h5>')
         $('.remarks-login').append('<h2>sign in</h2>')
         $('.remarks-login').append(login);
         $('.remarks-login').append('<h2>join</h2>')
@@ -1153,7 +1153,7 @@ $(function(){
         $('.next-song-btn').show();
         $('.topsongs .song').slice(3,10).hide();
         $('.topsongs-holder').append('<div class="remarks-login"></div>')
-        $('.remarks-login').append('<h5>sign in to see rest<br>(won\'t leave page)</h5>')
+        $('.remarks-login').append('<h5>sign in to see rest and to upvote<br>(won\'t leave page)</h5>')
         $('.remarks-login').append('<h2>sign in</h2>')
         $('.remarks-login').append($('.new_user')[0]);
         $('.remarks-login').append('<h2>join</h2>')
@@ -1171,7 +1171,7 @@ $(function(){
       $('.topsongs .song').slice(3,10).hide();
       $('.next-song-btn').show();
       $('.topsongs-holder').append('<div class="remarks-login"></div>')
-      $('.remarks-login').append('<h5>sign in to see rest<br>(won\'t leave page)</h5>')
+      $('.remarks-login').append('<h5>sign in to see rest and to upvote<br>(won\'t leave page)</h5>')
       $('.remarks-login').append('<h2>sign in</h2>')
       $('.remarks-login').append($('.new_user')[0]);
       $('.remarks-login').append('<h2>join</h2>')
