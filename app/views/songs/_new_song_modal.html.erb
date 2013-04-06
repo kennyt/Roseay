@@ -4,23 +4,30 @@
     <h3 id="myModalLabel" style="font-family: Quicksand">submit</h3>
   </div> -->
   <div class="modal-body">
-    (you have to be logged in)
-    <h4 style="font-family: Quicksand">youtube/soundcloud links</h4>
-    <p><%= form_for(@song) do |f| %>
-    <%= f.label :song_artist %>
+    <div>
+      (you have to be logged in)
+      <h4 style="font-family: Quicksand;">youtube/soundcloud links</h4>
+      <p><%= form_for(@song) do |f| %>
+      <%= f.label :song_artist %>
 
-    <%= f.text_field :song_artist %>
-    <br>
-    <%= f.label :song_name %>
+      <%= f.text_field :song_artist %>
+      <br>
+      <%= f.label :song_name %>
 
-    <%= f.text_field :song_name %>
-    <br>
-    <%= f.label :song_link %>
+      <%= f.text_field :song_name %>
+      <br>
+      <%= f.label :song_link %>
 
-    <%= f.text_field :song_link %>
-    <br>
-    <br>
-    
+      <%= f.text_field :song_link %>
+      <br>
+      <br>
+    </div>
+    <div class="rules-of-posting">
+      Quality > Quantity<br>
+      There's a limit to how much you can post per 12 hours<br>
+      Use search to check if song is already posted<br>
+      Reposts will be deleted<br>
+    </div>
   <div class="modal-footer">
     <a id="close-modal" data-dismiss="modal" aria-hidden="true">Close</a>
     <%= f.submit 'submit', class: 'song-modal-submit' %>
