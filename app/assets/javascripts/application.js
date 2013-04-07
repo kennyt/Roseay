@@ -128,7 +128,7 @@ $(function(){
     }
 
     $('.other-songs-right-side').append('<span class="song"></span>')
-    $($('.other-songs-right-side .song')[i]).append('<span id="song"><a data-songid="'+songID+'" href="/songs?d='+link+'">'+song["song_artist"]+" - "+song["song_name"]+'</a></span>&nbsp;<span data-song-name="'+song['song_artist']+ ' - ' + song['song_name']+'" data-songid="'+songID+'" class="add-to-queue">+Q </span><br>')
+    $($('.other-songs-right-side .song')[i]).append('<span id="song"><a is-blue="1" data-songid="'+songID+'" href="/songs?d='+link+'">'+song["song_artist"]+" - "+song["song_name"]+'</a></span>&nbsp;<span data-song-name="'+song['song_artist']+ ' - ' + song['song_name']+'" data-songid="'+songID+'" class="add-to-queue">+Q </span><br>')
   }
 
   var setupTopSong = function(i, song){
@@ -375,8 +375,10 @@ $(function(){
   }
 
   var createListen = function(songId, userId){
+    var q = $('.testing1').attr('is-queue');
+    var b = $('.testing1').attr('is-blue');
     $.post(
-      '/song_listens.json',
+      '/song_listens.json?q='+q+'&b='+b,
       {'song_listen' : {
         'user_id': userId,
         'song_id': songId
@@ -788,7 +790,17 @@ $(function(){
       if (!($('.queue-songs a').length)){
         $('.queue-songs').html('&nbsp;&nbsp;&nbsp;empty')
       }
+      $('.testing1').attr('is-queue', '1');
+    } else {
+      $('.testing1').attr('is-queue', '');
     }
+
+    if ($(this).attr('is-blue')){
+      $('.testing1').attr('is-blue', '1');
+    } else {
+      $('.testing1').attr('is-blue', '');
+    }
+
     var counter = 0;
     while (counter < 30){
      if ($($('#songwrap .song')[counter]).attr('class') == 'song'){
