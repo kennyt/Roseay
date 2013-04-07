@@ -34,7 +34,7 @@ $(function(){
 
   var fetchSongs = function(callback){
     songIdle = 0;
-    $('h1 a').append('<span class="song-refreshing">loading</span>');
+    $('h1 a').html('-loading-')
 
     $.getJSON(
       '/songs.json',
@@ -51,7 +51,7 @@ $(function(){
         page = 0;
         $('#songwrap').empty();
         $('#songwrap').attr('start', 1)
-        $('.song-refreshing').remove();
+        $('h1 a').html('roseay.edm');
         $('.backbtn').attr('class', 'backbtn inactive');
         $('.nextbtn').attr('class', 'nextbtn');
 
