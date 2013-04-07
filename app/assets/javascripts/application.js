@@ -377,8 +377,11 @@ $(function(){
   var createListen = function(songId, userId){
     var q = $('.testing1').attr('is-queue');
     var b = $('.testing1').attr('is-blue');
+    var s = $('.testing1').attr('is-search');
+    var sh = $('.testing1').attr('is-shuffle');
+
     $.post(
-      '/song_listens.json?q='+q+'&b='+b,
+      '/song_listens.json?q='+q+'&b='+b+'&s='+s+'&sh='+sh,
       {'song_listen' : {
         'user_id': userId,
         'song_id': songId
@@ -799,6 +802,18 @@ $(function(){
       $('.testing1').attr('is-blue', '1');
     } else {
       $('.testing1').attr('is-blue', '');
+    }
+
+    if ($('.backbtn span').html() == 'unshuffle'){
+      $('.testing1').attr('is-shuffle', '1')
+    } else {
+      $('.testing1').attr('is-shuffle', '')
+    }
+
+    if ($('.backbtn').html() == 'exit search'){
+      $('.testing1').attr('is-search', '1');
+    } else {
+      $('.testing1').attr('is-search', '');
     }
 
     var counter = 0;
