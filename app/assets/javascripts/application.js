@@ -34,18 +34,18 @@ $(function(){
 
   var fetchSongs = function(callback){
     songIdle = 0;
-    var beingPlayed = false;
-    $.each(songs, function(i, song){
-      if (song['being-played']){
-        beingPlayed = song;
-      }
-    })
     $('h1 a').append('<span class="song-refreshing">loading</span>');
 
     $.getJSON(
       '/songs.json',
       function(response){
-        songs = [];
+        var beingPlayed = false;
+        $.each(songs, function(i, song){
+          if (song['being-played']){
+            beingPlayed = song;
+          }
+        })
+
         names = [];
         oldPage = page;
         page = 0;
@@ -59,9 +59,9 @@ $(function(){
           if (datum['id'] == beingPlayed['id']){
             datum['being-played'] = true;
           }
-          songs.push(datum);
           names.push(datum['song_artist'].toLowerCase() + ' - ' +  datum['song_name'].toLowerCase())
         })
+        songs = response;
         firstpage = songs.slice(0, 30)
         $.each(firstpage, function(i, song){
           setupSong(song);
@@ -115,9 +115,6 @@ $(function(){
     if (datum['authored']){
       $('#'+songID+' .info_bar').append(' | <span class="delete-song" data-delete-id="'+songID+'">delete</span>')
     }
-    // if ((i) && (i%2 == 0)){
-    //   $('#' + songID).attr('class', $('#'+songID).attr('class')+' even-song');
-    // }
   }
 
   var setupSongBelowPlayer = function(i, song){
@@ -383,7 +380,13 @@ $(function(){
       {'song_listen' : {
         'user_id': userId,
         'song_id': songId
-      }}
+      }}, function(response){
+        if (response['like_it']){
+          if (($('.upvote-player a').length)&&($('.upvote-player a').attr('href').split('/')[2] == response['like_it'])){
+            $('.upvote-player a').trigger('click');
+          }
+        }
+      }
     )
   }
 
