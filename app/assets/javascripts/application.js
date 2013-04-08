@@ -829,6 +829,7 @@ $(function(){
   })
 
   $('body').on('click', '.add-to-queue', function(ev){
+    createAddedQueueTooltip(ev.pageY, ev.pageX);
     var songID = $(this).attr('data-songid')
     var songName = $('.song#'+songID+' #song a').html();
     if (!(songName)){
@@ -842,7 +843,6 @@ $(function(){
       songLink = $(this).attr('data-link');
       songName = $(this).attr('data-name');
     }
-    createAddedQueueTooltip(ev.pageY, ev.pageX);
     $('.queue-songs').append('<div class="queue-song" id="'+songID+'">&nbsp;&nbsp;&nbsp;<span id="song" data-queue="1"><a href="'+songLink+'">'+songName+'</a> | <span class="delete-queue">delete</span> </span></div> ')
   })
 
