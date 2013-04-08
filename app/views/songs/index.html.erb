@@ -1,36 +1,53 @@
+<div class="top-banner">
+  <div class="small_header_index">
+    <span class="small_header_text">
+      shuffle songs
+    </span>
+  </div>
+  <a href="#newSongModal" class="submit-button" data-toggle="modal">post   song</a>
+  <div class="next-song-btn clash"><div class="radio-next-text">play</div></div>
+  <div class="search">
+    <input id="song-search" placeholder="search artist or title">
+  </div>
+  <span class="right-arrow-info">tip: use right keyboard arrow for >>|</span>
+  <% if current_user %>
+    <span id="logged_in"><%= current_user.username %></span>
+    <%= link_to 'logout', session_path(current_user), method: :delete, class: 'logout' %>
+  <% else %>
+    <!-- <a id="login-modal" href="#newSessionModal" data-toggle="modal">login</a>
+    |
+    <a href="#newSessionModal" data-toggle="modal">join</a> -->
+  <% end %>
+</div>
 <div class="page-wrapper"> 
   <div class="left-side-wrapper">
-    <div class="top_header">
-      <% if current_user %>
-        <span id="logged_in"><%= current_user.username %></span>
-        <%= link_to 'logout', session_path(current_user), method: :delete, class: 'logout' %>
+    <% if @embed || @soundcloud_embed %>
+      <% if @soundcloud_embed %>
+        <% embed_info = @client.get('/oembed', :url => @soundcloud_embed) %>
+        <%= embed_info['html'].gsub('%2F', '/').gsub('%3A', ':').gsub('<iframe ', '<iframe data-id='+@id.to_s+ ' ').html_safe %>
       <% else %>
-        <!-- <a id="login-modal" href="#newSessionModal" data-toggle="modal">login</a>
-        |
-        <a href="#newSessionModal" data-toggle="modal">join</a> -->
+        <iframe  width="545" height="220" src=<%="http://www.youtube.com/embed/#{@embed}?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&fmt=18"%> frameborder="0" data-id="<%= @id %>"></iframe>
       <% end %>
+    <% else %>
+      <div class="player-holder"><span class="player-holder-text"><br><br><br>click play</span></div>
+    <% end %>
+    <div class="top_header">
       <span class="about">readme</span>
     </div>
-    <span class="right-arrow-info">tip: use right keyboard arrow for >>|</span>
 
-    <a href="#newSongModal" class="submit-button" data-toggle="modal">post   song</a>
-    <div class="big_header">
-      <h1><%= link_to 'roseay.edm', root_path %></h1>
-    </div>
-
-    <div class="small_header_index">
-      <span class="small_header_text">
-        shuffle songs
+    <div class="feed-header-holder">
+      <span class="feed-title">
+        <div class="big_header">
+          <h1><a>Refresh Song Feed</a></h1>
+        </div>
       </span>
     </div>
-    <span class="next-song-btn clash"><span class="radio-next-text">play</span></span>
+
     <div id="12345" data-time="<%=@by_time%>">
-      <div class="search">
-        <input id="song-search" placeholder="search artist or title">
-      </div>
       <span class="pagination">
         <span class="backbtn">back</span>
         <span class="nextbtn"><a href="#nextbtn">next</a></span>
+        <br><br>
       </span>
       <ol start="1" id="songwrap" >
 
@@ -41,22 +58,39 @@
         <br><br>
       </span>
     </div>
+  </div>  
+
+  <div class="topsongs-section">
+    <div class="topsongs-holder">
+    </div>
   </div>
+
+  <div class="queue-holder">
+    <div class="queue-header">your Q</div>
+    <span class="queue-songs">
+      &nbsp;&nbsp;&nbsp;empty
+    </span>
+  </div>
+
+  <span class="right-remarks">
+    <div class="remark-section">
+      <div class="remark-header">
+        remarks->
+      </div>
+      <textarea class="remark-input"></textarea>
+      <button class="remark-input-btn">post</button>
+      <!-- <div class="remark-news">&numbers add the song to your Q<br>username(total points)</div> -->
+      <span class="refresh">Refresh Remark Feed</span>
+      <span class="remarks">
+      </span>
+      <span class="pagination"><a class="next-remark-btn" data-remark-page="1" data-remark-filter>more</a></span>
+      <br>
+    </div>
+  </span>
 
   <div class="right-side-wrapper">
     <span class="left-songlist">
       <div class="testing1" data-radio="true">
-        <% if @embed || @soundcloud_embed %>
-          <% if @soundcloud_embed %>
-            <% embed_info = @client.get('/oembed', :url => @soundcloud_embed) %>
-            <%= embed_info['html'].gsub('%2F', '/').gsub('%3A', ':').gsub('<iframe ', '<iframe data-id='+@id.to_s+ ' ').html_safe %>
-          <% else %>
-            <iframe  width="545" height="220" src=<%="http://www.youtube.com/embed/#{@embed}?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&fmt=18"%> frameborder="0" data-id="<%= @id %>"></iframe>
-          <% end %>
-        <% else %>
-          <div class="player-holder"><span class="player-holder-text"><br><br><br>click play</span></div>
-        <% end %>
-
         <div class="below-player">
           <div class="other-songs-holder">
             <div class="other-songs-left-side">
@@ -66,32 +100,7 @@
             <div class="other-songs-right-side">
             </div>
           </div>
-          <div class="queue-holder">
-            <div class="queue-header">your Q</div>
-            <span class="queue-songs">
-              &nbsp;&nbsp;&nbsp;empty
-            </span>
-          </div>
-          <div class="topsongs-section">
-            <div class="remark-header">
-              remarks->
-            </div>
-            <textarea class="remark-input"></textarea>
-            <button class="remark-input-btn">post</button>
-            <div class="remark-news">&numbers add the song to your Q<br>username(total points)</div>
-            <div class="topsongs-holder">
-            </div>
-          </div>
         </div>
-      </div>
-    </span>
-    <span class="right-remarks">
-      <div class="remark-section">
-        <span class="refresh">first</span>
-        <span class="remarks">
-        </span>
-        <span class="pagination"><a class="next-remark-btn" data-remark-page="1" data-remark-filter>more</a></span>
-        <br>
       </div>
     </span>
   </div>
