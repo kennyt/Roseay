@@ -409,7 +409,6 @@ $(function(){
       $('.backbtn').trigger('click');
     }
     $('.right-side-wrapper').show();
-    $('.left-side-wrapper').attr('style', '');
     $('.backbtn').show();
     $('.submit-button').show();
     $('.small_header_index').show();
@@ -940,7 +939,6 @@ $(function(){
     if ($('#logged_in').length){
       fetchSongs(function(){
         $('.right-side-wrapper').show();
-        $('.left-side-wrapper').attr('style', '');
         $('.nextbtn').show();
         $('.backbtn').html('back');
         $('.backbtn').show();
@@ -955,7 +953,6 @@ $(function(){
         var join = $('.new_user')[1];
         setupTopSongs();
         $('.right-side-wrapper').show();
-        $('.left-side-wrapper').attr('style', '');
         $('.next-song-btn').attr('style', '');
         $('.nextbtn').show();
         $('.backbtn').html('back');
@@ -1144,7 +1141,7 @@ $(function(){
 
   setInterval(function(){
     songIdle ++;
-    if ((songIdle >= 20)&&($('.left-side-wrapper').attr('style') == '')){
+    if ((songIdle >= 20) && (!($('.backbtn').html() == 'exit search'))) {
       songIdle = 0;
       fetchSongs(function(){
         var onPage = 0;
