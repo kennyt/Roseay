@@ -916,3 +916,82 @@ iframe {
 .rules-of-posting {
   float: left;
 }
+
+@media screen and (max-width:1180px) {
+  .page-wrapper {
+    margin-left: 5%;
+  }
+  .right-arrow-info {
+    margin-left: 50%;
+  }
+}
+
+@media screen and (max-width:990px){
+  .page-wrapper {
+    margin-left: 5px;
+  }
+  .left-side-wrapper {
+    margin-right: 2px;
+  }
+}
+
+@media screen and (max-width:480px) {
+  h1 {
+    margin-left: 30%;
+  }
+  .refresh {
+    margin-left: 30%;
+  }
+  .next-song-btn {
+    margin-left: 40%;
+  }
+  .page-wrapper{
+    margin-left: 0px;
+    margin-top: 0px;
+    width: 100%;
+  }
+  .song {
+    margin-left: -20px;
+  }
+  .left-side-wrapper{
+    width: 100%;
+    margin-left: 0px;
+    margin-bottom: 3px;
+  }
+  .queue-holder {
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 3px;
+  }
+  .topsongs-section {
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 3px;
+  }
+  .topsongs-holder{
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .right-remarks {
+    width: 100%;
+    padding: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    .remark-section {
+      width: 100%;
+      padding: 0px;
+    }
+  }
+  #song-search {
+    display: none;
+  }
+  .right-arrow-info {
+    display: none;
+  }
+  .player-holder {
+    width: 100%;
+  }
+}

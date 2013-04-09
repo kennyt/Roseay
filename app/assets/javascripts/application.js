@@ -29,7 +29,6 @@ $(function(){
     $('.about').hide();
     $('.submit-button').hide();
     $('.small_header_index').hide();
-    $('#song-search').hide();
   }
 
   var fetchSongs = function(callback){
@@ -412,7 +411,6 @@ $(function(){
     $('.backbtn').show();
     $('.submit-button').show();
     $('.small_header_index').show();
-    $('#song-search').show();
     playNextSong($('.testing1').attr('data-song-played'));
     $('.radio-next-text').html('>>|');
   })
@@ -944,7 +942,6 @@ $(function(){
         $('.backbtn').show();
         $('.submit-button').show();
         $('.small_header_index').show();
-        $('#song-search').show();
         setupTopSongs();
       })
     } else {
@@ -959,7 +956,6 @@ $(function(){
         $('.backbtn').show();
         $('.submit-button').show();
         $('.small_header_index').show();
-        $('#song-search').show();
 
         $('.topsongs .song').slice(3,10).hide();
         $('.topsongs-holder').append('<div class="remarks-login"></div>')
