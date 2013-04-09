@@ -1153,7 +1153,20 @@ $(function(){
             onPage ++;
           }
         }
-        setupTopSongs();
+        if(!($('#logged_in').length)){
+          var login = $('.new_user')[0];
+          var signup = $('.new_user')[1];
+          setupTopSongs();
+          $('.topsongs .song').slice(3,10).hide();
+          $('.topsongs-holder').append('<div class="remarks-login"></div>')
+          $('.remarks-login').append('<h5>sign in to see rest and to upvote<br>(won\'t leave page)</h5>')
+          $('.remarks-login').append('<h2>sign in</h2>')
+          $('.remarks-login').append(login);
+          $('.remarks-login').append('<h2>join</h2>')
+          $('.remarks-login').append(signup);
+        } else {
+          setupTopSongs();
+        }
       })
     }
   }, 25000);
