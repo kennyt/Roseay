@@ -598,7 +598,7 @@ $(function(){
       }
     }
     var counter = 0;
-    while (counter < 30){
+    while (counter < $('#songwrap .song').length){
      if ($($('#songwrap .song')[counter]).attr('class') == 'song'){
       $($('#songwrap .song')[counter]).attr('style', 'background:#F4F5E0;');
      }
@@ -628,7 +628,7 @@ $(function(){
         setupSong(song);
       })
       var counter = 0;
-      while (counter < 30){
+      while (counter < $('#songwrap .song').length){
        if ($($('#songwrap .song')[counter]).attr('class') == 'song'){
         $($('#songwrap .song')[counter]).attr('style', 'background:#F4F5E0;');
        }
@@ -841,7 +841,7 @@ $(function(){
     }
 
     var counter = 0;
-    while (counter < 30){
+    while (counter < $('#songwrap .song').length){
      if ($($('#songwrap .song')[counter]).attr('class') == 'song'){
       $($('#songwrap .song')[counter]).attr('style', 'background:#F4F5E0;');
      }
