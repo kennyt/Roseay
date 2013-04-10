@@ -104,12 +104,13 @@ $(function(){
     } else {
       $('#'+songID).append('<a data_song_index="'+songs.indexOf(datum)+'" href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
     }
-    $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum['song_artist']+' - '+datum["song_name"]+'</a></span> &nbsp;<span data-songid="'+songID+'" class="add-to-queue">+Q </span>')
+    //  &nbsp;<span data-songid="'+songID+'" class="add-to-queue">+Q </span>
+    $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum['song_artist']+' - '+datum["song_name"]+'</a></span>')
                  .append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
     $('#'+songID+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
-                              .append('<span class="user">'+datum["author"]+'</span>')
-                              .append('&nbsp;|&nbsp;<span class="song-id-filter" data-id='+songID+'>&'+datum['id']+
-                                      '</span>')
+                              .append('<span class="user">'+datum["author"]+'('+datum["author_total"]+')</span>')
+                              // .append('&nbsp;|&nbsp;<span class="song-id-filter" data-id='+songID+'>&'+datum['id']+
+                              //         '</span>')
     $('#'+songID+' .info_bar').append('<span class="song-timestamp">'+time +'</span>')
     if (datum['authored']){
       $('#'+songID+' .info_bar').append(' | <span class="delete-song" data-delete-id="'+songID+'">delete</span>')
@@ -141,7 +142,24 @@ $(function(){
     }
 
     $('.topsongs').append('<span class="song"></span>')
-    $($('.topsongs .song')[i]).append('<li id="song"><a data-songid="'+songID+'" href="/songs?d='+link+'">'+song["song_artist"]+" - "+song["song_name"]+'</a></span>&nbsp;<span data-song-name="'+song['song_artist']+ ' - ' + song['song_name']+'" data-songid="'+songID+'" class="add-to-queue">+Q </li>')
+    //&nbsp;<span data-song-name="'+song['song_artist']+ ' - ' + song['song_name']+'" data-songid="'+songID+'" class="add-to-queue">+Q </span>
+    $($('.topsongs .song')[i]).append('<li id="song"><a data-songid="'+songID+'" href="/songs?d='+link+'">'+song["song_artist"]+" - "+song["song_name"]+'</a></li>')
+  }
+
+  var setupCurrentSong = function(songId){
+    var song = false;
+    $.each(songs, function(i, checkSong){
+      if (checkSong['id'] == songId){
+        song = checkSong;
+      }
+    })
+    $('.current-song').empty();
+    if (song){
+      if (song['voted'] == 2){
+        $('.current-song').append('<a data_song_index="'+songs.indexOf(song)+'" href="/songs/'+songId+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
+      }
+      $('.current-song').append(song['song_artist'] + ' - ' + song['song_name'])
+    }
   }
 
   var fillOtherSongs = function(songId){
@@ -354,7 +372,7 @@ $(function(){
   }
 
   var createPostSongTooltip = function(){
-    $('.left-side-wrapper').prepend('<span class="post-song-tooltip">post a song, help the human movement!</span>')
+    $('body').prepend('<span class="post-song-tooltip">post a song, help the human movement!</span>')
     setTimeout(function(){
       $('.post-song-tooltip').remove();
     }, 6000)
@@ -506,20 +524,20 @@ $(function(){
       $('.remark-input').val('');
     }
 
-    if ($('#logged_in').length){
-      $.post(
-        '/remarks.json',
-        { 'remark':{
-          'body': input
-          }
-        },
-        function(response){
-          fetchRemarks(0, filter);
+    // if ($('#logged_in').length){
+    $.post(
+      '/remarks.json',
+      { 'remark':{
+        'body': input
         }
-      )
-    } else {
-      $('.remark-input').val('you have to login to post a remark.')
-    }
+      },
+      function(response){
+        // fetchRemarks(0, filter);
+      }
+    )
+    // } else {
+    //   $('.remark-input').val('you have to login to post a remark.')
+    // }
   })
 
   $('body').on('click', '.next-remark-btn', function(ev){
@@ -556,20 +574,25 @@ $(function(){
   })
 
   $('#12345').on('click', '.backbtn', function(){
-    $('#song-search').val('');
     $('.nextbtn').show();
-    $('.backbtn').html('back')
+    $('.backbtn').html('less')
     
     if ($('.nextbtn').attr('class') == 'nextbtn inactive'){
       $('.nextbtn').toggleClass('inactive');
     }
     if (page > 0){
       page --
-      $('#songwrap').empty();
+      // $('#songwrap').empty();
       $('#songwrap').attr('start', page*30 + 1)
-      $.each(songs.slice(page*30, page*30+30), function(i, song){
-        setupSong(song);
-      })
+      // $.each(songs.slice(page*30, page*30+30), function(i, song){
+      //   setupSong(song);
+      // })
+      if ($('#songwrap .song').length % 30 == 0){
+        $('#songwrap .song').slice($('#songwrap .song').length - 30, $('#songwrap .song').length).remove();
+      } else {
+        var notThirty = $('#songwrap .song').length % 30;
+        $('#songwrap .song').slice($('#songwrap .song').length - notThirty, $('#songwrap .song').length).remove();
+      }
       if (page < 1) {
         $('.backbtn').toggleClass('inactive');
       }
@@ -586,16 +609,20 @@ $(function(){
   $('#12345').on('click', '.nextbtn', function(ev){
     ev.preventDefault();
     if ($('.nextbtn').attr('class') == 'nextbtn'){
-      if ($('.backbtn').attr('class') == 'backbtn inactive'){
+      if (($('.backbtn').attr('class') == 'backbtn inactive') && ($('.nextbtn a').html() != 'unshuffle') && ($('.nextbtn a').html() != 'exit search')){
         $('.backbtn').toggleClass('inactive');
       }
+      $('#song-search').val('');
+      $('.nextbtn a').html('more');
 
       if ((page + 2)*30 >= songs.length){
         $('.nextbtn').toggleClass('inactive');
       } 
 
+      if (page == -1){
+        $('#songwrap').empty();
+      }
       page ++
-      $('#songwrap').empty();
       $('#songwrap').attr('start', page*30 + 1)
       $.each(songs.slice(page*30, page*30+30), function(i, song){
         setupSong(song);
@@ -727,6 +754,7 @@ $(function(){
     if (!(clickedId)){
       clickedId = $(this).attr('data-songid');
     }
+    setupCurrentSong(clickedId);
     $('.song#'+clickedId).attr('class', 'song being-played');
     $('.song#'+clickedId).attr('style', '');
     ev.preventDefault();
@@ -864,10 +892,10 @@ $(function(){
     //   }
     // )
     if (songs.length) {
-      page = 1;
-      $('.nextbtn').hide();
-      $('.backbtn').html('<span style="font-size:9px;">unshuffle</span>');
-      $('.backbtn').attr('class', 'backbtn');
+      page = -1;
+      $('.backbtn').attr('class', 'backbtn inactive');
+      $('.nextbtn a').html('unshuffle');
+      $('.nextbtn').attr('class', 'nextbtn');
       $('#songwrap').empty();
       $('#songwrap').attr('start', 1)
       var randomSongs = []
@@ -937,7 +965,7 @@ $(function(){
       fetchSongs(function(){
         $('.right-side-wrapper').show();
         $('.nextbtn').show();
-        $('.backbtn').html('back');
+        $('.backbtn').html('less');
         $('.backbtn').show();
         $('.submit-button').show();
         $('.small_header_index').show();
@@ -951,18 +979,18 @@ $(function(){
         $('.right-side-wrapper').show();
         $('.next-song-btn').attr('style', '');
         $('.nextbtn').show();
-        $('.backbtn').html('back');
+        $('.backbtn').html('less');
         $('.backbtn').show();
         $('.submit-button').show();
         $('.small_header_index').show();
 
-        $('.topsongs .song').slice(3,10).hide();
-        $('.topsongs-holder').append('<div class="remarks-login"></div>')
-        $('.remarks-login').append('<h5>sign in to see trending and to upvote<br>(won\'t leave page)</h5>')
-        $('.remarks-login').append('<h2>sign in</h2>')
-        $('.remarks-login').append(login);
-        $('.remarks-login').append('<h2>join</h2>')
-        $('.remarks-login').append(join);
+        // $('.topsongs .song').slice(3,10).hide();
+        // $('.topsongs-holder').append('<div class="remarks-login"></div>')
+        // $('.remarks-login').append('<h5>sign in to see trending and to upvote<br>(won\'t leave page)</h5>')
+        // $('.remarks-login').append('<h2>sign in</h2>')
+        // $('.remarks-login').append(login);
+        // $('.remarks-login').append('<h2>join</h2>')
+        // $('.remarks-login').append(join);
       })
     }
   })
@@ -992,10 +1020,9 @@ $(function(){
   $('#song-search').keyup(function(){
       var input = $(this).val();
       if (input.length > 1){
-        page = 1;
-        $('.backbtn').html('exit search');
-        $('.backbtn').attr('class', 'backbtn');
-        $('.nextbtn').hide();
+        page = -1;
+        $('.nextbtn a').html('exit search');
+        $('.backbtn').attr('class', 'backbtn inactive');
         $('#songwrap').empty();
         $('#songwrap').attr('start', 1)
         matchedNames = [];
@@ -1023,7 +1050,7 @@ $(function(){
     var username = $('#create_username').val();
     var password = $('#create_password').val();
     var password_confirmation = $('#create_password_confirmation').val();
-    $($('h2')[1]).html('loading...')
+    $($('h3')[1]).html('loading...')
 
     $.post(
       '/users.json',
@@ -1033,13 +1060,15 @@ $(function(){
         'password_confirmation': password_confirmation
       }}, function(response){
         if (!(response['error'])){
-          $('.top_header').prepend('<span id="logged_in"></span><a href="/sessions/'+response['id']+'" class="logout" data-method="delete" rel="nofollow" style="margin-left:50px;">logout</a>');
-          fetchRemarks(0, '', function(){
-            $('.refresh').html('Refresh Remark Feed')
-            $('.next-remark-btn').show();
-            $('.refresh').show();
-            $('.remark-news').show();
-          })
+          $('#login-modal').remove();
+          $('.top-banner').prepend('<span id="logged_in"></span><a href="/sessions/'+response['id']+'" class="logout" data-method="delete" rel="nofollow">logout</a>');
+          // fetchRemarks(0, '', function(){
+          //   $('.refresh').html('Refresh Remark Feed')
+          //   $('.next-remark-btn').show();
+          //   $('.refresh').show();
+          //   $('.remark-news').show();
+          // })
+          $('#close-login-modal').trigger('click');
           if ($('.left-side-wrapper #song a').length){
             $('h1 a').trigger('click');
           }
@@ -1059,7 +1088,7 @@ $(function(){
     ev.stopImmediatePropagation();
     var username = $('#user_username').val();
     var password = $('#user_password').val();
-    $($('h2')[0]).html('loading...')
+    $($('h3')[0]).html('loading...')
 
     $.post(
       '/sessions.json',
@@ -1068,19 +1097,21 @@ $(function(){
         'password' : password
       }}, function(response){
         if (!(response['error'])){
+          $('#login-modal').remove();
           $('.top-banner').prepend('<span id="logged_in"></span><a href="/sessions/'+response['id']+'" class="logout" data-method="delete" rel="nofollow" style="margin-left:50px;">logout</a>')
           $('#newSongModal h4').html('youtube/soundcloud links');
-          fetchRemarks(0, '', function(){
-            $('.refresh').html('Refresh Remark Feed')
-            $('.next-remark-btn').show();
-            $('.refresh').show();
-            $('.remark-news').show();
-          })
+          $('#close-login-modal').trigger('click')
+          // fetchRemarks(0, '', function(){
+          //   $('.refresh').html('Refresh Remark Feed')
+          //   $('.next-remark-btn').show();
+          //   $('.refresh').show();
+          //   $('.remark-news').show();
+          // })
           if ($('.left-side-wrapper #song a').length){
             $('h1 a').trigger('click');
           }
         } else {
-          $($('h2')[0]).html('sign in')
+          $($('h3')[0]).html('sign in')
           $($('.new_user')[0]).prepend('<h4 style="color:red">wrong username or password</h4>')
           $('#user_password').val('');
           $('#user_username').val('');
@@ -1090,57 +1121,53 @@ $(function(){
   })
  
   SC.initialize({client_id:"8f1e619588b836d8f108bfe30977d6db"});
-  // if ($('#logged_in').length){
-    // fetchRemarks(0, "")
-  // } else {
-  //   signInRemarks();
-  fetchRemarks(0, "")
+
+  // fetchRemarks(0, "")
+  // setInterval(function(){
+  //   if (onTab){
+  //     idleSeconds += 1;
+  //   }
+  //   if ((idleSeconds  >= 20) && ($('.next-remark-btn').attr('data-remark-page'))){
+  //     $('.refresh').html('refreshing..');
+  //     var page = parseInt($('.next-remark-btn').attr('data-remark-page') - 1);
+  //     var filter = $('.next-remark-btn').attr('data-remark-filter');
+  //     fetchRemarks(page, filter, function(){
+  //       $('.refresh').html('Refresh Remark Feed')
+  //     })
+  //   }
+  // }, 4000)
+
+  // window.onfocus = function(){
+  //   onTab = true
+  //   if (blurSeconds >= 15){
+  //     $('.refresh').html('refreshing..');
+  //     var page = parseInt($('.next-remark-btn').attr('data-remark-page') - 1);
+  //     var filter = $('.next-remark-btn').attr('data-remark-filter');
+  //     fetchRemarks(page, filter, function(){
+  //       $('.refresh').html('Refresh Remark Feed')
+  //     })
+  //   }
+  //   blurSeconds = 0;
   // }
-  setInterval(function(){
-    if (onTab){
-      idleSeconds += 1;
-    }
-    if ((idleSeconds  >= 20) && ($('.next-remark-btn').attr('data-remark-page'))){
-      $('.refresh').html('refreshing..');
-      var page = parseInt($('.next-remark-btn').attr('data-remark-page') - 1);
-      var filter = $('.next-remark-btn').attr('data-remark-filter');
-      fetchRemarks(page, filter, function(){
-        $('.refresh').html('Refresh Remark Feed')
-      })
-    }
-  }, 4000)
 
-  window.onfocus = function(){
-    onTab = true
-    if (blurSeconds >= 15){
-      $('.refresh').html('refreshing..');
-      var page = parseInt($('.next-remark-btn').attr('data-remark-page') - 1);
-      var filter = $('.next-remark-btn').attr('data-remark-filter');
-      fetchRemarks(page, filter, function(){
-        $('.refresh').html('Refresh Remark Feed')
-      })
-    }
-    blurSeconds = 0;
-  }
+  // window.onblur = function(){
+  //   onTab = false
 
-  window.onblur = function(){
-    onTab = false
+  // }
 
-  }
-
-  setInterval(function(){
-    if (!(onTab)) {
-      blurSeconds += 1;
-    }
-  }, 4000)
+  // setInterval(function(){
+  //   if (!(onTab)) {
+  //     blurSeconds += 1;
+  //   }
+  // }, 4000)
 
   setInterval(function(){
     songIdle ++;
-    if ((songIdle >= 20) && (!($('.backbtn').html() == 'exit search'))) {
+    if ((songIdle >= 20) && (!($('.nextbtn a').html() == 'exit search'))) {
       songIdle = 0;
       fetchSongs(function(){
         var onPage = 0;
-        if ($('.backbtn span').html() == 'unshuffle'){
+        if ($('.nextbtn a').html() == 'unshuffle'){
           $('.small_header_index').trigger('click');
         } else {
           while(onPage < oldPage){
@@ -1149,16 +1176,16 @@ $(function(){
           }
         }
         if(!($('#logged_in').length)){
-          var login = $('.new_user')[0];
-          var signup = $('.new_user')[1];
+          // var login = $('.new_user')[0];
+          // var signup = $('.new_user')[1];
           setupTopSongs();
-          $('.topsongs .song').slice(3,10).hide();
-          $('.topsongs-holder').append('<div class="remarks-login"></div>')
-          $('.remarks-login').append('<h5>sign in to see rest and to upvote<br>(won\'t leave page)</h5>')
-          $('.remarks-login').append('<h2>sign in</h2>')
-          $('.remarks-login').append(login);
-          $('.remarks-login').append('<h2>join</h2>')
-          $('.remarks-login').append(signup);
+          // $('.topsongs .song').slice(3,10).hide();
+          // $('.topsongs-holder').append('<div class="remarks-login"></div>')
+          // $('.remarks-login').append('<h5>sign in to see rest and to upvote<br>(won\'t leave page)</h5>')
+          // $('.remarks-login').append('<h2>sign in</h2>')
+          // $('.remarks-login').append(login);
+          // $('.remarks-login').append('<h2>join</h2>')
+          // $('.remarks-login').append(signup);
         } else {
           setupTopSongs();
         }
@@ -1196,13 +1223,14 @@ $(function(){
         // $('.about').trigger('click');
         setupTopSongs();
         $('.next-song-btn').show();
-        $('.topsongs .song').slice(3,10).hide();
-        $('.topsongs-holder').append('<div class="remarks-login"></div>')
-        $('.remarks-login').append('<h5>sign in to see rest and to upvote<br>(won\'t leave page)</h5>')
-        $('.remarks-login').append('<h2>sign in</h2>')
-        $('.remarks-login').append($('.new_user')[0]);
-        $('.remarks-login').append('<h2>join</h2>')
-        $('.remarks-login').append($('.new_user')[1]);
+        // $('.next-song-btn').show();
+        // $('.topsongs .song').slice(3,10).hide();
+        // $('.topsongs-holder').append('<div class="remarks-login"></div>')
+        // $('.remarks-login').append('<h5>sign in to see rest and to upvote<br>(won\'t leave page)</h5>')
+        // $('.remarks-login').append('<h2>sign in</h2>')
+        // $('.remarks-login').append($('.new_user')[0]);
+        // $('.remarks-login').append('<h2>join</h2>')
+        // $('.remarks-login').append($('.new_user')[1]);
       });
     }
     $('.other-songs-holder').hide();
@@ -1213,14 +1241,15 @@ $(function(){
       // fillOtherSongs($('iframe').attr('data-id'));
       $('.next-song-btn').attr('class', 'next-song-btn');
       setupTopSongs();
-      $('.topsongs .song').slice(3,10).hide();
       $('.next-song-btn').show();
-      $('.topsongs-holder').append('<div class="remarks-login"></div>')
-      $('.remarks-login').append('<h5>sign in to see rest and to upvote<br>(won\'t leave page)</h5>')
-      $('.remarks-login').append('<h2>sign in</h2>')
-      $('.remarks-login').append($('.new_user')[0]);
-      $('.remarks-login').append('<h2>join</h2>')
-      $('.remarks-login').append($('.new_user')[1]);
+      // $('.topsongs .song').slice(3,10).hide();
+      // $('.next-song-btn').show();
+      // $('.topsongs-holder').append('<div class="remarks-login"></div>')
+      // $('.remarks-login').append('<h5>sign in to see rest and to upvote<br>(won\'t leave page)</h5>')
+      // $('.remarks-login').append('<h2>sign in</h2>')
+      // $('.remarks-login').append($('.new_user')[0]);
+      // $('.remarks-login').append('<h2>join</h2>')
+      // $('.remarks-login').append($('.new_user')[1]);
     });
   }
   $('html').keydown(function(event) {

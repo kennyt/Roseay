@@ -18,13 +18,18 @@ class RemarksController < ApplicationController
 	end
 
 	def create
-		@remark = current_user.remarks.build(params[:remark])
+		if current_user
+			@remark = current_user.remarks.build(params[:remark])
+		else
+			@remark = Remark.new(:user_id => 0, :body => params[:remark][:body])
+		end
 		@remark.body = @remark.body
 		@remark.save!
-		@remarks = Remark.order('created_at DESC').all[0..15]
+		# @remarks = Remark.order('created_at DESC').all[0..15]
 
 		respond_to do |format|
-			format.json { render :json => @remarks }
+			# format.json { render :json => @remarks }
+			format.json { render :json => {'success' => 'yes'}.to_json }
 		end
 	end
 

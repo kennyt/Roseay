@@ -9,13 +9,14 @@
   <div class="search">
     <input id="song-search" placeholder="search artist or title">
   </div>
+  <div class="current-song">No Song Playing</div>
   <span class="right-arrow-info">tip: use right keyboard arrow for >>|</span>
   <% if current_user %>
     <span id="logged_in"><%= current_user.username %></span>
     <%= link_to 'logout', session_path(current_user), method: :delete, class: 'logout' %>
   <% else %>
-    <!-- <a id="login-modal" href="#newSessionModal" data-toggle="modal">login</a>
-    |
+    <a id="login-modal" href="#newSessionModal" data-toggle="modal">login / join</a>
+    <!-- |
     <a href="#newSessionModal" data-toggle="modal">join</a> -->
   <% end %>
 </div>
@@ -44,49 +45,51 @@
     </div>
 
     <div id="12345" data-time="<%=@by_time%>">
-      <span class="pagination">
+      <!-- <span class="pagination">
         <span class="backbtn">back</span>
         <span class="nextbtn"><a href="#nextbtn">next</a></span>
         <br><br>
-      </span>
+      </span> -->
       <ol start="1" id="songwrap" >
 
       </ol>
       <span class="pagination">
-        <span class="backbtn">back</span>
-        <span class="nextbtn"><a href="#nextbtn">next</a></span>
+        <span class="backbtn">less</span>
+        <span class="nextbtn"><a href="#nextbtn">more</a></span>
         <br><br>
       </span>
     </div>
   </div>  
 
-  <div class="queue-holder">
+<!--   <div class="queue-holder">
     <div class="queue-header">your Q</div>
     <span class="queue-songs">
       &nbsp;&nbsp;&nbsp;empty
     </span>
-  </div>
+  </div> -->
 
   <div class="topsongs-section">
     <div class="topsongs-holder">
     </div>
   </div>
+  <div class="feedback-input">
+    <div class="feedback-title">Feedback/Suggestions (anonymous)</div>
+    <textarea class="remark-input"></textarea>
+    <button class="remark-input-btn">post</button>
+  </div>
 
-  <span class="right-remarks">
+<!--   <span class="right-remarks">
     <div class="remark-section">
       <div class="remark-header">
         remarks
-      </div>
-      <textarea class="remark-input"></textarea>
-      <button class="remark-input-btn">post</button>
-      <!-- <div class="remark-news">&numbers add the song to your Q<br>username(total points)</div> -->
-      <div class="refresh">Refresh Remark Feed</div>
+      </div> -->
+<!--       <div class="refresh">Refresh Remark Feed</div>
       <span class="remarks">
       </span>
       <span class="pagination"><a class="next-remark-btn" data-remark-page="1" data-remark-filter>more</a></span>
       <br>
     </div>
-  </span>
+  </span> -->
 
   <div class="right-side-wrapper">
     <span class="left-songlist">

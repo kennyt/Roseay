@@ -200,6 +200,12 @@ h1 {
   right: 10px;
 }
 
+#login-modal {
+  position: absolute;
+  top: 5px;
+  right: 30px;
+}
+
 .user_page_top_header {
   margin-left: 150px;
   a {
@@ -263,6 +269,7 @@ h1 {
   width: 544px;
   min-height: 900px;
   float: left;
+  position: relative;
 }
 .right-side-wrapper {
   background: #13060E;
@@ -551,11 +558,21 @@ iframe {
 
 .topsongs-section {
   background: white;
-  position: relative;
+  position: fixed;
   float: left;
   width: 350px;
-  margin-left: 10px;
-  margin-bottom: 20px;
+  margin-left: 560px;
+  margin-top:  90px;
+}
+
+.feedback-input {
+  text-align: center;
+  background: white;
+  color: black;
+  margin-bottom: -50px;
+  position: fixed;
+  margin-left: 560px;
+  width: 350px;
 }
 
 .queue-holder {
@@ -712,15 +729,19 @@ iframe {
 }
 
 .remark-input {
-  margin-left: 20px;
+  margin-left: 10px;
   resize: none;
-  height: 40px;
+  height: 20px;
   width: 88%;
 }
 
 .remark-input-btn {
   text-align: center;
-  margin-left: 135px;
+  margin-left: 30px;
+  margin-top: -17px;
+}
+.feedback-title {
+
 }
 
 .next-remark-btn {
@@ -802,8 +823,14 @@ iframe {
 
 .nextbtn {
   padding: 4px;
-  border-radius: 4px;
+  /*border-radius: 4px;*/
   background: #1B0910;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 43%;
+  height: 40px;
+  text-align: center;
   a {
     color: white;
   }
@@ -815,9 +842,15 @@ iframe {
 
 .backbtn {
   padding: 4px;
-  border-radius: 4px;
+  /*border-radius: 4px;*/
   background: #1B0910;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 43%;
+  height: 40px;
   color: white;
+  text-align: center;
 
   &:hover{
     background: #C75769;
@@ -856,11 +889,29 @@ iframe {
 
 
 #song-search {
-  margin-left: 20%;
+  margin-left: 113px;
   font-size: 10px;
   height: 17px;
   top: 10px;
   position: absolute;
+}
+
+.current-song {
+  cursor: default;
+  position: absolute;
+  margin-left: 28%;
+  width: 300px;
+  height: 20px;
+  overflow: hidden;
+  top: 10px;
+  .upvote {
+    font-size: 25px;
+    &:hover {
+      text-decoration: none;
+      color: red;
+      top: 7px;
+    }
+  }
 }
 
 .inactive {
@@ -924,9 +975,16 @@ iframe {
   .right-arrow-info {
     margin-left: 50%;
   }
+  .current-song {
+    width: 150px;
+    margin-left: 35%;
+  }
 }
 
 @media screen and (max-width:990px){
+  .current-song {
+    display: none;
+  }
   .page-wrapper {
     margin-top: 90px;
     margin-left: 5px;
@@ -983,6 +1041,9 @@ iframe {
     margin-top: 80px;
     width: 100%;
   }
+  .feedback-input {
+    display: none;
+  }
   .left-side-wrapper{
     width: 100%;
     margin-left: 0px;
@@ -995,10 +1056,12 @@ iframe {
     margin-bottom: 3px;
   }
   .topsongs-section {
+    position: relative;
     width: 100%;
     margin-left: 0px;
     margin-right: 0px;
     margin-bottom: 3px;
+    margin-top: 3px;
   }
   .topsongs-holder{
     width: 100%;
