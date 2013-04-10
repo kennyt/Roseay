@@ -957,8 +957,8 @@ iframe {
 
 .right-arrow-info {
   position: absolute;
-  top: 3px;
-  margin-left: 55%;
+  top: 0px;
+  margin-left: 50%;
   font-size: 10px;
   font-family: arial;
   cursor: default;
@@ -1023,6 +1023,9 @@ iframe {
   }
   .add-to-queue {
     font-size: 15px;
+  }
+  .right-arrow-info {
+    margin-left: 43%;
   }
 }
 
