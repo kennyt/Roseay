@@ -928,14 +928,47 @@ iframe {
 
 @media screen and (max-width:990px){
   .page-wrapper {
+    margin-top: 90px;
     margin-left: 5px;
+  }
+  .top-banner {
+    height: 80px;
+  }
+  .next-song-btn {
+    height: 80px;
   }
   .left-side-wrapper {
     margin-right: 2px;
   }
+  .topsongs {
+    .song a{
+      font-size: 20px;
+      margin-bottom: 25px;
+    }
+  }
+  .info_bar {
+    font-size: 13px;
+  }
+  .song a{
+    font-size: 20px;
+  }
+  .song {
+    margin-bottom: 25px;
+    margin-left: -20px;
+  }
+  .queue-song {
+    font-size: 20px;
+    margin-bottom: 25px;
+  }
+  .remark-body {
+    font-size: 15px;
+  }
+  .add-to-queue {
+    font-size: 15px;
+  }
 }
 
-@media screen and (max-width:480px) {
+@media screen and (max-width:641px) {
   h1 {
     margin-left: 30%;
   }
@@ -947,11 +980,8 @@ iframe {
   }
   .page-wrapper{
     margin-left: 0px;
-    margin-top: 40px;
+    margin-top: 80px;
     width: 100%;
-  }
-  .song {
-    margin-left: -20px;
   }
   .left-side-wrapper{
     width: 100%;

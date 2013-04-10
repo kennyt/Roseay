@@ -671,7 +671,6 @@ $(function(){
     ev.stopImmediatePropagation();
 
     var parent = this.parentNode;
-    var that = this;
     var songID = parseInt($(parent).attr('id'));
     if (!(songID)){
       songID = $(this).attr('href').split('/')[2]
@@ -679,6 +678,8 @@ $(function(){
     var index = parseInt($(this).attr('data_song_index'))
 
     path = $(this).attr('href') + '.json'
+    $(this).remove();
+    $(parent).prepend('</b>&nbsp;&nbsp;&nbsp;<b>')
     if (path == '/sessions/new.json'){
       $('#songwrap').append('<a class="need-to-login" href="#newSessionModal" data-toggle="modal">login</a>')
       $('.need-to-login').css('top', ev.pageY - 8)
@@ -687,7 +688,6 @@ $(function(){
     $.post(path, function(response){
       songs[index]['voted'] = 0;
       songs[index]['points'] ++;
-      $(that).remove();
       if ($('.left-side-wrapper .song#'+songID+' .upvote').length){
         $('.left-side-wrapper .song#'+songID+ ' .upvote').remove();
         $('.left-side-wrapper .song#'+songID).prepend('&nbsp;&nbsp;&nbsp;')
@@ -702,7 +702,6 @@ $(function(){
           $('.upvote-player').append('<div class="upvote-text">voted</div>')
         }
       } 
-      $(parent).prepend('</b>&nbsp;&nbsp;&nbsp;<b>')
     })
     }
   })
