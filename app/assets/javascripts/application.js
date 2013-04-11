@@ -852,7 +852,11 @@ $(function(){
     }
 
     checkValidListen(playerNumber, clickedId);
-    document.title = $(this).html().replace(/&amp;/g, '&');
+    if ($(this).attr('data-songid')){
+      document.title = $(this).html().replace(/&amp;/g, '&');
+    } else {
+      document.title = $($(this).children()[0]).html() + ' - ' + $($(this).children()[2]).html()
+    }
   })
 
   $('body').on('click', '.add-to-queue', function(ev){
