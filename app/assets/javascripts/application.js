@@ -855,7 +855,9 @@ $(function(){
     if ($(this).attr('data-songid')){
       document.title = $(this).html().replace(/&amp;/g, '&');
     } else {
-      document.title = $($(this).children()[0]).html() + ' - ' + $($(this).children()[2]).html()
+      var artist = $($(this).children()[0]).html().replace(/&amp;/g, '&');
+      var title = $($(this).children()[2]).html().replace(/&amp;/g, '&');
+      document.title = artist + ' - ' + title
     }
   })
 
