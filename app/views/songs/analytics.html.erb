@@ -1,0 +1,17 @@
+<b>song listens</b><br>
+<% @slistens.reverse.each do |listen| %>
+	<%= distance_of_time_in_words(listen.created_at - Time.now)%> &nbsp;&nbsp;&nbsp; id ~ <%= listen.id %>  &nbsp;&nbsp;&nbsp; song_id ~ <%= listen.song_id %> &nbsp;&nbsp;&nbsp; user_id ~ <%= listen.user_id %>
+	<br>
+<% end %>
+<br><br>
+<b>likes</b><br>
+<% @likez.reverse.each do |like| %>
+	<%= distance_of_time_in_words(like.created_at - Time.now) %> song_id ~ <%= like.song_id %> &nbsp;&nbsp;&nbsp; user_id ~ <%= like.user.username %>
+	<br>
+<% end %>
+<br><br>
+<b>songs</b><br>
+<% @songz.each do |song| %>
+	<%= distance_of_time_in_words(song.created_at - Time.now) %> &nbsp;&nbsp;&nbsp; <%= song.song_artist %> - <%= song.song_name %>&nbsp;&nbsp;&nbsp; user ~ <%= song.author.username %>
+	<br>
+<% end %>

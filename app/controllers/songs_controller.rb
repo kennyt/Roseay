@@ -17,8 +17,15 @@ class SongsController < ApplicationController
     @user = User.new
 
     respond_to do |format|
-      format.html
-      format.json { render :json => custom_song_json(@song_with_users) }
+      if params[:anal]
+        @slistens = SongListen.all[-10..-1]
+        @likez = Like.all[-3..-1]
+        @songz = Song.all[-2..-1]
+        format.html {render 'analytics'}
+      else
+        format.html
+        format.json { render :json => custom_song_json(@song_with_users) }
+      end
     end
   end
 
