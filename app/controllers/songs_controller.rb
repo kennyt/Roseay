@@ -22,6 +22,7 @@ class SongsController < ApplicationController
         @likez = Like.last
         @songz = Song.last
         @remarkz = Remark.last
+        @userz = User.last
         format.html {render 'analytics'}
       else
         format.html

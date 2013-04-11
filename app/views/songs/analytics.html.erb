@@ -24,3 +24,6 @@
 <% else %>
 	<%= @remarkz.user.username %> ~ <%= @remarkz.body %>
 <% end %>
+<br><br>
+<b>user</b><br>
+<%= distance_of_time_in_words(@userz.created_at - Time.now) %> &nbsp;&nbsp;&nbsp; id ~ <%= @userz.id.to_s %> &nbsp;&nbsp;&nbsp; <%= @userz.username %>
