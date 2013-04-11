@@ -1018,6 +1018,9 @@ $(function(){
   })
 
   $('#song-search').keyup(function(){
+      if ($(this).val() == ''){
+        $('.nextbtn').trigger('click');
+      }
       var input = $(this).val();
       if (input.length > 1){
         page = -1;
