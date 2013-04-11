@@ -19,8 +19,8 @@ class SongsController < ApplicationController
     respond_to do |format|
       if params[:anal]
         @slistens = SongListen.all[-10..-1]
-        @likez = Like.all[-3..-1]
-        @songz = Song.all[-2..-1]
+        @likez = Like.last
+        @songz = Song.last
         format.html {render 'analytics'}
       else
         format.html
