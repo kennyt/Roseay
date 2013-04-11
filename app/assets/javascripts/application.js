@@ -105,7 +105,7 @@ $(function(){
       $('#'+songID).append('<a data_song_index="'+songs.indexOf(datum)+'" href="/songs/'+songID+'/upvote" class="upvote">^</a>&nbsp;&nbsp;&nbsp;')
     }
     //  &nbsp;<span data-songid="'+songID+'" class="add-to-queue">+Q </span>
-    $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'">'+datum['song_artist']+' - '+datum["song_name"]+'</a></span>')
+    $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'"><span class="song-artist">'+datum['song_artist']+'</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="song-name">'+datum["song_name"]+'</span></a></span>')
                  .append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
     $('#'+songID+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
                               .append('<span class="user">'+datum["author"]+'('+datum["author_total"]+')</span>')

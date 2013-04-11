@@ -53,9 +53,11 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
 }
 
 .song {
-  margin: 4px;
-  margin-left: 10px;
+  /*margin: 4px;*/
+  margin-left: -20px;
   margin-right: 4px;
+  margin-bottom: 0px;
+  margin-top: 0px;
   position: relative;
   a {
     &:hover{
@@ -900,7 +902,7 @@ iframe {
   cursor: default;
   position: absolute;
   margin-left: 28%;
-  width: 200px;
+  width: 270px;
   height: 20px;
   overflow: hidden;
   top: 10px;
@@ -943,6 +945,13 @@ iframe {
     }
   }
   list-style-type: none;
+}
+
+.song-artist {
+  font-size: 11px;
+}
+.song-name {
+  font-size: 14px;
 }
 
 .queue-add-successful {
@@ -1026,6 +1035,12 @@ iframe {
   }
   .right-arrow-info {
     margin-left: 43%;
+  }
+  .song-artist {
+    margin-left: 10px;
+  }
+  .song-name {
+    margin-left: -15px;
   }
 }
 
