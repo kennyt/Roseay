@@ -1262,11 +1262,17 @@ $(function(){
     if (event.keyCode == 39){
       $('.next-song-btn').trigger('click');
     } else if (event.keyCode == 65) {
-      $('.small_header_index').trigger('click');
+      if ((!($('#song-search').val().length)) && (!($('.remark-input').val().length))) {
+        $('.small_header_index').trigger('click');
+      }
     } else if (event.keyCode == 83) {
-      $('.backbtn').trigger('click');
+      if ((!($('#song-search').val().length)) && (!($('.remark-input').val().length))) {
+        $('.backbtn').trigger('click');
+      }
     } else if (event.keyCode == 68) {
-      $('.nextbtn').trigger('click');
+      if ((!($('#song-search').val().length)) && (!($('.remark-input').val().length))) {
+        $('.nextbtn').trigger('click');
+      }
     }
   })
   $('.next-song-btn').hide();

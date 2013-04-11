@@ -17,7 +17,7 @@ class SongsController < ApplicationController
     @user = User.new
 
     respond_to do |format|
-      if params[:anal]
+      if params[:lytics]
         @slistens = SongListen.all[-10..-1]
         @likez = Like.last
         @songz = Song.last
