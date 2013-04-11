@@ -21,6 +21,7 @@ class SongsController < ApplicationController
         @slistens = SongListen.all[-10..-1]
         @likez = Like.last
         @songz = Song.last
+        @remarkz = Remark.last
         format.html {render 'analytics'}
       else
         format.html
