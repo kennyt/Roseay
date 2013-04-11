@@ -728,7 +728,10 @@ $(function(){
           $('.upvote-player').append('<div class="checkmark"></div>')
           $('.upvote-player').append('<div class="upvote-text">voted</div>')
         }
-      } 
+      }
+      if ($('.current-song .upvote').attr('href').split('/')[2] == songID){
+        $('.current-song .upvote').remove();
+      }
     })
     }
   })
