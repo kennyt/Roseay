@@ -1,3 +1,4 @@
+<div class="big-picture"></div>
 <div class="top-banner">
   <div class="small_header_index">
     <span class="small_header_text">
@@ -165,5 +166,49 @@
       $(song).trigger('click');
     }
   }
+  $(function() {
+    $.fn.scrollBottom = function() {
+        return $(document).height() - this.scrollTop() - this.height();
+    };
+
+    var $el = $('.top-banner');
+    var $el2 = $('.topsongs-section');
+    var $window = $(window);
+
+    $window.bind("scroll resize", function() {
+        var gap = $window.height() - $el.height() - 10;
+        var visibleFoot = 400 - $window.scrollBottom();
+        var scrollTop = $window.scrollTop()
+        
+        if(scrollTop < 400 + 10){
+            $el.css({
+                top: (400 - scrollTop) + "px",
+                bottom: "auto"
+            });
+            $el2.css({
+                top: (455 - scrollTop) + "px",
+                bottom: "auto"
+            });
+        }else if (visibleFoot > gap) {
+            $el.css({
+                top: "auto",
+                bottom: visibleFoot + "px"
+            });
+            $el2.css({
+                top: "auto",
+                bottom: visibleFoot + "px"
+            });
+        } else {
+            $el.css({
+                top: 0,
+                bottom: "auto"
+            });
+            $el2.css({
+                top: 55,
+                bottom: "auto"
+            });
+        }
+    });
+});
 
 </script>

@@ -382,11 +382,11 @@ body {
 
 .top-banner {
   position: fixed;
-  top: 0px;
+  top: 400px;
   background: #BED2E9;
-  -moz-box-shadow: 2px 2px 2px #888;
-  -webkit-box-shadow: 2px 2px 2px #888;
-  box-shadow: 2px 2px 2px #888;
+  -moz-box-shadow: 2px 2px 2px 3px #888;
+  -webkit-box-shadow: 2px 2px 2px 3px #888;
+  box-shadow: 2px 2px 2px 3px #888;
   width: 100%;
   height: 40px;
   z-index: 1;
@@ -401,7 +401,7 @@ body {
 }
 
 .page-wrapper {
-  margin-top: 55px;
+  margin-top: 455px;
   margin-left: 12%;
   width: 920px;
 }
@@ -976,6 +976,19 @@ iframe {
   float: left;
 }
 
+.big-picture {
+  top: 0px;
+  position: absolute;
+  width: 100%;
+  height: 400px;
+  background-image: url('sensation2.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  padding: 0;
+}
+
 @media screen and (max-width:1180px) {
   .page-wrapper {
     margin-left: 5%;
@@ -994,7 +1007,7 @@ iframe {
     display: none;
   }
   .page-wrapper {
-    margin-top: 90px;
+    margin-top: 490px;
     margin-left: 5px;
   }
   .top-banner {
@@ -1058,7 +1071,7 @@ iframe {
   }
   .page-wrapper{
     margin-left: 0px;
-    margin-top: 80px;
+    margin-top: 480px;
     width: 100%;
   }
   .feedback-input {
