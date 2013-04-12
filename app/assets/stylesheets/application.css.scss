@@ -48,7 +48,7 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
 
 .form {
   margin-left: 150px;
-  font-family: 'quicksand';
+  font-family: 'Open Sans';
   width: 300px;
 }
 
@@ -220,7 +220,7 @@ h1 {
 
 .user_page_list_header {
   font-size: 20px;
-  font-family: 'quicksand';
+  font-family: 'Open Sans';
 }
 
 .user {
@@ -396,7 +396,7 @@ body {
   display: table-cell;
   vertical-align: middle; 
   font-size: 20px;
-  font-family: 'quicksand';
+  font-family: 'Open Sans';
   /*font-family: 'Oxygen';*/
 }
 
@@ -409,7 +409,7 @@ body {
 .player-holder-text {
   margin-left: 32%;
   font-size: 25px;
-  font-family: 'quicksand';
+  font-family: 'Open Sans';
 }
 
 .testing1 {
@@ -512,7 +512,7 @@ iframe {
 .user_header {
   margin-top: 25px;
   margin-left: 138px;
-  font-family: 'quicksand';
+  font-family: 'Open Sans';
 }
 
 .goback {
@@ -981,8 +981,8 @@ iframe {
   height: 400px;
   background-image: url('concert.jpg');
   background-repeat: no-repeat;
-  background-position: left bottom;
-  background-attachment: fixed;
+  background-position: left 78%;
+  /*background-attachment: fixed;*/
   background-size: cover;
   padding: 0;
 }
