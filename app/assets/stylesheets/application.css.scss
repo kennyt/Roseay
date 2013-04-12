@@ -409,12 +409,12 @@ body {
 .player-holder-text {
   margin-left: 32%;
   font-size: 25px;
+  font-family: 'quicksand';
 }
 
 .testing1 {
   position: relative;
   font-size: 31px;
-  font-family: 'text me one';
   cursor: default;
   width: 545px;
   background: #0D0A1F;
@@ -437,7 +437,6 @@ iframe {
 
 .sign_in_txt {
   font-size: 26px;
-  font-family: 'text me one';
   text-align: left;
   margin-top: 24%;
   cursor: default;
@@ -717,7 +716,6 @@ iframe {
 .remark-header {
   text-align: center;
   margin-right: 20px;
-  font-family: 'text me one';
   font-size: 15px;
 }
 
@@ -981,9 +979,9 @@ iframe {
   position: absolute;
   width: 100%;
   height: 400px;
-  background-image: url('sensation2.jpg');
+  background-image: url('concert.jpg');
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: left bottom;
   background-attachment: fixed;
   background-size: cover;
   padding: 0;
