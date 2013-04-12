@@ -15,7 +15,7 @@ class Song < ActiveRecord::Base
   validates_presence_of :user_id
 
   def true_value
-    (points) / ((Time.now - created_at) + 23000)
+    (points) / ((Time.now - created_at) + 19000)
   end
 
   def related_songs
