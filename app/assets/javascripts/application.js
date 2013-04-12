@@ -831,13 +831,13 @@ $(function(){
       $('.testing1').attr('is-blue', '');
     }
 
-    if ($('.backbtn span').html() == 'unshuffle'){
+    if ($('.nextbtn a').html() == 'unshuffle'){
       $('.testing1').attr('is-shuffle', '1')
     } else {
       $('.testing1').attr('is-shuffle', '')
     }
 
-    if ($('.backbtn').html() == 'exit search'){
+    if ($('.nextbtn a').html() == 'exit search'){
       $('.testing1').attr('is-search', '1');
     } else {
       $('.testing1').attr('is-search', '');
