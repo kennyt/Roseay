@@ -1,4 +1,4 @@
-<div class="big-picture"></div>
+<div class="big-picture" id="picture"></div>
 <div class="top-banner">
   <div class="small_header_index">
     <span class="small_header_text">
@@ -166,6 +166,10 @@
       $(song).trigger('click');
     }
   }
+  function calcParallax(tileheight, speedratio, scrollposition) {
+    return ((tileheight) - (Math.floor(scrollposition / speedratio) % (tileheight+1)));
+  }
+
   $(function() {
     $.fn.scrollBottom = function() {
         return $(document).height() - this.scrollTop() - this.height();
@@ -209,6 +213,16 @@
             });
         }
     });
+    window.onscroll = function() {
+      var posX = (document.documentElement.scrollLeft) ? document.documentElement.scrollLeft : window.pageXOffset;
+      var posY = (document.documentElement.scrollTop) ? document.documentElement.scrollTop : window.pageYOffset;
+      
+      var ground = document.getElementById('picture');
+      var groundparallax = 47 + ((calcParallax(50, 8, posY) / $(document).height()) * 2000);
+      ground.style.backgroundPosition = "left "+ groundparallax+"%"; 
+    }
 });
+
+
 
 </script>
