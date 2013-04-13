@@ -707,6 +707,13 @@ $(function(){
     path = $(this).attr('href') + '.json'
     $(this).remove();
     $(parent).prepend('</b>&nbsp;&nbsp;&nbsp;<b>')
+    if ($('.left-side-wrapper .song#'+songID+' .upvote').length){
+      $('.left-side-wrapper .song#'+songID+ ' .upvote').remove();
+      $('.left-side-wrapper .song#'+songID).prepend('&nbsp;&nbsp;&nbsp;')
+      $('.upvote-player').empty()
+      $('.upvote-player').append('<div class="checkmark"></div>')
+      $('.upvote-player').append('<div class="upvote-text">voted</div>')
+    }
     if (path == '/sessions/new.json'){
       $('#songwrap').append('<a class="need-to-login" href="#newSessionModal" data-toggle="modal">login</a>')
       $('.need-to-login').css('top', ev.pageY - 8)
@@ -715,13 +722,6 @@ $(function(){
     $.post(path, function(response){
       songs[index]['voted'] = 0;
       songs[index]['points'] ++;
-      if ($('.left-side-wrapper .song#'+songID+' .upvote').length){
-        $('.left-side-wrapper .song#'+songID+ ' .upvote').remove();
-        $('.left-side-wrapper .song#'+songID).prepend('&nbsp;&nbsp;&nbsp;')
-        $('.upvote-player').empty()
-        $('.upvote-player').append('<div class="checkmark"></div>')
-        $('.upvote-player').append('<div class="upvote-text">voted</div>')
-      }
       if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]){
         if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]['id'] == songID){
           $('.upvote-player').empty()
@@ -850,7 +850,7 @@ $(function(){
      }
      counter += 2;
     }
-
+    
     checkValidListen(playerNumber, clickedId);
     if ($(this).attr('data-songid')){
       document.title = $(this).html().replace(/&amp;/g, '&');
