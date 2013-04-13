@@ -1213,6 +1213,8 @@ $(function(){
         $('.next-song-btn').attr('class', 'next-song-btn');
         setupTopSongs();
         $('.next-song-btn').show();
+        $('.page-wrapper').show();
+        $('.before-loaded').remove();
         // showSongs = songs.slice(0,30);
 
         // setInterval(function(){
@@ -1235,6 +1237,8 @@ $(function(){
         // $('.about').trigger('click');
         setupTopSongs();
         $('.next-song-btn').show();
+        $('.page-wrapper').show();
+        $('.before-loaded').remove();
         // $('.next-song-btn').show();
         // $('.topsongs .song').slice(3,10).hide();
         // $('.topsongs-holder').append('<div class="remarks-login"></div>')
@@ -1254,6 +1258,8 @@ $(function(){
       $('.next-song-btn').attr('class', 'next-song-btn');
       setupTopSongs();
       $('.next-song-btn').show();
+      $('.page-wrapper').show();
+      $('.before-loaded').remove();
       // $('.topsongs .song').slice(3,10).hide();
       // $('.next-song-btn').show();
       // $('.topsongs-holder').append('<div class="remarks-login"></div>')
@@ -1264,6 +1270,7 @@ $(function(){
       // $('.remarks-login').append($('.new_user')[1]);
     });
   }
+  $('.page-wrapper').hide();
   $('html').keydown(function(event) {
     if (event.keyCode == 39){
       $('.next-song-btn').trigger('click');
