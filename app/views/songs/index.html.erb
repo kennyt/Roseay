@@ -220,6 +220,11 @@
       
       var ground = document.getElementById('picture');
       var groundparallax = 47 + ((calcParallax(50, 8, posY) / $(document).height()) * 2000);
+      if (groundparallax > 100){
+        groundparallax = 100;
+      } else if (groundparallax < 0) {
+        groundparallax = 0;
+      }
       ground.style.backgroundPosition = "left "+ groundparallax+"%"; 
     }
 });
