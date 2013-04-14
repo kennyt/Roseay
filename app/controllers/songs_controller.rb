@@ -23,7 +23,7 @@ class SongsController < ApplicationController
         @songz = Song.last
         @remarkz = Remark.last
         @userz = User.last
-        format.html { render :html => 'analytics' }
+        format.html { render 'analytics' }
       else
         format.html
         format.json { render :json => custom_song_json(@song_with_users) }
