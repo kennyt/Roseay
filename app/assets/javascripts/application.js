@@ -1146,7 +1146,12 @@ $(function(){
                 $('.notification-panel').append('<div class="notification-title">likes</div>')
                 if (response[0].length){
                   $.each(response[0],function(i, like){
-                    $('.notification-panel').append('<div class="notification-content-holder"><span class="notification-content">someone liked your ' + like['song']+'</span></div>')
+                    if (like['recent'] == '1'){
+                      var panelClass = 'notification-content-holder recent'
+                    } else {
+                      var panelClass = 'notification-content-holder'
+                    }
+                    $('.notification-panel').append('<div class="'+panelClass+'"><span class="notification-content">someone liked your ' + like['song']+'</span></div>')
                     $($('.notification-content-holder')[$('.notification-content-holder').length - 1]).append('<div class="notification-timestamp">'+like['timestamp']+'</div>')
                   })
                 } else {
@@ -1155,7 +1160,12 @@ $(function(){
                 $('.notification-panel').append('<div class="notification-title">listens</div>')
                 if (response[1].length){
                   $.each(response[1],function(i, listen){
-                    $('.notification-panel').append('<div class="notification-content-holder"><span class="notification-content">someone listened to ' + listen['song']+'</span></div>')
+                    if (listen['recent'] == '1'){
+                      var panelClass = 'notification-content-holder recent'
+                    } else {
+                      var panelClass = 'notification-content-holder'
+                    }
+                    $('.notification-panel').append('<div class="'+panelClass+'"><span class="notification-content">someone listened to ' + listen['song']+'</span></div>')
                     $($('.notification-content-holder')[$('.notification-content-holder').length - 1]).append('<div class="notification-timestamp">'+listen['timestamp']+'</div>')
                   })
                 } else {

@@ -75,13 +75,15 @@ class ApplicationController < ActionController::Base
     x = current_user.they_liked.order('created_at DESC').limit(3).map do |like|
       {
         song: like.song.song_artist + ' - ' + like.song.song_name,
-        timestamp: distance_of_time_in_words(like.created_at - Time.now)
+        timestamp: distance_of_time_in_words(like.created_at - Time.now),
+        recent: (Time.now - like.created_at) < 3600 ? 1 : 0
       }
     end
     y = current_user.they_listened.order('created_at DESC').limit(9).map do |listen|
       {
         song: listen.song.song_artist + ' - ' + listen.song.song_name,
-        timestamp: distance_of_time_in_words(listen.created_at - Time.now)
+        timestamp: distance_of_time_in_words(listen.created_at - Time.now),
+        recent: (Time.now - listen.created_at) < 3600 ? 1 : 0
       }
     end
     [x, y]
