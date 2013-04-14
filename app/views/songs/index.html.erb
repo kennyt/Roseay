@@ -12,7 +12,7 @@
   </div>
   <div class="current-song">No Song Playing</div>
   <!-- <span class="right-arrow-info">right keyboard arrow = next song &nbsp;&nbsp;  'a' = shuffle<br>'s' = less &nbsp;&nbsp;&nbsp;&nbsp;  'd' = more</span> -->
-  <div class="notifications"><div class="logo">*</div></div>
+  <div class="notifications"><div class="logo">!</div></div>
   <% if current_user %>
     <span id="logged_in"><%= current_user.username %></span>
     <%= link_to 'logout', session_path(current_user), method: :delete, class: 'logout' %>
