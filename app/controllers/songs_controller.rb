@@ -1,6 +1,6 @@
 class SongsController < ApplicationController
   def index
-    @songs = Song.includes(:author).all
+    @songs = Song.includes(:author).includes(:song_listens).all
     @songs.sort! {|x,y| y.true_value <=> x.true_value }
     @song_with_users = @songs
 
@@ -23,7 +23,7 @@ class SongsController < ApplicationController
         @songz = Song.last
         @remarkz = Remark.last
         @userz = User.last
-        format.html {render 'analytics'}
+        format.html { render :html => 'analytics' }
       else
         format.html
         format.json { render :json => custom_song_json(@song_with_users) }
