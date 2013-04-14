@@ -1168,7 +1168,7 @@ $(function(){
       } else {
         if ($('.notifications').attr('hovering').length){
           if ($('.notification-panel').length == 0){
-            $('.notifications').append('<div class="notification-panel"><span class="not-header" style="margin-left: 40px;margin-top: 40px;">need to post songs to see activity</span></div>')
+            $('.notifications').append('<div class="notification-panel"><span class="not-header" style="margin-left: 40px;margin-top: 40px;">need to login to see activity</span></div>')
           }
         }
       }
