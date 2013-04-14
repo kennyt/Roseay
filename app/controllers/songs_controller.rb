@@ -1,28 +1,31 @@
 class SongsController < ApplicationController
   def index
-    @songs = Song.includes(:author).includes(:song_listens).all
-    @songs.sort! {|x,y| y.true_value <=> x.true_value }
-    @song_with_users = @songs
+    if params[:lytics]
+      @slistens = SongListen.all[-10..-1]
+      @likez = Like.last
+      @songz = Song.last
+      @remarkz = Remark.last
+      @userz = User.last
+    else
+      @songs = Song.includes(:author).includes(:song_listens).all
+      @songs.sort! {|x,y| y.true_value <=> x.true_value }
+      @song_with_users = @songs
 
-    if params[:d]
-      @embed = params[:d]
-      @id = Song.all.select{|song| song.song_link.include?(params[:d])}[0].id
-    elsif params[:s]
-      @soundcloud_embed = Song.find(params[:s].scan(/[0-9]/).join('').to_i).song_link
-      @id = params[:s].scan(/[0-9]/).join('').to_i
+      if params[:d]
+        @embed = params[:d]
+        @id = Song.all.select{|song| song.song_link.include?(params[:d])}[0].id
+      elsif params[:s]
+        @soundcloud_embed = Song.find(params[:s].scan(/[0-9]/).join('').to_i).song_link
+        @id = params[:s].scan(/[0-9]/).join('').to_i
+      end
+
+      @client = Soundcloud.new(:client_id => '8f1e619588b836d8f108bfe30977d6db')
+      @song = Song.new
+      @user = User.new
     end
-
-    @client = Soundcloud.new(:client_id => '8f1e619588b836d8f108bfe30977d6db')
-    @song = Song.new
-    @user = User.new
 
     respond_to do |format|
       if params[:lytics]
-        @slistens = SongListen.all[-10..-1]
-        @likez = Like.last
-        @songz = Song.last
-        @remarkz = Remark.last
-        @userz = User.last
         format.html { render 'analytics' }
       else
         format.html
