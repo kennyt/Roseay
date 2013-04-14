@@ -1025,6 +1025,9 @@ iframe {
   top: 0px;
   &:hover{
     background: #C75769;
+    .logo {
+      color: #0D0A1F;
+    }
   }
 }
 
@@ -1064,6 +1067,15 @@ iframe {
   font-size: 15px;
   margin-top: 6px;
   margin-left: 5px;
+}
+
+.logo {
+  margin-top: 18px;
+  margin-left: 12px;
+  font-size: 50px;
+  font-family: 'Open Sans';
+  color: white;
+  cursor: default;
 }
 
 
