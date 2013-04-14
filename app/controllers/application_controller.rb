@@ -72,13 +72,13 @@ class ApplicationController < ActionController::Base
   end
 
   def custom_user_json
-    x = current_user.they_liked.order('created_at DESC').limit(4).map do |like|
+    x = current_user.they_liked.order('created_at DESC').limit(3).map do |like|
       {
         song: like.song.song_artist + ' - ' + like.song.song_name,
         timestamp: distance_of_time_in_words(like.created_at - Time.now)
       }
     end
-    y = current_user.they_listened.order('created_at DESC').limit(11).map do |listen|
+    y = current_user.they_listened.order('created_at DESC').limit(9).map do |listen|
       {
         song: listen.song.song_artist + ' - ' + listen.song.song_name,
         timestamp: distance_of_time_in_words(listen.created_at - Time.now)
