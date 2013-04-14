@@ -15,7 +15,11 @@ class Song < ActiveRecord::Base
   validates_presence_of :user_id
 
   def true_value
-    (points) / ((Time.now - created_at) + 12000)
+    if points > 13
+      (points.to_f * 0.7) / ((Time.now - created_at) + 12000)
+    else
+      (points) / ((Time.now - created_at) + 12000)
+    end
   end
 
   def related_songs
