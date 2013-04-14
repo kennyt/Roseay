@@ -1,19 +1,22 @@
 class UsersController < ApplicationController
-  def show
-    @user = User.find(params[:id])
-    @remarks = []
-    @user.submissions.each {|song| @remarks << Remark.mentioned_song(song.id) }
-    @remarks = @remarks.flatten.uniq
-    @remarks.sort! {|x, y| y.created_at <=> x.created_at }
-    page = params[:page].to_i
+  def index
+    # @user = User.find(params[:id])
+    # @remarks = []
+    # @user.submissions.each {|song| @remarks << Remark.mentioned_song(song.id) }
+    # @remarks = @remarks.flatten.uniq
+    # @remarks.sort! {|x, y| y.created_at <=> x.created_at }
+    # page = params[:page].to_i
 
+    # respond_to do |format|
+    #   format.html
+    #   if @remarks[page*16..page*16+15].nil?
+    #     format.json { render :json => {} }
+    #   else
+    #     format.json { render :json => custom_remark_json(@remarks[page*16..page*16+15]) }
+    #   end
+    # end
     respond_to do |format|
-      format.html
-      if @remarks[page*16..page*16+15].nil?
-        format.json { render :json => {} }
-      else
-        format.json { render :json => custom_remark_json(@remarks[page*16..page*16+15]) }
-      end
+      format.json { render :json => custom_user_json }
     end
   end
 

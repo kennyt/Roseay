@@ -12,6 +12,7 @@
   </div>
   <div class="current-song">No Song Playing</div>
   <!-- <span class="right-arrow-info">right keyboard arrow = next song &nbsp;&nbsp;  'a' = shuffle<br>'s' = less &nbsp;&nbsp;&nbsp;&nbsp;  'd' = more</span> -->
+  <div class="notifications"></div>
   <% if current_user %>
     <span id="logged_in"><%= current_user.username %></span>
     <%= link_to 'logout', session_path(current_user), method: :delete, class: 'logout' %>
@@ -112,6 +113,7 @@
 <div class="before-loaded">loading</div>
 <%= render 'new_song_modal' %>
 <%= render 'new_session_modal' %>
+<%= render 'new_bump_modal' %>
 
 <script src="//connect.soundcloud.com/sdk.js"></script>
 <script type="text/javascript">

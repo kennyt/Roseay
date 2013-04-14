@@ -112,6 +112,7 @@ $(function(){
                               // .append('&nbsp;|&nbsp;<span class="song-id-filter" data-id='+songID+'>&'+datum['id']+
                               //         '</span>')
     $('#'+songID+' .info_bar').append('<span class="song-timestamp">'+time +'</span>')
+    // $('#'+songID).append('<a data-song="'+songID+'" href="#newBumpModal" class="bump-button" data-toggle="modal">bump song</a>');
     if (datum['authored']){
       $('#'+songID+' .info_bar').append(' | <span class="delete-song" data-delete-id="'+songID+'">delete</span>')
     }
@@ -850,7 +851,7 @@ $(function(){
      }
      counter += 2;
     }
-    
+
     checkValidListen(playerNumber, clickedId);
     if ($(this).attr('data-songid')){
       document.title = $(this).html().replace(/&amp;/g, '&');
@@ -1131,6 +1132,54 @@ $(function(){
       }
     )
   })
+  $('.notifications').hover(function(){
+    $('.notifications').attr('hovering', '1');
+    setTimeout(function(){
+      if ($('#logged_in').length){
+        if ($('.notifications').attr('hovering').length){
+          if ($('.notification-panel').length == 0){
+            $('.notifications').append('<div class="notification-panel"><span class="not-header" style="margin-left: 120px;margin-top: 40px;">loading...</span></div>')
+            $.getJSON(
+              '/users.json',
+              function(response){
+                $('.not-header').html('activity');
+                $('.notification-panel').append('<div class="notification-title">likes</div>')
+                if (response[0].length){
+                  $.each(response[0],function(i, like){
+                    $('.notification-panel').append('<div class="notification-content-holder"><span class="notification-content">someone liked your ' + like['song']+'</span></div>')
+                    $($('.notification-content-holder')[$('.notification-content-holder').length - 1]).append('<div class="notification-timestamp">'+like['timestamp']+'</div>')
+                  })
+                } else {
+                  $('.notification-panel').append('<div class="notification-content-holder"><span class="notification-content">no likes on your songs</span></div>')
+                }
+                $('.notification-panel').append('<div class="notification-title">listens</div>')
+                if (response[1].length){
+                  $.each(response[1],function(i, listen){
+                    $('.notification-panel').append('<div class="notification-content-holder"><span class="notification-content">someone listened to ' + listen['song']+'</span></div>')
+                    $($('.notification-content-holder')[$('.notification-content-holder').length - 1]).append('<div class="notification-timestamp">'+listen['timestamp']+'</div>')
+                  })
+                } else {
+                  $('.notification-panel').append('<div class="notification-content-holder"><span class="notification-content">no listens on your songs</span></div>')
+                }
+              }
+            )
+          }
+        }
+      } else {
+        if ($('.notifications').attr('hovering').length){
+          if ($('.notification-panel').length == 0){
+            $('.notifications').append('<div class="notification-panel"><span class="not-header" style="margin-left: 40px;margin-top: 40px;">need to post songs to see activity</span></div>')
+          }
+        }
+      }
+    }, 650)
+  }, function(){
+    $('.notifications').attr('hovering', '');
+    setTimeout(function(){
+      if ($('.notifications').attr('hovering').length == 0)
+        $('.notification-panel').remove();
+    }, 1600)
+  })
  
   SC.initialize({client_id:"8f1e619588b836d8f108bfe30977d6db"});
 
@@ -1214,6 +1263,7 @@ $(function(){
         setupTopSongs();
         $('.next-song-btn').show();
         $('.page-wrapper').show();
+        $('.notifications').show();
         $('.before-loaded').remove();
         // showSongs = songs.slice(0,30);
 
@@ -1238,6 +1288,7 @@ $(function(){
         setupTopSongs();
         $('.next-song-btn').show();
         $('.page-wrapper').show();
+        $('.notifications').show();
         $('.before-loaded').remove();
         // $('.next-song-btn').show();
         // $('.topsongs .song').slice(3,10).hide();
@@ -1259,6 +1310,7 @@ $(function(){
       setupTopSongs();
       $('.next-song-btn').show();
       $('.page-wrapper').show();
+      $('.notifications').show();
       $('.before-loaded').remove();
       // $('.topsongs .song').slice(3,10).hide();
       // $('.next-song-btn').show();
@@ -1289,4 +1341,5 @@ $(function(){
     }
   })
   $('.next-song-btn').hide();
+  $('.notifications').hide();
 })

@@ -3,4 +3,5 @@ class SongListen < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :song
+  # belongs_to :author, :through => :song
 end
