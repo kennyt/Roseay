@@ -1138,11 +1138,11 @@ $(function(){
       if ($('#logged_in').length){
         if ($('.notifications').attr('hovering').length){
           if ($('.notification-panel').length == 0){
-            $('.notifications').append('<div class="notification-panel"><span class="not-header" style="margin-left: 120px;margin-top: 40px;">loading...</span></div>')
+            $('.notifications').append('<div class="notification-panel"><span class="not-header" style="margin-left: 80px;margin-top: 40px;">loading...</span></div>')
             $.getJSON(
               '/users.json',
               function(response){
-                $('.not-header').html('activity');
+                $('.not-header').html('activity on your songs');
                 $('.notification-panel').append('<div class="notification-title">likes</div>')
                 if (response[0].length){
                   $.each(response[0],function(i, like){
