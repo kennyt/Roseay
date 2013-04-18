@@ -1248,7 +1248,7 @@ $(function(){
         setupTopSongs();
       })
     }
-  }, 25000);
+  }, 40000);
 
   if ($('.player-holder').length) {
     if ($('#logged_in').length){
