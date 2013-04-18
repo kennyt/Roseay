@@ -1,4 +1,4 @@
-<div class="big-picture" id="picture"></div>
+<div class="big-picture" id="picture"><div class="big-picture-text">edm radio</div></div>
 <div class="top-banner">
   <div class="small_header_index">
     <span class="small_header_text">
@@ -56,7 +56,7 @@
 
       </ol>
       <span class="pagination">
-        <span class="backbtn">less</span>
+        <!-- <span class="backbtn">less</span> -->
         <span class="nextbtn"><a href="#nextbtn">more</a></span>
         <br><br>
       </span>
@@ -228,6 +228,13 @@
         groundparallax = 0;
       }
       ground.style.backgroundPosition = "left "+ groundparallax+"%"; 
+      if ($(window).scrollTop() + $(window).height() == $(document).height()){
+        if (!(($('.nextbtn a').html() == 'exit search') || ($('.nextbtn a').html() == 'unshuffle'))){
+          setTimeout(function(){
+            $('.nextbtn').trigger('click')
+          }, 500)
+        }
+      }
     }
 });
 

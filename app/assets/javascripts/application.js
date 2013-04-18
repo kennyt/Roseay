@@ -737,20 +737,20 @@ $(function(){
     }
   })
 
-  $('.testing1').on('click', '.add-to-hubsongs', function(ev){
-    ev.preventDefault();
-    ev.stopImmediatePropagation();
-    var path = $(this).attr('href')
-    $(this).remove();
+  // $('.testing1').on('click', '.add-to-hubsongs', function(ev){
+  //   ev.preventDefault();
+  //   ev.stopImmediatePropagation();
+  //   var path = $(this).attr('href')
+  //   $(this).remove();
 
-    if ($('.x1c2').length){
-      $('.testing1').append('<a class="need-to-login2" href="/sessions/new">login</a>')
-      $('.need-to-login2').css('top', ev.pageY)
-      $('.need-to-login2').css('left', ev.pageX)
-    } else {
-      $.post(path)
-    }
-  })
+  //   if ($('.x1c2').length){
+  //     $('.testing1').append('<a class="need-to-login2" href="/sessions/new">login</a>')
+  //     $('.need-to-login2').css('top', ev.pageY)
+  //     $('.need-to-login2').css('left', ev.pageX)
+  //   } else {
+  //     $.post(path)
+  //   }
+  // })
 
   $('body').on('click', '#song a', function(ev){
     $('.being-played').attr('class', 'song')
@@ -797,7 +797,6 @@ $(function(){
     if (link == undefined){
       var link = datum['song_link'];
     }
-    
 
     if (link.indexOf('soundcloud')+1){
       var link = link.replace(/%2F/g, '/').replace(/%3A/g, ':')
@@ -811,7 +810,6 @@ $(function(){
         }
       })
     } else {
-
       $('.left-side-wrapper').prepend('<div id="ytplayer'+playerNumber+'"></div>')
       youtubeApiCall();
     }
@@ -862,30 +860,30 @@ $(function(){
     }
   })
 
-  $('body').on('click', '.add-to-queue', function(ev){
-    createAddedQueueTooltip(ev.pageY, ev.pageX);
-    var songID = $(this).attr('data-songid')
-    var songName = $('.song#'+songID+' #song a').html();
-    if (!(songName)){
-      songName = $(this).attr('data-song-name');
-    }
-    var songLink = $('.song#'+songID+' #song a').attr('href');
-    if (!($('.queue-songs #song').length)){
-      $('.queue-songs').empty();
-    }
-    if ($(this).attr('data-link')){
-      songLink = $(this).attr('data-link');
-      songName = $(this).attr('data-name');
-    }
-    $('.queue-songs').append('<div class="queue-song" id="'+songID+'">&nbsp;&nbsp;&nbsp;<span id="song" data-queue="1"><a href="'+songLink+'">'+songName+'</a> | <span class="delete-queue">delete</span> </span></div> ')
-  })
+  // $('body').on('click', '.add-to-queue', function(ev){
+  //   createAddedQueueTooltip(ev.pageY, ev.pageX);
+  //   var songID = $(this).attr('data-songid')
+  //   var songName = $('.song#'+songID+' #song a').html();
+  //   if (!(songName)){
+  //     songName = $(this).attr('data-song-name');
+  //   }
+  //   var songLink = $('.song#'+songID+' #song a').attr('href');
+  //   if (!($('.queue-songs #song').length)){
+  //     $('.queue-songs').empty();
+  //   }
+  //   if ($(this).attr('data-link')){
+  //     songLink = $(this).attr('data-link');
+  //     songName = $(this).attr('data-name');
+  //   }
+  //   $('.queue-songs').append('<div class="queue-song" id="'+songID+'">&nbsp;&nbsp;&nbsp;<span id="song" data-queue="1"><a href="'+songLink+'">'+songName+'</a> | <span class="delete-queue">delete</span> </span></div> ')
+  // })
 
-  $('body').on('click', '.delete-queue', function(){
-    $(this.parentNode.parentNode).remove();
-    if (!($('.queue-songs #song a').length)){
-      $('.queue-songs').html('&nbsp;&nbsp;&nbsp;empty')
-    }
-  })
+  // $('body').on('click', '.delete-queue', function(){
+  //   $(this.parentNode.parentNode).remove();
+  //   if (!($('.queue-songs #song a').length)){
+  //     $('.queue-songs').html('&nbsp;&nbsp;&nbsp;empty')
+  //   }
+  // })
 
   $('.small_header_index').click(function(){
     // $('h1').append('<span class="song-refreshing">...</span>')
@@ -928,44 +926,44 @@ $(function(){
     }
   })
 
-  $('.relevance').click(function(ev){
-    ev.preventDefault();
-    ev.stopImmediatePropagation();
-    $('h1').append('<span class="song-refreshing">...</span>')
-    $.getJSON(
-      '/songs.json?page=-1',
-      function(data){
-        $('#songwrap').remove();
-        $('.song-refreshing').remove();
-        $('#12345').append('<ol start="1" id="songwrap"></ol>')
-        $('#12345').attr('data-time', '')
-        $.each(data, function(i, datum){
-          setupSong(datum);
-        })
-        $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page=1">next</a></span></span>')
-      }
-    )
-  })
+  // $('.relevance').click(function(ev){
+  //   ev.preventDefault();
+  //   ev.stopImmediatePropagation();
+  //   $('h1').append('<span class="song-refreshing">...</span>')
+  //   $.getJSON(
+  //     '/songs.json?page=-1',
+  //     function(data){
+  //       $('#songwrap').remove();
+  //       $('.song-refreshing').remove();
+  //       $('#12345').append('<ol start="1" id="songwrap"></ol>')
+  //       $('#12345').attr('data-time', '')
+  //       $.each(data, function(i, datum){
+  //         setupSong(datum);
+  //       })
+  //       $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page=1">next</a></span></span>')
+  //     }
+  //   )
+  // })
 
-  $('.time').click(function(ev){
-    ev.preventDefault();
-    ev.stopImmediatePropagation();
-    $('h1').append('<span class="song-refreshing">...</span>')
+  // $('.time').click(function(ev){
+  //   ev.preventDefault();
+  //   ev.stopImmediatePropagation();
+  //   $('h1').append('<span class="song-refreshing">...</span>')
 
-    $.getJSON(
-      '/songs.json?page=-1&by_time=1',
-      function(data){
-        $('#songwrap').remove();
-        $('.song-refreshing').remove();
-        $('#12345').append('<ol start="1" id="songwrap"></ol>')
-        $('#12345').attr('data-time', true)
-        $.each(data, function(i, datum){
-          setupSong(datum);
-        })
-        $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page=1">next</a></span></span>')
-      }
-    )
-  })
+  //   $.getJSON(
+  //     '/songs.json?page=-1&by_time=1',
+  //     function(data){
+  //       $('#songwrap').remove();
+  //       $('.song-refreshing').remove();
+  //       $('#12345').append('<ol start="1" id="songwrap"></ol>')
+  //       $('#12345').attr('data-time', true)
+  //       $.each(data, function(i, datum){
+  //         setupSong(datum);
+  //       })
+  //       $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page=1">next</a></span></span>')
+  //     }
+  //   )
+  // })
 
   $('h1 a').click(function(ev){
     ev.preventDefault();
@@ -1017,15 +1015,15 @@ $(function(){
   //   });
   // })
 
-  $('.about').click(function(){
-    page = 1;
-    $('#songwrap').empty();
-    $('.nextbtn').hide();
-    $('.backbtn').html('go home');
-    $('.backbtn').attr('class', 'backbtn');
-    $('#songwrap').append('<div class="about-text">we\'re leading the war against robots,<br>robots who decide what music we listen to<br>join the human music movement<br><br>discovering music sucks.<br>constantly clicking through \'related videos\' - <br>ain\'t nobody got time for that<br><br><br><strong>listening</strong><br><br>1. click play<br><br><br><strong>submitting</strong><br><br>1. <strong>you</strong> post a song (anyone can post) <br><br>2. the song <strong>instantly</strong> goes onto everyone\'s list <br><br> 3. people vote it up!</div>')
-    // $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><i>"they ask me what I do and who I do it fo"</i><br>-Two Chainz<br><br>we do it because we think the people who share good music<br>are the most awesome people in the world<br><br><b>Jarvis</b><br>Jarvis is the reason that after every song finishes,<br>another song begins to play.<br>Jarvis will intelligently calculate an algorithm that will <br>play the song best matched to your needs, wants, desires.<br> (joking, he chooses a song randomly on the left side of the page)<br>if Jarvis sees that you have a song in your Q <br> he will play the top one. otherwise it\'s up to him to play a song<br>Jarvis is just smart enough to know when you change the page<br>Jarvis loves you<br><br>on the song list, notice the "&" numbers.<br> type it in a remark and it will allow people to queue that song up easily.<br>for example: queue this song up -> <span class="add-to-queue remark-queue" data-link="/songs?d=6jhC6GjGC5M" data-name="Knife Party - Internet Friends (AnonFM Remix)">&25</span><br><br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>leave jarvis on and party<br>.roseay</div>')
-  })
+  // $('.about').click(function(){
+  //   page = 1;
+  //   $('#songwrap').empty();
+  //   $('.nextbtn').hide();
+  //   $('.backbtn').html('go home');
+  //   $('.backbtn').attr('class', 'backbtn');
+  //   $('#songwrap').append('<div class="about-text">we\'re leading the war against robots,<br>robots who decide what music we listen to<br>join the human music movement<br><br>discovering music sucks.<br>constantly clicking through \'related videos\' - <br>ain\'t nobody got time for that<br><br><br><strong>listening</strong><br><br>1. click play<br><br><br><strong>submitting</strong><br><br>1. <strong>you</strong> post a song (anyone can post) <br><br>2. the song <strong>instantly</strong> goes onto everyone\'s list <br><br> 3. people vote it up!</div>')
+  //   // $('#songwrap').append('<div class="about-text"><i>"she got a big booty so I call her big booty"</i> <br> - Two Chainz <br><br> we aspire to be that simple.<br><br><i>"they ask me what I do and who I do it fo"</i><br>-Two Chainz<br><br>we do it because we think the people who share good music<br>are the most awesome people in the world<br><br><b>Jarvis</b><br>Jarvis is the reason that after every song finishes,<br>another song begins to play.<br>Jarvis will intelligently calculate an algorithm that will <br>play the song best matched to your needs, wants, desires.<br> (joking, he chooses a song randomly on the left side of the page)<br>if Jarvis sees that you have a song in your Q <br> he will play the top one. otherwise it\'s up to him to play a song<br>Jarvis is just smart enough to know when you change the page<br>Jarvis loves you<br><br>on the song list, notice the "&" numbers.<br> type it in a remark and it will allow people to queue that song up easily.<br>for example: queue this song up -> <span class="add-to-queue remark-queue" data-link="/songs?d=6jhC6GjGC5M" data-name="Knife Party - Internet Friends (AnonFM Remix)">&25</span><br><br>the ^ button gives the song another point.<br>^ buttons are anonymous<br><br>you are now a master<br>leave jarvis on and party<br>.roseay</div>')
+  // })
 
   $('#song-search').keyup(function(){
       if ($(this).val() == ''){
@@ -1232,6 +1230,7 @@ $(function(){
   //   }
   // }, 4000)
 
+  // periodically refresh song list
   setInterval(function(){
     songIdle ++;
     if ((songIdle >= 20) && (!($('.nextbtn a').html() == 'exit search'))) {
@@ -1246,20 +1245,7 @@ $(function(){
             onPage ++;
           }
         }
-        if(!($('#logged_in').length)){
-          // var login = $('.new_user')[0];
-          // var signup = $('.new_user')[1];
-          setupTopSongs();
-          // $('.topsongs .song').slice(3,10).hide();
-          // $('.topsongs-holder').append('<div class="remarks-login"></div>')
-          // $('.remarks-login').append('<h5>sign in to see rest and to upvote<br>(won\'t leave page)</h5>')
-          // $('.remarks-login').append('<h2>sign in</h2>')
-          // $('.remarks-login').append(login);
-          // $('.remarks-login').append('<h2>join</h2>')
-          // $('.remarks-login').append(signup);
-        } else {
-          setupTopSongs();
-        }
+        setupTopSongs();
       })
     }
   }, 25000);
