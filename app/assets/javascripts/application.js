@@ -33,6 +33,7 @@ $(function(){
 
   var fetchSongs = function(callback){
     songIdle = 0;
+    $('.top-banner').prepend('<div class="loading-gif"></div>')
     $('h1 a').html('-loading-')
 
     $.getJSON(
@@ -48,6 +49,7 @@ $(function(){
         names = [];
         oldPage = page;
         page = 0;
+        $('.loading-gif').remove();
         $('#songwrap').empty();
         $('#songwrap').attr('start', 1)
         $('h1 a').html('Refresh Song Feed');

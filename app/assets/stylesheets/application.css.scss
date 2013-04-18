@@ -992,6 +992,17 @@ iframe {
   cursor: default;
 }
 
+.loading-gif {
+  background-image: url('loading.gif');
+  background-repeat: no-repeat;
+  background-position: left 86.82477100756671%;
+  background-size: cover;
+  width: 40px;
+  height: 40px;
+  margin-left: 50%;
+  position: absolute;
+}
+
 .big-picture {
   top: 0px;
   position: absolute;
