@@ -47,6 +47,7 @@ $(function(){
         })
 
         names = [];
+        songs = null;
         oldPage = page;
         page = 0;
         $('.loading-gif').remove();
@@ -1324,19 +1325,19 @@ $(function(){
   $('html').keydown(function(event) {
     if (event.keyCode == 39){
       $('.next-song-btn').trigger('click');
-    } else if (event.keyCode == 65) {
-      if ((!($('#song-search').val().length))) {
-        $('.small_header_index').trigger('click');
-      }
-    } else if (event.keyCode == 83) {
-      if ((!($('#song-search').val().length))) {
-        $('.backbtn').trigger('click');
-      }
-    } else if (event.keyCode == 68) {
-      if ((!($('#song-search').val().length))) {
-        $('.nextbtn').trigger('click');
-      }
-    }
+    }// else if (event.keyCode == 65) {
+    //   if ((!($('#song-search').val().length))) {
+    //     $('.small_header_index').trigger('click');
+    //   }
+    // } else if (event.keyCode == 83) {
+    //   if ((!($('#song-search').val().length))) {
+    //     $('.backbtn').trigger('click');
+    //   }
+    // } else if (event.keyCode == 68) {
+    //   if ((!($('#song-search').val().length))) {
+    //     $('.nextbtn').trigger('click');
+    //   }
+    // }
   })
   $('.next-song-btn').hide();
   $('.notifications').hide();

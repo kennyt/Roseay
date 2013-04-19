@@ -9,7 +9,6 @@ class SongsController < ApplicationController
     else
       @songs = Song.includes(:author).includes(:song_listens).all
       @songs.sort! {|x,y| y.true_value <=> x.true_value }
-      @song_with_users = @songs
 
       if params[:d]
         @embed = params[:d]
@@ -29,7 +28,7 @@ class SongsController < ApplicationController
         format.html { render 'analytics' }
       else
         format.html
-        format.json { render :json => custom_song_json(@song_with_users) }
+        format.json { render :json => custom_song_json(@songs) }
       end
     end
   end

@@ -30,26 +30,43 @@ class ApplicationController < ActionController::Base
   end
 
   def custom_song_json(songs)
-    songlist = songs.map do |song|
-      {
-        id: song.id,
-        created_at: song.created_at,
-        points: song.points,
-        song_artist: song.song_artist,
-        song_link: song.song_link,
-        song_name: song.song_name,
-        # user_id: song.user_id,
-        voted: current_user ? (current_user.liked_songs.include?(song) || current_user == song.author) ? 0 : 2 : 1,
-        author: song.author.username,
-        authored: current_user ? current_user == song.author || current_user.id == 8 || current_user.id == 11 : false,
-        # author_id: song.author.id,
-        time: distance_of_time_in_words(song.created_at - Time.now),
-        listen_count: song.trailing_two_day_listens.length,
-        # uphubbed: current_user ? current_user.songhubs.include?(song) ? 1 : 0 : 0,
-        # author_avg: song.author.avg,
-        author_total: song.author.total
-        # author_submissions: song.author.submissions.length
-      }
+    if current_user
+      liked_songs = current_user.liked_songs
+      songlist = songs.map do |song|
+        author = song.author
+        current_user == author ? authoredz = true : authoredz = false
+        {
+          id: song.id,
+          created_at: song.created_at,
+          points: song.points,
+          song_artist: song.song_artist,
+          song_link: song.song_link,
+          song_name: song.song_name,
+          voted: authoredz || liked_songs.include?(song) ? 0 : 2,
+          author: author.username,
+          authored: authoredz,
+          time: distance_of_time_in_words(song.created_at - Time.now),
+          listen_count: song.trailing_two_day_listens.length,
+          author_total: author.total
+        }
+      end
+    else
+      songlist = songs.map do |song|
+        {
+          id: song.id,
+          created_at: song.created_at,
+          points: song.points,
+          song_artist: song.song_artist,
+          song_link: song.song_link,
+          song_name: song.song_name,
+          voted: 1,
+          author: song.author.username,
+          authored: false,
+          time: distance_of_time_in_words(song.created_at - Time.now),
+          listen_count: song.trailing_two_day_listens.length,
+          author_total: song.author.total
+        }
+      end
     end
 
     songlist
