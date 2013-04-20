@@ -347,12 +347,25 @@ body {
   background: #CDD2EE;
   color: #0A111F;
   /*border: solid black 1px;*/
-  border-radius: 10px;
   text-align: center;
   width: 180px;
-  margin-left: 290px;
-  margin-top: 400px;
+  left: 100px;
+  top: 700px;
+  -moz-box-shadow: 2px 2px 2px 3px #888;
+  -webkit-box-shadow: 2px 2px 2px 3px #888;
+  box-shadow: 2px 2px 2px 3px #888;
   z-index: 1;
+}
+
+.close-radio-tooltip {
+  width: 180px;
+  background: #66C0CC;
+  cursor: pointer;
+  color: white;
+  &:hover {
+    background: white;
+    color: black;
+  }
 }
 
 .post-song-tooltip {
@@ -1035,6 +1048,10 @@ iframe {
     cursor: pointer;
     color: green;
   }
+}
+
+.hidden-song {
+  display: none;
 }
 
 .notifications {

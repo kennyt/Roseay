@@ -122,6 +122,16 @@ $(function(){
     }
   }
 
+  var setupHiddenSong = function(datum){
+    var songID = datum['id']
+    var link = datum['song_link'].split('watch?v=')[1]
+    if (link == undefined){
+      var link = datum['song_link'];
+    }
+    $('.hidden-song').append('<li class="song" id="'+songID+'"></li>')
+    $('.hidden-song .song').append('<span id="song"><a href="/songs?d='+link+'"><span class="song-artist">'+datum['song_artist']+'</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="song-name">'+datum["song_name"]+'</span></a></span>')
+  }
+
   var setupSongBelowPlayer = function(i, song){
     var songID = song['id']
     var link = song['song_link'].split('watch?v=')[1]
@@ -320,23 +330,34 @@ $(function(){
   }
 
   var playNextSong = function(id){
-    if ($('.queue-songs #song a').length){
-      $($('.queue-songs #song a')[0]).trigger('click');
-    } else {
-      numberOfSongs = $('.left-side-wrapper #song a').length
-      if (numberOfSongs && $('.testing1').attr('data-radio') == 'true'){
-        var randomNum = Math.floor(Math.random()*(numberOfSongs))
-        var song = $('.left-side-wrapper #song a')[randomNum]
-        while ($(song.parentNode.parentNode).attr('id') == id){
-          randomNum = Math.floor(Math.random()*(numberOfSongs))
-          song = $('.left-side-wrapper #song a')[randomNum]
-        }
-        $(song).trigger('click');
+    // if ($('.queue-songs #song a').length){
+    //   $($('.queue-songs #song a')[0]).trigger('click');
+    // } else {
+    //   numberOfSongs = $('.left-side-wrapper #song a').length
+    //   if (numberOfSongs && $('.testing1').attr('data-radio') == 'true'){
+    //     var randomNum = Math.floor(Math.random()*(numberOfSongs))
+    //     var song = $('.left-side-wrapper #song a')[randomNum]
+    //     while ($(song.parentNode.parentNode).attr('id') == id){
+    //       randomNum = Math.floor(Math.random()*(numberOfSongs))
+    //       song = $('.left-side-wrapper #song a')[randomNum]
+    //     }
+    //     $(song).trigger('click');
+    //   }
+    // }
+    $('.hidden-song').empty();
+    var chosenSong = false;
+    while (!(chosenSong)){
+      chosenSong = songs[Math.floor(Math.random()*songs.length)]
+      if (!(chosenSong['points'] > 2)){
+        chosenSong = false;
       }
     }
+    setupHiddenSong(chosenSong)
+    $('.hidden-song .song a').trigger('click');
   }
 
   var youtubeApiCall = function(){
+    $('.player-section').attr('style','')
     if ($('.testing1').attr('data-ytapi-received')){
       constructYTVideo();
     } else {
@@ -370,11 +391,15 @@ $(function(){
   }
   
   var createRadioTooltip = function(){
-    $('.left-side-wrapper').prepend('<span class="radio-tooltip">a random song on the page will play after every song finishes.</span>')
-    setTimeout(function(){
-      $('.radio-tooltip').remove();
-    }, 6000);
+    $('body').prepend('<div class="radio-tooltip">A suggested song from our '+songs.length+' song library will play after this song finishes.<div class="close-radio-tooltip">okay</div></div>')
+    // setTimeout(function(){
+    //   $('.radio-tooltip').remove();
+    // }, 6000);
   }
+
+  $('body').on('click','.close-radio-tooltip', function(){
+    $('.radio-tooltip').remove();
+  })
 
   var createPostSongTooltip = function(){
     $('body').prepend('<span class="post-song-tooltip">post a song, help the human movement!</span>')
@@ -787,9 +812,6 @@ $(function(){
       setTimeout(function(){
         createRadioTooltip();  
       }, 7000)
-      setTimeout(function(){
-        createPostSongTooltip();
-      }, 13500)
     }
 
     var link   = this['href'].split('songs?d=')[1]
@@ -803,8 +825,10 @@ $(function(){
     }
 
     if (link.indexOf('soundcloud')+1){
+      $('.player-section').attr('style','height:171px;');
       var link = link.replace(/%2F/g, '/').replace(/%3A/g, ':')
       SC.oEmbed(link,{auto_play:true, maxwidth:545, height:300, show_comments: true, color:'602220' }, function(track){
+        $('.player-section').attr('style','');
         if (track){
           track.html['height'] = 300
           $('.left-side-wrapper').prepend(track.html);
@@ -814,6 +838,7 @@ $(function(){
         }
       })
     } else {
+      $('.player-section').attr('style','height: 220px;')
       $('.left-side-wrapper').prepend('<div id="ytplayer'+playerNumber+'"></div>')
       youtubeApiCall();
     }
@@ -1134,6 +1159,7 @@ $(function(){
       }
     )
   })
+
   $('.notifications').hover(function(){
     $('.notifications').attr('hovering', '1');
     setTimeout(function(){

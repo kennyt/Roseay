@@ -24,16 +24,18 @@
 </div>
 <div class="page-wrapper"> 
   <div class="left-side-wrapper">
-    <% if @embed || @soundcloud_embed %>
-      <% if @soundcloud_embed %>
-        <% embed_info = @client.get('/oembed', :url => @soundcloud_embed) %>
-        <%= embed_info['html'].gsub('%2F', '/').gsub('%3A', ':').gsub('<iframe ', '<iframe data-id='+@id.to_s+ ' ').html_safe %>
+    <div class="player-section">
+      <% if @embed || @soundcloud_embed %>
+        <% if @soundcloud_embed %>
+          <% embed_info = @client.get('/oembed', :url => @soundcloud_embed) %>
+          <%= embed_info['html'].gsub('%2F', '/').gsub('%3A', ':').gsub('<iframe ', '<iframe data-id='+@id.to_s+ ' ').html_safe %>
+        <% else %>
+          <iframe  width="545" height="220" src=<%="http://www.youtube.com/embed/#{@embed}?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&fmt=18"%> frameborder="0" data-id="<%= @id %>"></iframe>
+        <% end %>
       <% else %>
-        <iframe  width="545" height="220" src=<%="http://www.youtube.com/embed/#{@embed}?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&fmt=18"%> frameborder="0" data-id="<%= @id %>"></iframe>
+        <div class="player-holder"><span class="player-holder-text"><br><br><br>click play</span></div>
       <% end %>
-    <% else %>
-      <div class="player-holder"><span class="player-holder-text"><br><br><br>click play</span></div>
-    <% end %>
+    </div>
     <div class="top_header">
       <span class="about">readme</span>
     </div>
@@ -62,6 +64,7 @@
       </span>
     </div>
   </div>  
+  <div class="hidden-song"></div>
 
 <!--   <div class="queue-holder">
     <div class="queue-header">your Q</div>
@@ -134,6 +137,7 @@
     while (!($('#ytplayer' + num).length)){
       num ++
     }
+
     player = new YT.Player('ytplayer' + num, {
       height: '220',
       width: '545',
