@@ -56,6 +56,7 @@ $(function(){
         $('h1 a').html('Refresh Song Feed');
         $('.backbtn').attr('class', 'backbtn inactive');
         $('.nextbtn').attr('class', 'nextbtn');
+        $('.nextbtn a').html('more');
 
         $.each(response, function(i, datum){
           if (datum['id'] == beingPlayed['id']){
@@ -111,7 +112,7 @@ $(function(){
     $('#'+songID).append('<span id="song"><a href="/songs?d='+link+'"><span class="song-artist">'+datum['song_artist']+'</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="song-name">'+datum["song_name"]+'</span></a></span>')
                  .append('<div class="info_bar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>')
     $('#'+songID+' .info_bar').append('<span class="12345">'+points+' points ~ </span>')
-                              .append('<span class="user">'+datum["author"]+'('+datum["author_total"]+')</span>')
+                              .append('<span class="user">'+datum["author"]+'('+datum["author_total"]+' points)</span>')
                               // .append('&nbsp;|&nbsp;<span class="song-id-filter" data-id='+songID+'>&'+datum['id']+
                               //         '</span>')
     $('#'+songID+' .info_bar').append('<span class="song-timestamp">'+time +'</span>')
