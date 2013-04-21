@@ -134,4 +134,17 @@ class ApplicationController < ActionController::Base
     end
     converted
   end
+
+  def upcase_input(input)
+    input = input.split(' ')
+    input.map do |word|
+      capped_char = word[0]
+      if capped_char == '(' && word.length > 1
+        capped_char = word[1]
+        '(' + capped_char.upcase + word[2..-1]
+      else
+        capped_char.upcase + word[1..-1]
+      end
+    end.join(' ')
+  end
 end

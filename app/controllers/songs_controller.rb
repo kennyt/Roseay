@@ -46,6 +46,9 @@ class SongsController < ApplicationController
     if params[:song][:song_link].include?('&')
       params[:song][:song_link] = params[:song][:song_link].split('&')[0]
     end
+    params[:song][:song_artist] = upcase_input(params[:song][:song_artist])
+    params[:song][:song_name] = upcase_input(params[:song][:song_name])
+    
     @song = current_user.submissions.new(params[:song]) if current_user
     unless params[:song][:song_link].include?('youtube.com') || params[:song][:song_link].include?('soundcloud.com')
       @song = false
