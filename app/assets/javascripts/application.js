@@ -391,7 +391,7 @@ $(function(){
   }
   
   var createRadioTooltip = function(){
-    $('body').prepend('<div class="radio-tooltip">A suggested song from our '+songs.length+' song library will play after this song finishes.<div class="close-radio-tooltip">okay</div></div>')
+    $('body').prepend('<div class="radio-tooltip">Leave roseay on and we will play curated songs continuously from our '+songs.length+' song library.<div class="close-radio-tooltip">okay</div></div>')
     // setTimeout(function(){
     //   $('.radio-tooltip').remove();
     // }, 6000);
