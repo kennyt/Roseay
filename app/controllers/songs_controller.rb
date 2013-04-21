@@ -43,11 +43,13 @@ class SongsController < ApplicationController
 
   def create
     @song = false;
-  	@song = current_user.submissions.new(params[:song]) if current_user
+    if params[:song][:song_link].include?('&')
+      params[:song][:song_link] = params[:song][:song_link].split('&')[0]
+    end
+    @song = current_user.submissions.new(params[:song]) if current_user
     unless params[:song][:song_link].include?('youtube.com') || params[:song][:song_link].include?('soundcloud.com')
       @song = false
     end
-
     respond_to do |format|
     	if current_user.songs_made_twelve_hours.length < 10 && @song && @song.save 
         format.json { render :json => @song}
