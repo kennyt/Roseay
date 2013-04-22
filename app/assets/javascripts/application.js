@@ -457,7 +457,6 @@ $(function(){
     }
     $('.right-side-wrapper').show();
     $('.backbtn').show();
-    $('.submit-button').show();
     $('.small_header_index').show();
     playNextSong($('.testing1').attr('data-song-played'));
     $('.radio-next-text').html('>>|');
@@ -1018,7 +1017,6 @@ $(function(){
         $('.nextbtn').show();
         $('.backbtn').html('less');
         $('.backbtn').show();
-        $('.submit-button').show();
         $('.small_header_index').show();
 
         // $('.topsongs .song').slice(3,10).hide();
@@ -1101,6 +1099,8 @@ $(function(){
       }}, function(response){
         if (!(response['error'])){
           $('#login-modal').remove();
+          $('.notifications').show();
+          $('.submit-button').show();
           $('.top-banner').prepend('<span id="logged_in"></span><a href="/sessions/'+response['id']+'" class="logout" data-method="delete" rel="nofollow">logout</a>');
           // fetchRemarks(0, '', function(){
           //   $('.refresh').html('Refresh Remark Feed')
@@ -1138,6 +1138,8 @@ $(function(){
       }}, function(response){
         if (!(response['error'])){
           $('#login-modal').remove();
+          $('.notifications').show();
+          $('.submit-button').show();
           $('.top-banner').prepend('<span id="logged_in"></span><a href="/sessions/'+response['id']+'" class="logout" data-method="delete" rel="nofollow" style="margin-left:50px;">logout</a>')
           $('#newSongModal h4').html('youtube/soundcloud links');
           $('#close-login-modal').trigger('click')
@@ -1283,69 +1285,34 @@ $(function(){
   if ($('.player-holder').length) {
     if ($('#logged_in').length){
       fetchSongs(function(){
-        $('.submit-button').show();
+        if ($('#logged_in').length){
+          $('.submit-button').show();
+          $('.notifications').show();
+        }
         $('.small_header_index').show();
         $('.next-song-btn').attr('class', 'next-song-btn');
         setupTopSongs();
         $('.next-song-btn').show();
         $('.page-wrapper').show();
-        $('.notifications').show();
         $('.before-loaded').remove();
-        // showSongs = songs.slice(0,30);
-
-        // setInterval(function(){
-        //   $('#songwrap').empty();
-        //   showSongs.splice(29,29)
-        //   showSongs.unshift(songs[Math.floor(Math.random()*(songs.length))])
-        //   $.each(showSongs, function(i, song){
-        //     setupSong(song);
-        //   })
-        // }, 7000)
       });
     } else {
-      // $('.left-side-wrapper').attr('style', 'margin-left: 28%; width: 40%;')
-      // $('.right-side-wrapper').hide();
-      // $('.submit-button').hide();
-      // $('.small_header_index').hide();
-      // $('#song-search').hide();
       fetchSongs(function(){
-        // $('.backbtn').hide();
-        // $('.about').trigger('click');
         setupTopSongs();
         $('.next-song-btn').show();
         $('.page-wrapper').show();
-        $('.notifications').show();
         $('.before-loaded').remove();
-        // $('.next-song-btn').show();
-        // $('.topsongs .song').slice(3,10).hide();
-        // $('.topsongs-holder').append('<div class="remarks-login"></div>')
-        // $('.remarks-login').append('<h5>sign in to see rest and to upvote<br>(won\'t leave page)</h5>')
-        // $('.remarks-login').append('<h2>sign in</h2>')
-        // $('.remarks-login').append($('.new_user')[0]);
-        // $('.remarks-login').append('<h2>join</h2>')
-        // $('.remarks-login').append($('.new_user')[1]);
       });
     }
     $('.other-songs-holder').hide();
   } else {
     fetchSongs(function(){
-      $('.submit-button').show();
       $('.small_header_index').show();
-      // fillOtherSongs($('iframe').attr('data-id'));
       $('.next-song-btn').attr('class', 'next-song-btn');
       setupTopSongs();
       $('.next-song-btn').show();
       $('.page-wrapper').show();
-      $('.notifications').show();
       $('.before-loaded').remove();
-      // $('.topsongs .song').slice(3,10).hide();
-      // $('.next-song-btn').show();
-      // $('.topsongs-holder').append('<div class="remarks-login"></div>')
-      // $('.remarks-login').append('<h5>sign in to see rest and to upvote<br>(won\'t leave page)</h5>')
-      // $('.remarks-login').append('<h2>sign in</h2>')
-      // $('.remarks-login').append($('.new_user')[0]);
-      // $('.remarks-login').append('<h2>join</h2>')
-      // $('.remarks-login').append($('.new_user')[1]);
     });
   }
   $('.page-wrapper').hide();
@@ -1368,4 +1335,5 @@ $(function(){
   })
   $('.next-song-btn').hide();
   $('.notifications').hide();
+  $('.submit-button').hide();
 })
