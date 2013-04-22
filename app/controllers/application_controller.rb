@@ -43,7 +43,6 @@ class ApplicationController < ActionController::Base
         logged_in == author ? authoredz = true : authoredz = false
         {
           id: song.id,
-          created_at: song.created_at,
           points: song.points,
           song_artist: song.song_artist,
           song_link: song.song_link,
@@ -61,7 +60,6 @@ class ApplicationController < ActionController::Base
         author = song.author
         {
           id: song.id,
-          created_at: song.created_at,
           points: song.points,
           song_artist: song.song_artist,
           song_link: song.song_link,

@@ -88,7 +88,6 @@ $(function(){
     var songID = datum['id']
     var link = datum['song_link'].split('watch?v=')[1]
     var points = datum['points']
-    var createdAt = datum['created_at']
     var time = datum['time'].replace('about ', '');
     if (datum['being-played']){
       var beingPlayed = ' being-played';
@@ -136,7 +135,6 @@ $(function(){
     var songID = song['id']
     var link = song['song_link'].split('watch?v=')[1]
     var points = song['points']
-    var createdAt = song['created_at']
 
     if (link == undefined){
       var link = song['song_link'];
@@ -150,7 +148,6 @@ $(function(){
     var songID = song['id']
     var link = song['song_link'].split('watch?v=')[1]
     var points = song['points']
-    var createdAt = song['created_at']
 
     if (link == undefined){
       var link = song['song_link'];
