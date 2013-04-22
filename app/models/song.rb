@@ -17,6 +17,8 @@ class Song < ActiveRecord::Base
   def true_value
     if points > 13
       (points.to_f * 0.7) / ((Time.now - created_at) + 12000)
+    elsif user_id == 8 && points < 4
+      (points * 2) / ((Time.now - created_at) + 12000)
     else
       (points) / ((Time.now - created_at) + 12000)
     end
