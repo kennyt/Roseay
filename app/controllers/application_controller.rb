@@ -31,6 +31,7 @@ class ApplicationController < ActionController::Base
 
   def custom_song_json(songs)
     all_users_total = User.all_total
+    all_songs_listens = Song.all_recent_listens
     if current_user
       liked_songz = []
       current_user.liked_songs.each{|song| liked_songz << song}
@@ -51,7 +52,7 @@ class ApplicationController < ActionController::Base
           author: author.username,
           authored: authoredz,
           time: distance_of_time_in_words(song.created_at - Time.now),
-          listen_count: song.trailing_two_day_listens.length,
+          listen_count: all_songs_listens[song.id.to_s],
           author_total: all_users_total[author.id.to_s]
         }
       end
@@ -69,7 +70,7 @@ class ApplicationController < ActionController::Base
           author: author.username,
           authored: false,
           time: distance_of_time_in_words(song.created_at - Time.now),
-          listen_count: song.trailing_two_day_listens.length,
+          listen_count: all_songs_listens[song.id.to_s],
           author_total: all_users_total[author.id.to_s]
         }
       end

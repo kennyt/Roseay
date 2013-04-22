@@ -40,4 +40,11 @@ class Song < ActiveRecord::Base
   def trailing_two_day_listens
     song_listens.select{|listen| Time.now - listen.created_at < 172800 }
   end
+
+  def self.all_recent_listens
+    all_songs = Hash.new(0)
+    listens = SongListen.where(:created_at => ((Time.now - 172800).to_date)..(Time.now).to_date)
+    listens.each{|listen| all_songs[listen.song_id.to_s] += 1}
+    all_songs
+  end
 end
