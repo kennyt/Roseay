@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   end
 
   def total
-    id == 95 ? 'chief' : submissions.inject(0) {|x, y| x + y.points }
+    submissions.inject(0) {|x, y| x + y.points }
   end
 
   def top_listened
@@ -51,5 +51,11 @@ class User < ActiveRecord::Base
 
   def songs_made_twelve_hours
     submissions.select{|song| Time.now - song.created_at < 43200 }
+  end
+
+  def self.all_total
+    combined_users = Hash.new(0)
+    Song.all.each{|song| combined_users[song.user_id.to_s] += 1}
+    combined_users
   end
 end

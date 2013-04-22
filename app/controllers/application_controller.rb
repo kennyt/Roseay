@@ -30,11 +30,16 @@ class ApplicationController < ActionController::Base
   end
 
   def custom_song_json(songs)
+    all_users_total = User.all_total
     if current_user
-      liked_songs = current_user.liked_songs
+      liked_songz = []
+      current_user.liked_songs.each{|song| liked_songz << song}
+      logged_in = []
+      logged_in << current_user
+      logged_in = logged_in[0]
       songlist = songs.map do |song|
         author = song.author
-        current_user == author ? authoredz = true : authoredz = false
+        logged_in == author ? authoredz = true : authoredz = false
         {
           id: song.id,
           created_at: song.created_at,
@@ -42,16 +47,17 @@ class ApplicationController < ActionController::Base
           song_artist: song.song_artist,
           song_link: song.song_link,
           song_name: song.song_name,
-          voted: authoredz || liked_songs.include?(song) ? 0 : 2,
+          voted: authoredz || liked_songz.include?(song) ? 0 : 2,
           author: author.username,
           authored: authoredz,
           time: distance_of_time_in_words(song.created_at - Time.now),
           listen_count: song.trailing_two_day_listens.length,
-          author_total: author.total
+          author_total: all_users_total[author.id.to_s]
         }
       end
     else
       songlist = songs.map do |song|
+        author = song.author
         {
           id: song.id,
           created_at: song.created_at,
@@ -60,11 +66,11 @@ class ApplicationController < ActionController::Base
           song_link: song.song_link,
           song_name: song.song_name,
           voted: 1,
-          author: song.author.username,
+          author: author.username,
           authored: false,
           time: distance_of_time_in_words(song.created_at - Time.now),
           listen_count: song.trailing_two_day_listens.length,
-          author_total: song.author.total
+          author_total: all_users_total[author.id.to_s]
         }
       end
     end
