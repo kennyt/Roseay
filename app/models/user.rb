@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
 
   def self.all_total
     combined_users = Hash.new(0)
-    Song.all.each{|song| combined_users[song.user_id.to_s] += 1}
+    Song.all.each{|song| combined_users[song.user_id.to_s] += song.points}
     combined_users
   end
 end
