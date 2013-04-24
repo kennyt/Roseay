@@ -76,9 +76,11 @@ class SongsController < ApplicationController
   	if @song.author == current_user
   	else
 	    if current_user && !current_user.liked_songs.include?(@song)
-		  	current_user.liked_songs << @song
-		  	@song.points += 1
-		  	@song.save
+  		  current_user.liked_songs << @song
+        if Time.now - current_user.created_at > 600
+  		    @song.points += 1
+        end
+  		  @song.save
   		end
   	end
 
