@@ -58,4 +58,10 @@ class User < ActiveRecord::Base
     Song.all.each{|song| combined_users[song.user_id.to_s] += song.points}
     combined_users
   end
+
+  def is_spamming_votes
+    liked_songs.each do |song|
+      song.update_attribute(:points, song.points - 1)
+    end
+  end
 end
