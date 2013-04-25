@@ -37,7 +37,7 @@ $(function(){
     $('h1 a').html('-loading-')
 
     $.getJSON(
-      '/songs.json',
+      '/songs.json?fetch=1',
       function(response){
         var beingPlayed = false;
         $.each(songs, function(i, song){
