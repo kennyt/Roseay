@@ -831,9 +831,9 @@ $(function(){
 
     if ($('.radio-next-text').html() == 'play'){
       $('.radio-next-text').html('>>|')
-      setTimeout(function(){
-        createRadioTooltip();  
-      }, 7000)
+      // setTimeout(function(){
+      //   createRadioTooltip();  
+      // }, 7000)
     }
 
     var link   = this['href'].split('songs?d=')[1]
