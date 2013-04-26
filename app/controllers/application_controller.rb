@@ -30,8 +30,8 @@ class ApplicationController < ActionController::Base
   end
 
   def custom_song_json(songs)
-    all_users_total = User.all_total
-    all_songs_listens = Song.all_recent_listens
+    # all_users_total = User.all_total
+    # all_songs_listens = Song.all_recent_listens
     if current_user
       liked_songz = []
       current_user.liked_songs.each{|song| liked_songz << song}
@@ -50,9 +50,9 @@ class ApplicationController < ActionController::Base
           voted: authoredz || liked_songz.include?(song) ? 0 : 2,
           author: author.username,
           authored: authoredz,
-          time: distance_of_time_in_words(song.created_at - Time.now),
-          listen_count: all_songs_listens[song.id.to_s],
-          author_total: all_users_total[author.id.to_s]
+          time: distance_of_time_in_words(song.created_at - Time.now)
+          # listen_count: all_songs_listens[song.id.to_s],
+          # author_total: all_users_total[author.id.to_s]
         }
       end
     else
@@ -64,12 +64,12 @@ class ApplicationController < ActionController::Base
           song_artist: song.song_artist,
           song_link: song.song_link,
           song_name: song.song_name,
-          voted: 1,
+          voted: 2,
           author: author.username,
           authored: false,
-          time: distance_of_time_in_words(song.created_at - Time.now),
-          listen_count: all_songs_listens[song.id.to_s],
-          author_total: all_users_total[author.id.to_s]
+          time: distance_of_time_in_words(song.created_at - Time.now)
+          # listen_count: all_songs_listens[song.id.to_s],
+          # author_total: all_users_total[author.id.to_s]
         }
       end
     end
@@ -94,21 +94,27 @@ class ApplicationController < ActionController::Base
   end
 
   def custom_user_json
-    x = current_user.they_liked.order('created_at DESC').limit(3).map do |like|
+    # x = current_user.they_liked.order('created_at DESC').limit(3).map do |like|
+    #   {
+    #     song: like.song.song_artist + ' - ' + like.song.song_name,
+    #     timestamp: distance_of_time_in_words(like.created_at - Time.now),
+    #     recent: (Time.now - like.created_at) < 3600 ? 1 : 0
+    #   }
+    # end
+    # y = current_user.they_listened.order('created_at DESC').limit(9).map do |listen|
+    #   {
+    #     song: listen.song.song_artist + ' - ' + listen.song.song_name,
+    #     timestamp: distance_of_time_in_words(listen.created_at - Time.now),
+    #     recent: (Time.now - listen.created_at) < 3600 ? 1 : 0
+    #   }
+    # end
+    # [x, y]
+    x = User.all.sort{|y,w| w.total <=> y.total}[0..4]
+    x.map do |user|
       {
-        song: like.song.song_artist + ' - ' + like.song.song_name,
-        timestamp: distance_of_time_in_words(like.created_at - Time.now),
-        recent: (Time.now - like.created_at) < 3600 ? 1 : 0
+        username: user.username
       }
     end
-    y = current_user.they_listened.order('created_at DESC').limit(9).map do |listen|
-      {
-        song: listen.song.song_artist + ' - ' + listen.song.song_name,
-        timestamp: distance_of_time_in_words(listen.created_at - Time.now),
-        recent: (Time.now - listen.created_at) < 3600 ? 1 : 0
-      }
-    end
-    [x, y]
   end
 
   def convert_with_links(body)

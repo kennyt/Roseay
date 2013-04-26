@@ -5,7 +5,6 @@
   </div> -->
   <div class="modal-body">
     <div>
-      (you have to be logged in)
       <h4 style="font-family: Open Sans;">youtube/soundcloud links</h4>
       <p><%= form_for(@song) do |f| %>
       <%= f.label :song_artist %>
@@ -18,12 +17,6 @@
       <%= f.text_field :song_link %>
       <br>
       <br>
-    </div>
-    <div class="rules-of-posting">
-      Quality > Quantity<br>
-      There's a limit to how much you can post per 12 hours<br>
-      Use search to check if song is already posted<br>
-      Reposts will be deleted<br>
     </div>
   <div class="modal-footer">
     <a id="close-modal" data-dismiss="modal" aria-hidden="true">Close</a>

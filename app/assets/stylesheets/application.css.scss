@@ -85,13 +85,37 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
 }
 
 .upvote {
-  position: relative;
-  top: 7px;
+  text-align: center;
+  position: absolute;
+  height: 100%;
+  width: 100px;
+  top:0px;
+  left: 0px;
   font-weight: bold;
   font-size: 20px;
-  font-family: monospace;
-  line-height: 0.5px;
-  color: #205560;
+  font-family: 'Open Sans';
+  background: #C75769;
+  color: white;
+  border-right: solid black 1px;
+  &:hover{
+    background: #1B0910;
+    cursor: pointer;
+  }
+}
+
+.vote-box {
+  text-align: center;
+  position: absolute;
+  height: 100%;
+  width: 100px;
+  top:0px;
+  left: 0px;
+  font-weight: bold;
+  font-size: 20px;
+  font-family: 'Open Sans';
+  background: #1B0910;
+  color: white;
+  border-right: solid black 1px;
 }
 
 h1 {
@@ -245,6 +269,7 @@ h1 {
   color: #C2DAEB;
   width: 50px;
   height: 40px;
+  display: none;
   /*border-radius: 2px;*/
 
   &:hover {
@@ -269,16 +294,29 @@ h1 {
 
 .left-side-wrapper {
   /*border-radius: 10px;*/
-  margin: 5px;
   margin-top: 0px;
   margin-bottom: 15px;
   margin-right: 10px;
-  background: white;
+  margin-left: 25%;
+  background: #0D0A1F;
   width: 544px;
-  min-height: 400px;
+  /*min-height: 400px;*/
   float: left;
   position: relative;
 }
+
+.below-main {
+  height: 100px;
+  width: 545px;
+  background-color: rgb(233, 234, 237);
+  text-align: center;
+  position: relative;
+}
+
+.show-song-author {
+  font-family: 'Open Sans';
+}
+
 .right-side-wrapper {
   background: #13060E;
   background: #0D0A1F;
@@ -345,16 +383,13 @@ body {
 .radio-tooltip {
   position: absolute;
   /*background: #C6EBC2;*/
-  background: #CDD2EE;
+  background-color: rgb(233, 234, 237);
   color: #0A111F;
   /*border: solid black 1px;*/
   text-align: center;
   width: 180px;
   left: 100px;
   top: 700px;
-  -moz-box-shadow: 2px 2px 2px 3px #888;
-  -webkit-box-shadow: 2px 2px 2px 3px #888;
-  box-shadow: 2px 2px 2px 3px #888;
   z-index: 1;
 }
 
@@ -382,17 +417,18 @@ body {
 
 .next-song-btn {
   text-align: center;
-  margin-left: 55%;
+  margin-left: 43%;
   /*margin-top: -67px;*/
   background: #1B0910;
   top: 0px;
   color: white;
   width: 100px;
-  height: 40px;
+  height: 80px;
   position: absolute;
   /*border-radius: 10px;*/
   display: table;
   font-size: 7px;
+  width: 150px;
 
   &:hover{
     cursor: pointer;
@@ -408,7 +444,7 @@ body {
   -webkit-box-shadow: 2px 2px 2px 3px #888;
   box-shadow: 2px 2px 2px 3px #888;
   width: 100%;
-  height: 40px;
+  height: 80px;
   z-index: 1;
   /*zoom: 1;
   filter: alpha(opacity=80);
@@ -430,9 +466,10 @@ body {
 
 .page-wrapper {
   position: relative;
-  margin-top: 455px;
+  margin-top: 495px;
   margin-left: 12%;
   width: 920px;
+  min-height: 100%;
 }
 
 .player-holder-text {
@@ -728,6 +765,7 @@ iframe {
 .topsongs-holder {
   margin-top: 10px;
   background: white;
+  display: none;
 }
 
 .other-songs-title{
@@ -860,6 +898,7 @@ iframe {
   width: 43%;
   height: 40px;
   text-align: center;
+  display: none;
   a {
     color: white;
   }
@@ -923,6 +962,7 @@ iframe {
   height: 17px;
   top: 10px;
   position: absolute;
+  display: none;
 }
 
 .current-song {
@@ -934,6 +974,7 @@ iframe {
   height: 20px;
   overflow: hidden;
   top: 10px;
+  display: none;
   .upvote {
     font-size: 25px;
     &:hover {
@@ -994,10 +1035,10 @@ iframe {
 
 .right-arrow-info {
   position: absolute;
-  top: 0px;
-  margin-left: 50%;
-  font-size: 10px;
-  font-family: arial;
+  top: 30px;
+  margin-left: 10%;
+  font-size: 15px;
+  font-family: 'Open Sans';
   cursor: default;
 }
 
@@ -1020,8 +1061,8 @@ iframe {
   background-repeat: no-repeat;
   background-position: left 86.82477100756671%;
   background-size: cover;
-  width: 40px;
-  height: 40px;
+  width: 80px;
+  height: 80px;
   right: 430px;
   position: absolute;
 }
@@ -1071,6 +1112,7 @@ iframe {
   position: absolute;
   right: 370px;
   top: 0px;
+  display: none;
   &:hover{
     background: #C75769;
     .logo {
@@ -1135,13 +1177,6 @@ iframe {
   .page-wrapper {
     margin-left: 5%;
   }
-  .right-arrow-info {
-    margin-left: 50%;
-  }
-  .current-song {
-    width: 200px;
-    margin-left: 25%;
-  }
   .next-song-btn {
     margin-left: 45%;
   }
@@ -1152,7 +1187,7 @@ iframe {
     display: none;
   }
   .page-wrapper {
-    margin-top: 490px;
+    margin-top: 495px;
     margin-left: 5px;
   }
   .top-banner {
@@ -1190,17 +1225,11 @@ iframe {
   .add-to-queue {
     font-size: 15px;
   }
-  .right-arrow-info {
-    margin-left: 43%;
-  }
   .song-artist {
     margin-left: 10px;
   }
   .song-name {
     margin-left: -15px;
-  }
-  .submit-button {
-    width: 50px;
   }
 }
 
@@ -1216,7 +1245,7 @@ iframe {
   }
   .page-wrapper{
     margin-left: 0px;
-    margin-top: 480px;
+    margin-top: 495px;
     width: 100%;
   }
   .feedback-input {

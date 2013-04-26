@@ -66,20 +66,20 @@ $(function(){
         })
         songs = response;
         firstpage = songs.slice(0, 30)
-        $.each(firstpage, function(i, song){
-          setupSong(song);
-        })
+        // $.each(firstpage, function(i, song){
+        //   setupSong(song);
+        // })
 
         if (callback){
           callback();
         }
-        var counter = 0;
-        while (counter < 30){
-         if ($($('#songwrap .song')[counter]).attr('class') == 'song'){
-          $($('#songwrap .song')[counter]).attr('style', 'background:#F4F5E0;');
-         }
-         counter += 2;
-        }
+        // var counter = 0;
+        // while (counter < 30){
+        //  if ($($('#songwrap .song')[counter]).attr('class') == 'song'){
+        //   $($('#songwrap .song')[counter]).attr('style', 'background:#F4F5E0;');
+        //  }
+        //  counter += 2;
+        // }
       }
     )
   }
@@ -172,6 +172,18 @@ $(function(){
       }
       $('.current-song').append(song['song_artist'] + ' - ' + song['song_name'])
     }
+  }
+
+  var changeIntoVoted = function(songId){
+    var chosenSong = false;
+    $.each(songs, function(i, song){
+      if (song['id'] == songId){
+        chosenSong = song
+      }
+    })
+    $('.below-main').empty();
+    $('.below-main').append('<br><div class="show-song-author">'+ (parseInt(chosenSong['points']) + 1) +' people like this song<br>contributed by '+chosenSong['author']+'</div>')
+    $('.below-main').append('<div class="vote-box"><br><br>liked</div>')
   }
 
   var fillOtherSongs = function(songId){
@@ -345,12 +357,21 @@ $(function(){
     var chosenSong = false;
     while (!(chosenSong)){
       chosenSong = songs[Math.floor(Math.random()*songs.length)]
-      if (!(chosenSong['points'] > 2)){
-        chosenSong = false;
-      }
+    }
+    if (chosenSong['points'] == 1){
+      var personOrPeople = 'person likes'
+    } else {
+      var personOrPeople = 'people like'
     }
     setupHiddenSong(chosenSong)
     $('.hidden-song .song a').trigger('click');
+    $('.below-main').empty();
+    $('.below-main').append('<br><div class="show-song-author">'+chosenSong['points']+' '+personOrPeople+' this song<br>contributed by '+chosenSong['author']+'</div>')
+    if (chosenSong['voted'] == 0){
+      $('.below-main').append('<div class="vote-box"><br><br>liked</div>')
+    } else {
+      $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br><br>like</div>')
+    }
   }
 
   var youtubeApiCall = function(){
@@ -632,37 +653,37 @@ $(function(){
     }
   })
 
-  $('#12345').on('click', '.nextbtn', function(ev){
-    ev.preventDefault();
-    if ($('.nextbtn').attr('class') == 'nextbtn'){
-      if (($('.backbtn').attr('class') == 'backbtn inactive') && ($('.nextbtn a').html() != 'unshuffle') && ($('.nextbtn a').html() != 'exit search')){
-        $('.backbtn').toggleClass('inactive');
-      }
-      $('#song-search').val('');
-      $('.nextbtn a').html('more');
+  // $('#12345').on('click', '.nextbtn', function(ev){
+  //   ev.preventDefault();
+  //   if ($('.nextbtn').attr('class') == 'nextbtn'){
+  //     if (($('.backbtn').attr('class') == 'backbtn inactive') && ($('.nextbtn a').html() != 'unshuffle') && ($('.nextbtn a').html() != 'exit search')){
+  //       $('.backbtn').toggleClass('inactive');
+  //     }
+  //     $('#song-search').val('');
+  //     $('.nextbtn a').html('more');
 
-      if ((page + 2)*30 >= songs.length){
-        $('.nextbtn').toggleClass('inactive');
-      } 
+  //     if ((page + 2)*30 >= songs.length){
+  //       $('.nextbtn').toggleClass('inactive');
+  //     } 
 
-      if (page == -1){
-        $('#songwrap').empty();
-      }
-      page ++
-      $('#songwrap').attr('start', page*30 + 1)
-      $.each(songs.slice(page*30, page*30+30), function(i, song){
-        setupSong(song);
-      })
-      var counter = 0;
-      while (counter < $('#songwrap .song').length){
-       if ($($('#songwrap .song')[counter]).attr('class') == 'song'){
-        $($('#songwrap .song')[counter]).attr('style', 'background:#F4F5E0;');
-       }
-       counter += 2;
-      }
-    }
+  //     if (page == -1){
+  //       $('#songwrap').empty();
+  //     }
+  //     page ++
+  //     $('#songwrap').attr('start', page*30 + 1)
+  //     $.each(songs.slice(page*30, page*30+30), function(i, song){
+  //       setupSong(song);
+  //     })
+  //     var counter = 0;
+  //     while (counter < $('#songwrap .song').length){
+  //      if ($($('#songwrap .song')[counter]).attr('class') == 'song'){
+  //       $($('#songwrap .song')[counter]).attr('style', 'background:#F4F5E0;');
+  //      }
+  //      counter += 2;
+  //     }
+  //   }
 
-    ev.stopImmediatePropagation()
+    // ev.stopImmediatePropagation()
     // var that = this;
     // $(that).append('---')
 
@@ -686,7 +707,7 @@ $(function(){
     //     $('#songwrap').append('<span class="pagination"><span id="nextbtn"><a href="/songs?page='+ (page+1) +'">more</a></span></span>')
     //   }
     // )
-  })
+  // })
 
   // $('body').on('click', '.user', function(ev){
   //   ev.preventDefault();
@@ -723,42 +744,47 @@ $(function(){
     ev.preventDefault();
     ev.stopImmediatePropagation();
 
-    var parent = this.parentNode;
-    var songID = parseInt($(parent).attr('id'));
-    if (!(songID)){
-      songID = $(this).attr('href').split('/')[2]
-    }
-    var index = parseInt($(this).attr('data_song_index'))
+    if ($('#logged_in').length){
+      var parent = this.parentNode;
+      var songID = parseInt($(parent).attr('id'));
+      if (!(songID)){
+        songID = $(this).attr('data-path').split('/')[2]
+      }
+      var index = parseInt($(this).attr('data_song_index'))
 
-    path = $(this).attr('href') + '.json'
-    $(this).remove();
-    $(parent).prepend('</b>&nbsp;&nbsp;&nbsp;<b>')
-    if ($('.left-side-wrapper .song#'+songID+' .upvote').length){
-      $('.left-side-wrapper .song#'+songID+ ' .upvote').remove();
-      $('.left-side-wrapper .song#'+songID).prepend('&nbsp;&nbsp;&nbsp;')
-      $('.upvote-player').empty()
-      $('.upvote-player').append('<div class="checkmark"></div>')
-      $('.upvote-player').append('<div class="upvote-text">voted</div>')
-    }
-    if (path == '/sessions/new.json'){
-      $('#songwrap').append('<a class="need-to-login" href="#newSessionModal" data-toggle="modal">login</a>')
-      $('.need-to-login').css('top', ev.pageY - 8)
-      $('.need-to-login').css('left', ev.pageX - 60)
-    } else {
-    $.post(path, function(response){
-      songs[index]['voted'] = 0;
-      songs[index]['points'] ++;
-      if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]){
-        if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]['id'] == songID){
-          $('.upvote-player').empty()
-          $('.upvote-player').append('<div class="checkmark"></div>')
-          $('.upvote-player').append('<div class="upvote-text">voted</div>')
+      path = $(this).attr('data-path') + '.json'
+      $(this).remove();
+      changeIntoVoted(songID);
+
+      if ($('.left-side-wrapper .song#'+songID+' .upvote').length){
+        $('.left-side-wrapper .song#'+songID+ ' .upvote').remove();
+        $('.left-side-wrapper .song#'+songID).prepend('&nbsp;&nbsp;&nbsp;')
+        $('.upvote-player').empty()
+        $('.upvote-player').append('<div class="checkmark"></div>')
+        $('.upvote-player').append('<div class="upvote-text">voted</div>')
+      }
+      if (path == '/sessions/new.json'){
+        $('#songwrap').append('<a class="need-to-login" href="#newSessionModal" data-toggle="modal">login</a>')
+        $('.need-to-login').css('top', ev.pageY - 8)
+        $('.need-to-login').css('left', ev.pageX - 60)
+      } else {
+      $.post(path, function(response){
+        songs[index]['voted'] = 0;
+        songs[index]['points'] ++;
+        if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]){
+          if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]['id'] == songID){
+            $('.upvote-player').empty()
+            $('.upvote-player').append('<div class="checkmark"></div>')
+            $('.upvote-player').append('<div class="upvote-text">voted</div>')
+          }
         }
+        if ($('.current-song .upvote').attr('href').split('/')[2] == songID){
+          $('.current-song .upvote').remove();
+        }
+      })
       }
-      if ($('.current-song .upvote').attr('href').split('/')[2] == songID){
-        $('.current-song .upvote').remove();
-      }
-    })
+    } else {
+      $('#login-modal').trigger('click');
     }
   })
 
@@ -1260,24 +1286,24 @@ $(function(){
   // }, 4000)
 
   // periodically refresh song list
-  setInterval(function(){
-    songIdle ++;
-    if ((songIdle >= 20) && (!($('.nextbtn a').html() == 'exit search'))) {
-      songIdle = 0;
-      fetchSongs(function(){
-        var onPage = 0;
-        if ($('.nextbtn a').html() == 'unshuffle'){
-          $('.small_header_index').trigger('click');
-        } else {
-          while(onPage < oldPage){
-            $($('.nextbtn')[0]).trigger('click');
-            onPage ++;
-          }
-        }
-        setupTopSongs();
-      })
-    }
-  }, 40000);
+  // setInterval(function(){
+  //   songIdle ++;
+  //   if ((songIdle >= 20) && (!($('.nextbtn a').html() == 'exit search'))) {
+  //     songIdle = 0;
+  //     fetchSongs(function(){
+  //       var onPage = 0;
+  //       if ($('.nextbtn a').html() == 'unshuffle'){
+  //         $('.small_header_index').trigger('click');
+  //       } else {
+  //         while(onPage < oldPage){
+  //           $($('.nextbtn')[0]).trigger('click');
+  //           onPage ++;
+  //         }
+  //       }
+  //       setupTopSongs();
+  //     })
+  //   }
+  // }, 40000);
 
   if ($('.player-holder').length) {
     if ($('#logged_in').length){
@@ -1292,6 +1318,9 @@ $(function(){
         $('.next-song-btn').show();
         $('.page-wrapper').show();
         $('.before-loaded').remove();
+        var pageheight = $(window).height() - 90
+        $('.page-wrapper').css({height: pageheight})
+        // $('.next-song-btn').trigger('click');
       });
     } else {
       fetchSongs(function(){
@@ -1299,6 +1328,9 @@ $(function(){
         $('.next-song-btn').show();
         $('.page-wrapper').show();
         $('.before-loaded').remove();
+        var pageheight = $(window).height() - 90
+        $('.page-wrapper').css({height: pageheight})
+        // $('.next-song-btn').trigger('click');
       });
     }
     $('.other-songs-holder').hide();

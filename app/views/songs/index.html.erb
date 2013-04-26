@@ -1,18 +1,18 @@
 <div class="big-picture" id="picture"><div class="big-picture-text">edm radio</div></div>
 <div class="top-banner">
-  <div class="small_header_index">
+  <!-- <div class="small_header_index">
     <span class="small_header_text">
       shuffle songs
     </span>
-  </div>
+  </div> -->
   <a href="#newSongModal" class="submit-button" data-toggle="modal">post   song</a>
   <div class="next-song-btn clash"><div class="radio-next-text">play</div></div>
   <div class="search">
     <input id="song-search" placeholder="search artist or title">
   </div>
   <div class="current-song">No Song Playing</div>
-  <!-- <span class="right-arrow-info">right keyboard arrow = next song &nbsp;&nbsp;  'a' = shuffle<br>'s' = less &nbsp;&nbsp;&nbsp;&nbsp;  'd' = more</span> -->
-  <div class="notifications"><div class="logo">!</div></div>
+  <span class="right-arrow-info">use "right keyboard arrow" to skip song</span>
+  <!-- <div class="notifications"><div class="logo">!</div></div> -->
   <% if current_user %>
     <span id="logged_in"><%= current_user.username %></span>
     <%= link_to 'logout', session_path(current_user), method: :delete, class: 'logout' %>
@@ -36,33 +36,34 @@
         <div class="player-holder"><span class="player-holder-text"><br><br><br>click play</span></div>
       <% end %>
     </div>
-    <div class="top_header">
+    <!-- <div class="top_header">
       <span class="about">readme</span>
+    </div> -->
+    <div class="below-main">
     </div>
-
-    <div class="feed-header-holder">
+    <!-- <div class="feed-header-holder">
       <span class="feed-title">
         <div class="big_header">
           <h1><a>Refresh Song Feed</a></h1>
         </div>
       </span>
-    </div>
+    </div> -->
 
-    <div id="12345" data-time="<%=@by_time%>">
+    <!-- <div id="12345" data-time="<%=@by_time%>"> -->
       <!-- <span class="pagination">
         <span class="backbtn">back</span>
         <span class="nextbtn"><a href="#nextbtn">next</a></span>
         <br><br>
       </span> -->
-      <ol start="1" id="songwrap" >
+      <!-- <ol start="1" id="songwrap" > -->
 
-      </ol>
-      <span class="pagination">
+      <!-- </ol>
+      <span class="pagination"> -->
         <!-- <span class="backbtn">less</span> -->
-        <span class="nextbtn"><a href="#nextbtn">more</a></span>
-        <br><br>
+        <!-- <span class="nextbtn"><a href="#nextbtn">more</a></span> -->
+        <!-- <br><br>
       </span>
-    </div>
+    </div> -->
   </div>  
   <div class="hidden-song"></div>
 
