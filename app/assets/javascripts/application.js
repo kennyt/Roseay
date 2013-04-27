@@ -1315,7 +1315,9 @@ $(function(){
         $('.page-wrapper').show();
         $('.before-loaded').remove();
         var pageheight = $(window).height() - 90
+        var marginTop = ($(window).height() - 390) / 2
         $('.page-wrapper').css({height: pageheight})
+        $('.left-side-wrapper').css({top: marginTop})
         // $('.next-song-btn').trigger('click');
       });
     } else {
@@ -1325,7 +1327,9 @@ $(function(){
         $('.page-wrapper').show();
         $('.before-loaded').remove();
         var pageheight = $(window).height() - 90
+        var marginTop = ($(window).height() - 390) / 2
         $('.page-wrapper').css({height: pageheight})
+        $('.left-side-wrapper').css({top: marginTop})
         // $('.next-song-btn').trigger('click');
       });
     }
