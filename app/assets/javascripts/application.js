@@ -1132,9 +1132,7 @@ $(function(){
           //   $('.remark-news').show();
           // })
           $('#close-login-modal').trigger('click');
-          if ($('.left-side-wrapper #song a').length){
-            $('h1 a').trigger('click');
-          }
+          fetchSongs();
           $('#newSongModal h4').html('youtube/soundcloud links');
         } else {
           $($('h2')[1]).html('join')
@@ -1172,9 +1170,7 @@ $(function(){
           //   $('.refresh').show();
           //   $('.remark-news').show();
           // })
-          if ($('.left-side-wrapper #song a').length){
-            $('h1 a').trigger('click');
-          }
+          fetchSongs();
         } else {
           $($('h3')[0]).html('sign in')
           $($('.new_user')[0]).prepend('<h4 style="color:red">wrong username or password</h4>')
