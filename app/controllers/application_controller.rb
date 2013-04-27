@@ -29,6 +29,20 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def custom_single_song_json(song)
+    {
+      id: song.id,
+      points: song.points,
+      song_artist: song.song_artist,
+      song_link: song.song_link,
+      song_name: song.song_name,
+      voted: 0,
+      author: song.author.username,
+      authored: true,
+      time: distance_of_time_in_words(song.created_at - Time.now)
+    }
+  end
+
   def custom_song_json(songs)
     # all_users_total = User.all_total
     # all_songs_listens = Song.all_recent_listens

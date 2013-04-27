@@ -131,6 +131,16 @@ $(function(){
     $('.hidden-song .song').append('<span id="song"><a href="/songs?d='+link+'"><span class="song-artist">'+datum['song_artist']+'</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="song-name">'+datum["song_name"]+'</span></a></span>')
   }
 
+  var setupForcedSong = function(datum){
+    var songID = datum['id']
+    var link = datum['song_link'].split('watch?v=')[1]
+    if (link == undefined){
+      var link = datum['song_link'];
+    }
+    $('.forced-song').append('<li class="song" id="'+songID+'"></li>')
+    $('.forced-song .song').append('<span id="song"><a href="/songs?d='+link+'"><span class="song-artist">'+datum['song_artist']+'</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="song-name">'+datum["song_name"]+'</span></a></span>')
+  }
+
   var setupSongBelowPlayer = function(i, song){
     var songID = song['id']
     var link = song['song_link'].split('watch?v=')[1]
@@ -353,24 +363,47 @@ $(function(){
     //     $(song).trigger('click');
     //   }
     // }
-    $('.hidden-song').empty();
-    var chosenSong = false;
-    while (!(chosenSong)){
-      chosenSong = songs[Math.floor(Math.random()*songs.length)]
-    }
-    if (chosenSong['points'] == 1){
-      var personOrPeople = 'person likes'
+    if ($('.forced-song .song a').length){
+      $($('.forced-song .song a')[0]).trigger('click');
+      var chosenID = $($('.forced-song .song')[0]).attr('id');
+      console.log(chosenID);
+      $($('.forced-song .song')[0]).remove();
+
+      var chosenSong = false;
+      $.each(songs,function(i, song){
+        if (song['id'] == chosenID){
+          console.log('hi');
+          chosenSong = song;
+        }
+      });
+
+      $('.below-main').empty();
+      $('.below-main').append('<br><div class="show-song-author">1 person likes this song<br>contributed by '+chosenSong['author']+'</div>')
+      if (chosenSong['voted'] == 0){
+        $('.below-main').append('<div class="vote-box"><br><br>liked</div>')
+      } else {
+        $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br><br>like</div>')
+      }
     } else {
-      var personOrPeople = 'people like'
-    }
-    setupHiddenSong(chosenSong)
-    $('.hidden-song .song a').trigger('click');
-    $('.below-main').empty();
-    $('.below-main').append('<br><div class="show-song-author">'+chosenSong['points']+' '+personOrPeople+' this song<br>contributed by '+chosenSong['author']+'</div>')
-    if (chosenSong['voted'] == 0){
-      $('.below-main').append('<div class="vote-box"><br><br>liked</div>')
-    } else {
-      $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br><br>like</div>')
+      $('.hidden-song').empty();
+      var chosenSong = false;
+      while (!(chosenSong)){
+        chosenSong = songs[Math.floor(Math.random()*songs.length)]
+      }
+      if (chosenSong['points'] == 1){
+        var personOrPeople = 'person likes'
+      } else {
+        var personOrPeople = 'people like'
+      }
+      setupHiddenSong(chosenSong)
+      $('.hidden-song .song a').trigger('click');
+      $('.below-main').empty();
+      $('.below-main').append('<br><div class="show-song-author">'+chosenSong['points']+' '+personOrPeople+' this song<br>contributed by '+chosenSong['author']+'</div>')
+      if (chosenSong['voted'] == 0){
+        $('.below-main').append('<div class="vote-box"><br><br>liked</div>')
+      } else {
+        $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br><br>like</div>')
+      }
     }
   }
 
@@ -413,6 +446,13 @@ $(function(){
     // setTimeout(function(){
     //   $('.radio-tooltip').remove();
     // }, 6000);
+  }
+
+  var createThankTooltip = function(){
+    $('body').prepend('<div class="radio-tooltip">Thanks for contributing</div>')
+    setTimeout(function(){
+      $('.radio-tooltip').remove();
+    }, 10000)
   }
 
   $('body').on('click','.close-radio-tooltip', function(){
@@ -503,7 +543,9 @@ $(function(){
           $('#newSongModal h4').append('<br>--not logged in OR bad song link OR reached limit--')
         } else {
           $('#close-modal').trigger('click');
-          $('h1 a').trigger('click');
+          fetchSongs();
+          setupForcedSong(response);
+          createThankTooltip();
         }
         $('.song-modal-submit').show();
         $('#close-modal').show();

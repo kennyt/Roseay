@@ -9,7 +9,6 @@ class SongsController < ApplicationController
       else
         if params[:fetch]
           @songs = Song.includes(:author).includes(:song_listens).all
-          @songs.sort! {|x,y| y.true_value <=> x.true_value }
         end
 
         if params[:d]
@@ -57,7 +56,7 @@ class SongsController < ApplicationController
     end
     respond_to do |format|
     	if current_user.songs_made_twelve_hours.length < 10 && @song && @song.save 
-        format.json { render :json => @song}
+        format.json { render :json => custom_single_song_json(@song)}
     	else
     		format.json { render :json => {'error' => 'yes'}.to_json }
     	end
