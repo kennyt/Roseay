@@ -1202,16 +1202,19 @@ iframe {
 }
 
 
-@media screen and (max-width:1180px) {
-  .page-wrapper {
+@media screen and (max-width:990px) {
+  /*.page-wrapper {
     margin-left: 5%;
   }
   .next-song-btn {
     margin-left: 45%;
+  }*/
+  .right-arrow-info {
+    display: none;
   }
 }
 
-@media screen and (max-width:990px){
+/*@media screen and (max-width:990px){
   .current-song {
     display: none;
   }
@@ -1323,4 +1326,4 @@ iframe {
   .player-holder {
     width: 100%;
   }
-}
+}*/
