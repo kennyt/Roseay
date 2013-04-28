@@ -5,7 +5,7 @@
       shuffle songs
     </span>
   </div> -->
-  <a href="#newSongModal" class="submit-button" data-toggle="modal">post   song</a>
+  <a href="#newsong" class="submit-button" data-toggle="modal">post   song</a>
   <div class="next-song-btn clash"><div class="radio-next-text">play</div></div>
   <div class="search">
     <input id="song-search" placeholder="search artist or title">
@@ -17,7 +17,7 @@
     <span id="logged_in"><%= current_user.username %></span>
     <%= link_to 'logout', session_path(current_user), method: :delete, class: 'logout' %>
   <% else %>
-    <a id="login-modal" href="#newSessionModal" data-toggle="modal">login / join</a>
+    <a id="login-modal" href="#login-signup" data-toggle="modal">login / join</a>
     <!-- |
     <a href="#newSessionModal" data-toggle="modal">join</a> -->
   <% end %>
