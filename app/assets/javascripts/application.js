@@ -1432,6 +1432,14 @@ $(function(){
     //   }
     // }
   })
+  bigPictureTextMargin = 'margin-left:'+($(window).width() - 330) / 2+'px'
+  beforeLoadedTextMargin = 'margin-left:'+($(window).width() - 180) / 2+'px'
+  nextSongMargin = 'margin-left:'+($(window).width() - 150) / 2+'px'
+  leftWrapperMargin = 'margin-left:'+($(window).width() - 545) / 2+'px'
+  $('.big-picture-text').attr('style',bigPictureTextMargin);
+  $('.before-loaded').attr('style',beforeLoadedTextMargin);
+  $('.next-song-btn').attr('style',nextSongMargin);
+  $('.left-side-wrapper').attr('style',leftWrapperMargin);
   $('.next-song-btn').hide();
   $('.notifications').hide();
   $('.submit-button').hide();

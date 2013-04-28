@@ -337,6 +337,7 @@ h1 {
 
 .show-song-author {
   font-family: 'Open Sans';
+  cursor: default;
 }
 
 .right-side-wrapper {
@@ -489,7 +490,7 @@ body {
 .page-wrapper {
   position: relative;
   margin-top: 495px;
-  margin-left: 12%;
+  /*margin-left: 12%;*/
   width: 920px;
   min-height: 100%;
 }

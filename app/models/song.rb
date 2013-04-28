@@ -47,4 +47,8 @@ class Song < ActiveRecord::Base
     listens.each{|listen| all_songs[listen.song_id.to_s] += 1}
     all_songs
   end
+
+  def old_useless_songs
+    Song.all.select{|x| x.points == 1 && Time.now - x.created_at >  259200}
+  end
 end
