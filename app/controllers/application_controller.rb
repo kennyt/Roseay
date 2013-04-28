@@ -123,10 +123,11 @@ class ApplicationController < ActionController::Base
     #   }
     # end
     # [x, y]
-    x = User.all.sort{|y,w| w.total <=> y.total}[0..4]
+    x = User.all.select{|x| x.submissions.length > 0}.sort{|y,w| w.total <=> y.total}
     x.map do |user|
       {
-        username: user.username
+        username: user.username,
+        total: user.total
       }
     end
   end

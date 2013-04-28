@@ -455,6 +455,13 @@ $(function(){
     }, 10000)
   }
 
+  var createGoodTasteTooltip = function(){
+    $('body').prepend('<div class="radio-tooltip">Nice! Liking a song gives the contributor thanks.</div>')
+    setTimeout(function(){
+      $('.radio-tooltip').remove();
+    }, 5000)
+  }
+
   $('body').on('click','.close-radio-tooltip', function(){
     $('.radio-tooltip').remove();
   })
@@ -811,6 +818,9 @@ $(function(){
         $('.need-to-login').css('left', ev.pageX - 60)
       } else {
       $.post(path, function(response){
+        setTimeout(function(){
+          createGoodTasteTooltip();
+        }, 2000)
         songs[index]['voted'] = 0;
         songs[index]['points'] ++;
         if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]){
@@ -1219,6 +1229,18 @@ $(function(){
           $('#user_password').val('');
           $('#user_username').val('');
         }
+      }
+    )
+  })
+
+  $('body').on('click','#contributors-modal',function(){
+    $.getJSON(
+      '/users.json',
+      function(response){
+        $('.contributors-list').empty();
+        $.each(response, function(i, user){
+          $('.contributors-list').append('<div class="contributor-item">'+user['username']+' ('+user['total']+' likes)</div>');
+        })
       }
     )
   })

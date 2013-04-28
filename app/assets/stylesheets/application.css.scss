@@ -116,6 +116,7 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
   background: #1B0910;
   color: white;
   border-right: solid black 1px;
+  cursor: default;
 }
 
 h1 {
@@ -231,10 +232,28 @@ h1 {
   right: 10px;
 }
 
+#contributors-modal {
+  position: absolute;
+  top: 25px;
+  right: 10px;
+}
+
 #login-modal {
   position: absolute;
   top: 5px;
   right: 30px;
+}
+
+.contributors-header {
+  font-size: 20px;
+  font-family: 'Open Sans';
+  font-weight: bold;
+  border-bottom: solid grey 1px;
+}
+
+.not-fetched {
+  margin: 200px;
+  font-size: 30px;
 }
 
 .user_page_top_header {
