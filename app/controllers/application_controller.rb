@@ -124,10 +124,12 @@ class ApplicationController < ActionController::Base
     # end
     # [x, y]
     x = User.all.select{|x| x.submissions.length > 0}.sort{|y,w| w.total <=> y.total}
+    current_user ? current = ([]<< current_user)[0] : current = false
     x.map do |user|
       {
         username: user.username,
-        total: user.total
+        total: user.total,
+        is_current_user: user == current ? 1 : 0
       }
     end
   end

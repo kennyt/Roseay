@@ -1239,7 +1239,13 @@ $(function(){
       function(response){
         $('.contributors-list').empty();
         $.each(response, function(i, user){
-          $('.contributors-list').append('<div class="contributor-item">'+user['username']+' ('+user['total']+' likes)</div>');
+          var styling = false;
+          if (user['is_current_user'] == 1){
+            styling = 'color: red;' 
+          } else {
+            styling = ''
+          }
+          $('.contributors-list').append('<div class="contributor-item" style="'+styling+'">'+user['username']+' ('+user['total']+' likes)</div>');
         })
       }
     )
