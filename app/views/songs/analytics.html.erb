@@ -16,7 +16,10 @@
 	<%= distance_of_time_in_words(@likez.created_at - Time.now) %> song ~ <%= song.song_artist  %> - <%= song.song_name %> &nbsp;&nbsp;&nbsp; user_id ~ <%= @likez.user.username %>
 	<br><br>
 	<b>songs</b><br>
-	<%= distance_of_time_in_words(@songz.created_at - Time.now) %> &nbsp;&nbsp;&nbsp; <%= @songz.song_artist %> - <%= @songz.song_name %>&nbsp;&nbsp;&nbsp; user ~ <%= @songz.author.username %>
+	<% @songz.each do |song| %>
+		id = <%= song.id %>&nbsp;&nbsp;&nbsp;<%= distance_of_time_in_words(song.created_at - Time.now) %> &nbsp;&nbsp;&nbsp; <%= song.song_artist %> - <%= song.song_name %>&nbsp;&nbsp;&nbsp; user ~ <%= song.author.username %>
+		<br>
+	<% end %>
 	<br><br>
 	<b>remark</b><br>
 	<%= distance_of_time_in_words(@remarkz.created_at - Time.now)%> 

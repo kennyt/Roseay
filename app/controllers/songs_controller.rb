@@ -3,7 +3,7 @@ class SongsController < ApplicationController
       if params[:lytics]
         @slistens = SongListen.all[-10..-1]
         @likez = Like.last
-        @songz = Song.last
+        @songz = Song.order('created_at DESC')[0..5]
         @remarkz = Remark.last
         @userz = User.last
       else
