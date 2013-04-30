@@ -64,7 +64,8 @@ class ApplicationController < ActionController::Base
           voted: authoredz || liked_songz.include?(song) ? 0 : 2,
           author: author.username,
           authored: authoredz,
-          time: distance_of_time_in_words(song.created_at - Time.now)
+          time: distance_of_time_in_words(song.created_at - Time.now),
+          priority: Time.now - song.created_at < 172800 ? 1 : 0
           # listen_count: all_songs_listens[song.id.to_s],
           # author_total: all_users_total[author.id.to_s]
         }
@@ -81,7 +82,8 @@ class ApplicationController < ActionController::Base
           voted: 2,
           author: author.username,
           authored: false,
-          time: distance_of_time_in_words(song.created_at - Time.now)
+          time: distance_of_time_in_words(song.created_at - Time.now),
+          priority: Time.now - song.created_at < 172800 ? 1 : 0
           # listen_count: all_songs_listens[song.id.to_s],
           # author_total: all_users_total[author.id.to_s]
         }

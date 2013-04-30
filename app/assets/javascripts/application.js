@@ -23,6 +23,7 @@ $(function(){
   playerNumber = 0;
   songs = [];
   names = [];
+  listenedAlready = [];
   page = 0;
 
   var signInRemarks = function(){
@@ -366,13 +367,11 @@ $(function(){
     if ($('.forced-song .song a').length){
       $($('.forced-song .song a')[0]).trigger('click');
       var chosenID = $($('.forced-song .song')[0]).attr('id');
-      console.log(chosenID);
       $($('.forced-song .song')[0]).remove();
 
       var chosenSong = false;
       $.each(songs,function(i, song){
         if (song['id'] == chosenID){
-          console.log('hi');
           chosenSong = song;
         }
       });
@@ -384,49 +383,76 @@ $(function(){
       } else {
         $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br><br>like</div>')
       }
+      listenedAlready.push(chosenSong);
     } else {
       $('.hidden-song').empty();
       var chosenSong = false;
-      while (!(chosenSong)){
-        chosenSong = songs[Math.floor(Math.random()*songs.length)]
-      }
-      if (chosenSong['points'] == 1){
-        var personOrPeople = 'person likes'
+      var priorityChance = Math.floor(Math.random()*6) == 0
+      if (priorityChance){
+        var prioritySongs = []
+        $.each(songs, function(i, song){
+          if (song['priority'] == 1){
+            prioritySongs.push(song)
+          }
+        })
+        if (prioritySongs.length){
+          while (!(chosenSong)){
+            chosenSong = prioritySongs[Math.floor(Math.random()*prioritySongs.length)]
+          }
+        } else {
+          while (!(chosenSong)){
+            chosenSong = songs[Math.floor(Math.random()*songs.length)]
+          }
+        }
       } else {
-        var personOrPeople = 'people like'
+        while (!(chosenSong)){
+          chosenSong = songs[Math.floor(Math.random()*songs.length)]
+        }
       }
-      setupHiddenSong(chosenSong)
-      $('.hidden-song .song a').trigger('click');
-      $('.below-main').empty();
-      $('.below-main').append('<br><div class="show-song-author">'+chosenSong['points']+' '+personOrPeople+' this song<br>contributed by '+chosenSong['author']+'</div>')
-      if (chosenSong['voted'] == 0){
-        $('.below-main').append('<div class="vote-box"><br><br>liked</div>')
+      if (listenedAlready.indexOf(chosenSong) == -1){
+        if (chosenSong['points'] == 1){
+          var personOrPeople = 'person likes'
+        } else {
+          var personOrPeople = 'people like'
+        }
+        setupHiddenSong(chosenSong)
+        $('.hidden-song .song a').trigger('click');
+        $('.below-main').empty();
+        $('.below-main').append('<br><div class="show-song-author">'+chosenSong['points']+' '+personOrPeople+' this song<br>contributed by '+chosenSong['author']+'</div>')
+        if (chosenSong['voted'] == 0){
+          $('.below-main').append('<div class="vote-box"><br><br>liked</div>')
+        } else {
+          $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br><br>like</div>')
+        }
+        listenedAlready.push(chosenSong);
       } else {
-        $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br><br>like</div>')
+        playNextSong(id);
       }
     }
   }
 
-  var youtubeApiCall = function(){
+  var youtubeApiCall = function(playerID){
     $('.player-section').attr('style','')
     if ($('.testing1').attr('data-ytapi-received')){
-      constructYTVideo();
+      constructYTVideo(playerID);
     } else {
       $.getScript("https://www.youtube.com/iframe_api");
       $('.testing1').attr('data-ytapi-received', 'yes')
     }
   }
 
-  var constructYTVideo = function(){
-    player = new YT.Player('ytplayer' + playerNumber, {
-      height: '220',
-      width: '545',
-      videoId: $('.testing1').attr('data-youtube-code'),
-      events: {
-        'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
-      }
-    })
+  var constructYTVideo = function(playerID){
+    if (playerID == playerNumber){
+      player = new YT.Player('ytplayer' + playerNumber, {
+        height: '220',
+        width: '545',
+        videoId: $('.testing1').attr('data-youtube-code'),
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      })
+    }
   }
 
   function onPlayerStateChange(event) {
@@ -518,12 +544,6 @@ $(function(){
 
   $('.next-song-btn').click(function(ev){
     $('.below-main').show();
-    if ($('.backbtn').html() == 'go home'){
-      $('.backbtn').trigger('click');
-    }
-    $('.right-side-wrapper').show();
-    $('.backbtn').show();
-    $('.small_header_index').show();
     playNextSong($('.testing1').attr('data-song-played'));
     $('.radio-next-text').html('>>|');
   })
@@ -901,10 +921,11 @@ $(function(){
 
     if (link.indexOf('soundcloud')+1){
       $('.player-section').attr('style','height:171px;');
+      var currentPlayer = playerNumber;
       var link = link.replace(/%2F/g, '/').replace(/%3A/g, ':')
       SC.oEmbed(link,{auto_play:true, maxwidth:545, height:300, show_comments: true, color:'602220' }, function(track){
         $('.player-section').attr('style','');
-        if (track){
+        if ((track) && (currentPlayer == playerNumber)){
           track.html['height'] = 300
           $('.left-side-wrapper').prepend(track.html);
           bindScPlayerFinish();
@@ -915,7 +936,7 @@ $(function(){
     } else {
       $('.player-section').attr('style','height: 220px;')
       $('.left-side-wrapper').prepend('<div id="ytplayer'+playerNumber+'"></div>')
-      youtubeApiCall();
+      youtubeApiCall(playerNumber);
     }
 
     if (queueSong == '1'){

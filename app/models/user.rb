@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :remarks
   has_many :song_listens
   has_many :they_listened, through: :submissions, source: :song_listens
+  has_many :songs_listened_to, through: :song_listens, source: :song
 
   validates_length_of :username, minimum: 4, message: "too short"
   # validates_length_of :password, minimum: 4, message: "too short"
