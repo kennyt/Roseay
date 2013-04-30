@@ -32,8 +32,8 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
   position: absolute;
   right: 200px;
   width: 120px;
-  top: 0px;
-  height: 40px;
+  top: 10px;
+  height: 60px;
   text-align: center;
   background: #3BB041;
   text-decoration: none;
@@ -243,6 +243,13 @@ h1 {
 #login-modal {
   position: absolute;
   top: 5px;
+  right: 10px;
+  color: white;
+}
+
+#faq-modal {
+  position: absolute;
+  top: 45px;
   right: 10px;
   color: white;
 }

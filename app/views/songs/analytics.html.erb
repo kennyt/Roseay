@@ -8,27 +8,21 @@
 			<% else %>
 				<%= User.find(listen.user_id).username %>
 			<% end %>
+			<a style="margin-left:50px;color:blue;"href="<%=Song.find(listen.song_id).song_link%>" target="_blank">source</a>
 		<br>
 	<% end %>
-	<br><br>
 	<b>like</b><br>
-	<% song = Song.find(@likez.song_id) %>
-	<%= distance_of_time_in_words(@likez.created_at - Time.now) %> song ~ <%= song.song_artist  %> - <%= song.song_name %> &nbsp;&nbsp;&nbsp; user_id ~ <%= @likez.user.username %>
-	<br><br>
+	<% @likez.each do |like| %>
+		<% song = Song.find(like.song_id) %>
+		<%= distance_of_time_in_words(like.created_at - Time.now) %> song ~ <%= song.song_artist  %> - <%= song.song_name %> &nbsp;&nbsp;&nbsp; user_id ~ <%= like.user.username %><br>
+	<% end %>
 	<b>songs</b><br>
 	<% @songz.each do |song| %>
 		id = <%= song.id %>&nbsp;&nbsp;&nbsp;<%= distance_of_time_in_words(song.created_at - Time.now) %> &nbsp;&nbsp;&nbsp; <%= song.song_artist %> - <%= song.song_name %>&nbsp;&nbsp;&nbsp; user ~ <%= song.author.username %>
+		<a style="margin-left:50px;color:blue;"href="<%=song.song_link%>" target="_blank">source</a>
 		<br>
 	<% end %>
-	<br><br>
-	<b>remark</b><br>
-	<%= distance_of_time_in_words(@remarkz.created_at - Time.now)%> 
-	<% if @remarkz.user_id == 0 %>
-		0 ~ <%= @remarkz.body %>
-	<% else %>
-		<%= @remarkz.user.username %> ~ <%= @remarkz.body %>
-	<% end %>
-	<br><br>
+	<br>
 	<b>user</b><br>
 	<%= distance_of_time_in_words(@userz.created_at - Time.now) %> &nbsp;&nbsp;&nbsp; id ~ <%= @userz.id.to_s %> &nbsp;&nbsp;&nbsp; <%= @userz.username %>
 </div>

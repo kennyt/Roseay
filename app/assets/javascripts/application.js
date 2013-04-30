@@ -517,6 +517,7 @@ $(function(){
   }
 
   $('.next-song-btn').click(function(ev){
+    $('.below-main').show();
     if ($('.backbtn').html() == 'go home'){
       $('.backbtn').trigger('click');
     }
@@ -1234,11 +1235,15 @@ $(function(){
   })
 
   $('body').on('click','#contributors-modal',function(){
+    if ($('.not-fetched').length){
+      $('.instructions-to-contribute').hide();
+    }
     $.getJSON(
       '/users.json',
       function(response){
         $('.contributors-list').empty();
         $.each(response, function(i, user){
+          $('.instructions-to-contribute').show();
           var styling = false;
           if (user['is_current_user'] == 1){
             styling = 'color: red;' 
@@ -1432,10 +1437,10 @@ $(function(){
     //   }
     // }
   })
-  bigPictureTextMargin = 'margin-left:'+($(window).width() - 330) / 2+'px'
-  beforeLoadedTextMargin = 'margin-left:'+($(window).width() - 180) / 2+'px'
-  nextSongMargin = 'margin-left:'+($(window).width() - 150) / 2+'px'
-  leftWrapperMargin = 'margin-left:'+($(window).width() - 545) / 2+'px'
+  bigPictureTextMargin = 'margin-left:'+($(window).width() - 350) / 2+'px'
+  beforeLoadedTextMargin = 'margin-left:'+($(window).width() - 200) / 2+'px'
+  nextSongMargin = 'margin-left:'+($(window).width() - 170) / 2+'px'
+  leftWrapperMargin = 'margin-left:'+($(window).width() - 565) / 2+'px'
   $('.big-picture-text').attr('style',bigPictureTextMargin);
   $('.before-loaded').attr('style',beforeLoadedTextMargin);
   $('.next-song-btn').attr('style',nextSongMargin);
@@ -1443,4 +1448,5 @@ $(function(){
   $('.next-song-btn').hide();
   $('.notifications').hide();
   $('.submit-button').hide();
+  $('.below-main').hide();
 })

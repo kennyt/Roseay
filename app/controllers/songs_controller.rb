@@ -2,9 +2,9 @@ class SongsController < ApplicationController
   def index
       if params[:lytics]
         @slistens = SongListen.all[-10..-1]
-        @likez = Like.last
+        @slistens = @slistens.select{|x| Song.find_by_id(x.song_id) }
+        @likez = Like.order('created_at DESC')[0..5]
         @songz = Song.order('created_at DESC')[0..5]
-        @remarkz = Remark.last
         @userz = User.last
       else
         if params[:fetch]

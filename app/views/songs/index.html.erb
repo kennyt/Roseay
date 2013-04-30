@@ -5,7 +5,7 @@
       shuffle songs
     </span>
   </div> -->
-  <a href="#newsong" class="submit-button" data-toggle="modal">post   song</a>
+  <a href="#newsong" class="submit-button" data-toggle="modal"><br>post   song</a>
   <div class="next-song-btn clash"><div class="radio-next-text">play</div></div>
   <div class="search">
     <input id="song-search" placeholder="search artist or title">
@@ -22,6 +22,7 @@
     <a href="#newSessionModal" data-toggle="modal">join</a> -->
   <% end %>
   <a id="contributors-modal" href="#contributors" data-toggle="modal">contributors</a>
+  <!-- <a id="faq-modal" href="#faq" data-toggle="modal">faq</a> -->
 </div>
 <div class="page-wrapper"> 
   <div class="left-side-wrapper">
@@ -121,6 +122,7 @@
 <%= render 'new_session_modal' %>
 <%= render 'new_bump_modal' %>
 <%= render 'contributors_modal' %>
+<%= render 'faq_modal' %>
 
 <script src="//connect.soundcloud.com/sdk.js"></script>
 <script type="text/javascript">
