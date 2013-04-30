@@ -1393,6 +1393,7 @@ $(function(){
         var marginTop = ($(window).height() - 390) / 2
         $('.page-wrapper').css({height: pageheight})
         $('.left-side-wrapper').css({top: marginTop})
+        $('.next-song-btn').trigger('click');
         // $('.next-song-btn').trigger('click');
       });
     } else {
@@ -1405,6 +1406,7 @@ $(function(){
         var marginTop = ($(window).height() - 390) / 2
         $('.page-wrapper').css({height: pageheight})
         $('.left-side-wrapper').css({top: marginTop})
+        $('.next-song-btn').trigger('click');
         // $('.next-song-btn').trigger('click');
       });
     }
