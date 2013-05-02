@@ -449,10 +449,15 @@ $(function(){
         videoId: $('.testing1').attr('data-youtube-code'),
         events: {
           'onReady': onPlayerReady,
-          'onStateChange': onPlayerStateChange
+          'onStateChange': onPlayerStateChange,
+          'onError': onPlayerError
         }
       })
     }
+  }
+
+  function onPlayerError(event){
+    $('.next-song-btn').trigger('click');
   }
 
   function onPlayerStateChange(event) {
@@ -464,11 +469,7 @@ $(function(){
   }
 
   function onPlayerReady(event){
-    if (event.target.getDuration() == 0){
-      $('.next-song-btn').trigger('click');
-    } else {
-      event.target.playVideo();
-    }
+    event.target.playVideo();
   }
   
   var createRadioTooltip = function(){
