@@ -37,7 +37,7 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
   text-align: center;
   background: #3BB041;
   text-decoration: none;
-  /*border-radius: 2px;*/
+  border-radius: 2px;
 
   &:hover {
     text-decoration: none;
@@ -455,7 +455,7 @@ body {
   width: 100px;
   height: 80px;
   position: absolute;
-  /*border-radius: 10px;*/
+  border-radius: 2px;
   display: table;
   font-size: 7px;
   width: 150px;

@@ -464,7 +464,11 @@ $(function(){
   }
 
   function onPlayerReady(event){
-    event.target.playVideo();
+    if (event.target.getDuration() == 0){
+      $('.next-song-btn').trigger('click');
+    } else {
+      event.target.playVideo();
+    }
   }
   
   var createRadioTooltip = function(){
