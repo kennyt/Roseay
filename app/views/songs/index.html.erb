@@ -157,9 +157,10 @@
   }
 
   function onPlayerError(event){
+    createPlayerErrorTooltip();
     $('.next-song-btn').trigger('click');
   }
-  
+
   function onPlayerStateChange(event) {
     var myPlayerState;
     myPlayerState = event.data;
@@ -186,6 +187,13 @@
   }
   function calcParallax(tileheight, speedratio, scrollposition) {
     return ((tileheight) - (Math.floor(scrollposition / speedratio) % (tileheight+1)));
+  }
+
+  var createPlayerErrorTooltip = function(){
+    $('body').prepend('<div class="radio-tooltip">We skipped a song for you because the video was broken. We will continue to make your listening experience smooth :)</div>')
+    setTimeout(function(){
+      $('.radio-tooltip').remove();
+    }, 12000)
   }
 
   $(function() {

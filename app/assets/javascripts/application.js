@@ -457,6 +457,7 @@ $(function(){
   }
 
   function onPlayerError(event){
+    createPlayerErrorTooltip();
     $('.next-song-btn').trigger('click');
   }
 
@@ -484,6 +485,13 @@ $(function(){
     setTimeout(function(){
       $('.radio-tooltip').remove();
     }, 10000)
+  }
+
+  var createPlayerErrorTooltip = function(){
+    $('body').prepend('<div class="radio-tooltip">We skipped a song for you because the video was broken. We will continue to make your listening experience smooth :)</div>')
+    setTimeout(function(){
+      $('.radio-tooltip').remove();
+    }, 12000)
   }
 
   var createGoodTasteTooltip = function(){
@@ -935,6 +943,7 @@ $(function(){
           $('.left-side-wrapper').prepend(track.html);
           bindScPlayerFinish();
         } else {
+          createPlayerErrorTooltip();
           $('.next-song-btn').trigger('click');
         }
       })
