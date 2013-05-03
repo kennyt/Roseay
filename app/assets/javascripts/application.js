@@ -856,26 +856,28 @@ $(function(){
         $('.need-to-login').css('top', ev.pageY - 8)
         $('.need-to-login').css('left', ev.pageX - 60)
       } else {
-      $.post(path, function(response){
-        setTimeout(function(){
-          createGoodTasteTooltip();
-        }, 2000)
-        songs[index]['voted'] = 0;
-        songs[index]['points'] ++;
-        if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]){
-          if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]['id'] == songID){
-            $('.upvote-player').empty()
-            $('.upvote-player').append('<div class="checkmark"></div>')
-            $('.upvote-player').append('<div class="upvote-text">voted</div>')
+        $.post(path, function(response){
+          setTimeout(function(){
+            createGoodTasteTooltip();
+          }, 2000)
+          songs[index]['voted'] = 0;
+          songs[index]['points'] ++;
+          if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]){
+            if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]['id'] == songID){
+              $('.upvote-player').empty()
+              $('.upvote-player').append('<div class="checkmark"></div>')
+              $('.upvote-player').append('<div class="upvote-text">voted</div>')
+            }
           }
-        }
-        if ($('.current-song .upvote').attr('href').split('/')[2] == songID){
-          $('.current-song .upvote').remove();
-        }
-      })
+          if ($('.current-song .upvote').attr('href').split('/')[2] == songID){
+            $('.current-song .upvote').remove();
+          }
+        })
       }
     } else {
       $('#login-modal').trigger('click');
+      $.post('/remarks.json?guest_like=1');
+      $('#login-modal').attr('data-guest','1');
     }
   })
 
@@ -1214,6 +1216,9 @@ $(function(){
         'password_confirmation': password_confirmation
       }}, function(response){
         if (!(response['error'])){
+          if ($('#login-modal').attr('data-guest')){
+            $.post('/remarks.json?convert_guest_like=1')
+          }
           $('#login-modal').remove();
           $('.notifications').show();
           $('.submit-button').show();
