@@ -342,6 +342,17 @@ h1 {
   position: relative;
 }
 
+.recently-added-tag {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #5EC97B;
+  color: white;
+  border-radius: 4px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
 .show-song-author {
   font-family: 'Open Sans';
   cursor: default;

@@ -383,6 +383,7 @@ $(function(){
       } else {
         $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br><br>like</div>')
       }
+      $('.below-main').append('<div class="recently-added-tag">Recently Added</div>')
       listenedAlready.push(chosenSong);
     } else {
       $('.hidden-song').empty();
@@ -404,6 +405,7 @@ $(function(){
             chosenSong = songs[Math.floor(Math.random()*songs.length)]
           }
         }
+
       } else {
         while (!(chosenSong)){
           chosenSong = songs[Math.floor(Math.random()*songs.length)]
@@ -425,6 +427,9 @@ $(function(){
           $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br><br>like</div>')
         }
         listenedAlready.push(chosenSong);
+        if (chosenSong['priority'] == 1){
+          $('.below-main').append('<div class="recently-added-tag">Recently Added</div>')
+        }
       } else {
         playNextSong(id);
       }
