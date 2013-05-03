@@ -35,6 +35,10 @@ class RemarksController < ApplicationController
 			Mention.find(3).update_attribute(:remark_id, (Mention.find(3).remark_id + 1))
 		elsif params[:convert_guest_like]
 			Mention.find(3).update_attribute(:mentionable_id, (Mention.find(3).mentionable_id + 1))
+		elsif params[:skip_song]
+			Mention.find(4).update_attribute(:remark_id, (Mention.find(4).remark_id + 1))
+		elsif params[:completed_song]
+			Mention.find(4).update_attribute(:mentionable_id, (Mention.find(4).mentionable_id + 1))
 		end
 
 		respond_to do |format|

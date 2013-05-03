@@ -158,7 +158,7 @@
 
   function onPlayerError(event){
     createPlayerErrorTooltip();
-    $('.next-song-btn').trigger('click');
+    playNextSong($('.testing1').attr('data-song-played'));
   }
 
   function onPlayerStateChange(event) {
@@ -166,6 +166,7 @@
     myPlayerState = event.data;
     if (myPlayerState == 0){
       playNextSong($('.testing1').attr('data-song-played'));
+      $.post('/remarks.json?completed_song=1')
     }
   }
 
@@ -255,7 +256,7 @@
     $('.hidden-song').append('<li class="song" id="'+songID+'"></li>')
     $('.hidden-song .song').append('<span id="song"><a href="/songs?d='+link+'"><span class="song-artist">'+datum['song_artist']+'</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="song-name">'+datum["song_name"]+'</span></a></span>')
   }
-  
+
   function calcParallax(tileheight, speedratio, scrollposition) {
     return ((tileheight) - (Math.floor(scrollposition / speedratio) % (tileheight+1)));
   }

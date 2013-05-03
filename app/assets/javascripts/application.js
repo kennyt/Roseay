@@ -345,6 +345,7 @@ $(function(){
     var widgetIframe = $('iframe')[0],
         widget       = SC.Widget(widgetIframe);
     widget.bind(SC.Widget.Events.FINISH, function(player, data) {
+      $.post('/remarks.json?completed_song=1');
       playNextSong($('.testing1').attr('data-song-played'));
     });
   }
@@ -463,7 +464,7 @@ $(function(){
 
   function onPlayerError(event){
     createPlayerErrorTooltip();
-    $('.next-song-btn').trigger('click');
+    playNextSong($('.testing1').attr('data-song-played'));
   }
 
   function onPlayerStateChange(event) {
@@ -471,6 +472,7 @@ $(function(){
     myPlayerState = event.data;
     if (myPlayerState == 0){
       playNextSong($('.testing1').attr('data-song-played'));
+      $.post('/remarks.json?completed_song=1');
     }
   }
 
@@ -563,7 +565,13 @@ $(function(){
   $('.next-song-btn').click(function(ev){
     $('.below-main').show();
     playNextSong($('.testing1').attr('data-song-played'));
-    $('.radio-next-text').html('>>|');
+    if ($('.radio-next-text').html() == 'play'){
+      $('.radio-next-text').html('>>|');
+    } else {
+      if (!(playerNumber == 1)){
+        $.post('/remarks.json?skip_song=1');
+      }
+    }
   })
 
   $('body').on('click', '.song-modal-submit', function(ev){
@@ -951,7 +959,7 @@ $(function(){
           bindScPlayerFinish();
         } else {
           createPlayerErrorTooltip();
-          $('.next-song-btn').trigger('click');
+          playNextSong($('.testing1').attr('data-song-played'));
         }
       })
     } else {
