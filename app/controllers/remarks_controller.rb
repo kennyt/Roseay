@@ -37,7 +37,7 @@ class RemarksController < ApplicationController
 			Mention.find(3).update_attribute(:mentionable_id, (Mention.find(3).mentionable_id + 1))
 		end
 
-		if current_user && !current_user.id == 1
+		if current_user
 			if params[:skip_song]
 				Mention.find(4).update_attribute(:remark_id, (Mention.find(4).remark_id + 1)) unless current_user.id == 1
 			elsif params[:completed_song]
