@@ -174,17 +174,88 @@
   }
 
   var playNextSong = function(id){
-    numberOfSongs = $('.left-side-wrapper #song a').length
-    if (numberOfSongs && $('.testing1').attr('data-radio') == 'true'){
-      var randomNum = Math.floor(Math.random()*(numberOfSongs))
-      var song = $('.left-side-wrapper #song a')[randomNum]
-      while ($(song.parentNode.parentNode).attr('id') == id){
-        randomNum = Math.floor(Math.random()*(numberOfSongs))
-        song = $('.left-side-wrapper #song a')[randomNum]
+    if ($('.forced-song .song a').length){
+      $($('.forced-song .song a')[0]).trigger('click');
+      var chosenID = $($('.forced-song .song')[0]).attr('id');
+      $($('.forced-song .song')[0]).remove();
+
+      var chosenSong = false;
+      $.each(songs,function(i, song){
+        if (song['id'] == chosenID){
+          chosenSong = song;
+        }
+      });
+
+      $('.below-main').empty();
+      $('.below-main').append('<br><div class="show-song-author">1 person likes this song<br>contributed by '+chosenSong['author']+'</div>')
+      if (chosenSong['voted'] == 0){
+        $('.below-main').append('<div class="vote-box"><br><br>liked</div>')
+      } else {
+        $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br><br>like</div>')
       }
-      $(song).trigger('click');
+      $('.below-main').append('<div class="recently-added-tag">Recently Added</div>')
+      listenedAlready.push(chosenSong);
+    } else {
+      $('.hidden-song').empty();
+      var chosenSong = false;
+      var priorityChance = Math.floor(Math.random()*6) == 0
+      if (priorityChance){
+        var prioritySongs = []
+        $.each(songs, function(i, song){
+          if (song['priority'] == 1){
+            prioritySongs.push(song)
+          }
+        })
+        if (prioritySongs.length){
+          while (!(chosenSong)){
+            chosenSong = prioritySongs[Math.floor(Math.random()*prioritySongs.length)]
+          }
+        } else {
+          while (!(chosenSong)){
+            chosenSong = songs[Math.floor(Math.random()*songs.length)]
+          }
+        }
+
+      } else {
+        while (!(chosenSong)){
+          chosenSong = songs[Math.floor(Math.random()*songs.length)]
+        }
+      }
+      if (listenedAlready.indexOf(chosenSong) == -1){
+        if (chosenSong['points'] == 1){
+          var personOrPeople = 'person likes'
+        } else {
+          var personOrPeople = 'people like'
+        }
+        setupHiddenSong(chosenSong)
+        $('.hidden-song .song a').trigger('click');
+        $('.below-main').empty();
+        $('.below-main').append('<br><div class="show-song-author">'+chosenSong['points']+' '+personOrPeople+' this song<br>contributed by '+chosenSong['author']+'</div>')
+        if (chosenSong['voted'] == 0){
+          $('.below-main').append('<div class="vote-box"><br><br>liked</div>')
+        } else {
+          $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br><br>like</div>')
+        }
+        listenedAlready.push(chosenSong);
+        if (chosenSong['priority'] == 1){
+          $('.below-main').append('<div class="recently-added-tag">Recently Added</div>')
+        }
+      } else {
+        playNextSong(id);
+      }
     }
   }
+
+  var setupHiddenSong = function(datum){
+    var songID = datum['id']
+    var link = datum['song_link'].split('watch?v=')[1]
+    if (link == undefined){
+      var link = datum['song_link'];
+    }
+    $('.hidden-song').append('<li class="song" id="'+songID+'"></li>')
+    $('.hidden-song .song').append('<span id="song"><a href="/songs?d='+link+'"><span class="song-artist">'+datum['song_artist']+'</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="song-name">'+datum["song_name"]+'</span></a></span>')
+  }
+  
   function calcParallax(tileheight, speedratio, scrollposition) {
     return ((tileheight) - (Math.floor(scrollposition / speedratio) % (tileheight+1)));
   }
