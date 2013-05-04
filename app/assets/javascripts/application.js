@@ -1441,7 +1441,6 @@ $(function(){
         setupTopSongs();
         $('.next-song-btn').show();
         $('.page-wrapper').show();
-        $('.before-loaded').remove();
         var pageheight = $(window).height() - 90
         var marginTop = ($(window).height() - 390) / 2
         $('.page-wrapper').css({height: pageheight})
@@ -1454,7 +1453,6 @@ $(function(){
         setupTopSongs();
         $('.next-song-btn').show();
         $('.page-wrapper').show();
-        $('.before-loaded').remove();
         var pageheight = $(window).height() - 90
         var marginTop = ($(window).height() - 390) / 2
         $('.page-wrapper').css({height: pageheight})
@@ -1471,7 +1469,6 @@ $(function(){
       setupTopSongs();
       $('.next-song-btn').show();
       $('.page-wrapper').show();
-      $('.before-loaded').remove();
     });
   }
   $('.page-wrapper').hide();
@@ -1493,13 +1490,13 @@ $(function(){
     // }
   })
   bigPictureTextMargin = 'margin-left:'+($(window).width() - 350) / 2+'px'
-  beforeLoadedTextMargin = 'margin-left:'+($(window).width() - 200) / 2+'px'
   nextSongMargin = 'margin-left:'+($(window).width() - 170) / 2+'px'
   leftWrapperMargin = 'margin-left:'+($(window).width() - 565) / 2+'px'
+  roseayWordMargin = 'margin-left:'+($(window).width() - 205) / 2+'px'
   $('.big-picture-text').attr('style',bigPictureTextMargin);
-  $('.before-loaded').attr('style',beforeLoadedTextMargin);
   $('.next-song-btn').attr('style',nextSongMargin);
   $('.left-side-wrapper').attr('style',leftWrapperMargin);
+  $('.roseay-word').attr('style',roseayWordMargin);
   $('.next-song-btn').hide();
   $('.notifications').hide();
   $('.submit-button').hide();
