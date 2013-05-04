@@ -436,7 +436,7 @@ $(function(){
       }
     }
   }
-
+//hi
   var youtubeApiCall = function(playerID){
     $('.player-section').attr('style','')
     if ($('.testing1').attr('data-ytapi-received')){
