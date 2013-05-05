@@ -389,7 +389,7 @@ $(function(){
     } else {
       $('.hidden-song').empty();
       var chosenSong = false;
-      var priorityChance = Math.floor(Math.random()*9) == 0
+      var priorityChance = Math.floor(Math.random()*6) == 0
       if (priorityChance){
         var prioritySongs = []
         $.each(songs, function(i, song){
@@ -436,7 +436,7 @@ $(function(){
       }
     }
   }
-//hi
+
   var youtubeApiCall = function(playerID){
     $('.player-section').attr('style','')
     if ($('.testing1').attr('data-ytapi-received')){
