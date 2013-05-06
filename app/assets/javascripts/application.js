@@ -991,13 +991,15 @@ $(function(){
       var link = link.replace(/%2F/g, '/').replace(/%3A/g, ':')
       SC.oEmbed(link,{auto_play:true, maxwidth:545, height:300, show_comments: true, color:'602220' }, function(track){
         $('.player-section').attr('style','');
-        if ((track) && (currentPlayer == playerNumber)){
-          track.html['height'] = 300
-          $('.left-side-wrapper').prepend(track.html);
-          bindScPlayerFinish();
-        } else {
-          createPlayerErrorTooltip();
-          playNextSong($('.testing1').attr('data-song-played'));
+        if (currentPlayer == playerNumber){
+          if (track){
+            track.html['height'] = 300
+            $('.left-side-wrapper').prepend(track.html);
+            bindScPlayerFinish();
+          } else {
+            createPlayerErrorTooltip();
+            playNextSong($('.testing1').attr('data-song-played'));
+          }
         }
       })
     } else {
