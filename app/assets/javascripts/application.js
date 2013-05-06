@@ -570,7 +570,7 @@ $(function(){
           setUpRecentlyListened();
         });
       }
-    }, 1000)
+    }, 90000)
   }
 
   var createListen = function(songId, userId, callback){
