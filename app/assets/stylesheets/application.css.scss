@@ -54,10 +54,11 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
 
 .song {
   /*margin: 4px;*/
-  margin-left: -20px;
+/*  margin-left: -20px;
   margin-right: 4px;
   margin-bottom: 0px;
-  margin-top: 0px;
+  margin-top: 0px;*/
+  color: grey;
   position: relative;
   a {
     &:hover{
@@ -96,7 +97,7 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
   font-family: 'Open Sans';
   background: #822B55;
   color: white;
-  border-right: solid black 1px;
+  /*border-right: solid black 1px;*/
   &:hover{
     background: #1B0910;
     cursor: pointer;
@@ -321,6 +322,57 @@ h1 {
   }
 }
 
+.left-tool-column {
+  width: 200px;
+  min-height: 40px;
+  left: 0px;
+  top: -15px;
+  background-color: #ecf0f1;
+  position: absolute;
+}
+
+.recently-listened-header {
+  background-color: #ecf0f1;
+  padding-bottom: 4px;
+  cursor: default;
+  /*border-bottom: solid rgb(137, 148, 155) 1px;*/
+}
+
+.recently-header-text {
+  color: grey;
+  margin-left: 25px;
+  font-family: 'Open Sans';
+  font-size: 16px;
+}
+
+.recently-listened-list {
+  .song {
+    text-align: left;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 16px;
+    /*border-bottom: solid rgb(137, 148, 155) 1px;*/
+    font-family: Helvetica;
+    font-size: 17px;
+    a{
+      color: #2c3e50;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.recently-listened-timestamp{
+  position: absolute;
+  right: 2px;
+  bottom: 0px;
+  color: grey;
+  font-size: 10px;
+  font-family: Arial;
+  cursor: default;
+}
+
 .left-side-wrapper {
   /*border-radius: 10px;*/
   margin-top: 0px;
@@ -429,7 +481,7 @@ body {
   /*border: solid black 1px;*/
   text-align: center;
   width: 180px;
-  left: 100px;
+  right: 100px;
   top: 700px;
   z-index: 1;
 }

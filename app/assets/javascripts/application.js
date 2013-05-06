@@ -157,8 +157,8 @@ $(function(){
 
   var setupTopSong = function(i, song){
     var songID = song['id']
-    var link = song['song_link'].split('watch?v=')[1]
     var points = song['points']
+    var link = song['song_link'].split('watch?v=')[1]
 
     if (link == undefined){
       var link = song['song_link'];
@@ -295,6 +295,35 @@ $(function(){
     $.each(topSongs, function(i, song){
       setupTopSong(i, song);
     })
+  }
+
+  var setUpRecentlyListened = function(){
+    var recentlyListened = [];
+    $.each(songs, function(i, song){
+      if (song['recently_listened']){
+        recentlyListened.push(song)
+      }
+    })
+    if (recentlyListened.length){
+      recentlyListened = recentlyListened.sort(function(a,b){return a['recently_listened']-b['recently_listened']}).slice(0,10);
+      $('.recently-listened-list').empty();
+      $.each(recentlyListened, function(i, song){
+        setUpSingleRecent(i,song);
+      })
+      $($('.recently-listened-list .song')[0]).append('<div class="recently-listened-timestamp">most recent</div>')
+      $($('.recently-listened-list .song')[$('.recently-listened-list .song').length -1]).append('<div class="recently-listened-timestamp">least recent</div>')
+    }
+  }
+
+  var setUpSingleRecent = function(i,song){
+    var songID = song['id'];
+    var link = song['song_link'].split('watch?v=')[1]
+    if (link == undefined){
+      var link = song['song_link'];
+    }
+
+    $('.recently-listened-list').append('<div class="song"></div>');
+    $($('.recently-listened-list .song')[i]).append('<div id="song"><a data-songid="'+songID+'" href="/songs?d='+link+'">'+song["song_artist"]+" - "+song["song_name"]+'</a></div>')
   }
 
   var fetchRemarks = function(page, filter, callback) {
@@ -527,12 +556,21 @@ $(function(){
     }
     setTimeout(function(){
       if ($('.testing1').attr('data-song-number') == uniqueId){
-        createListen(songId, userId);
+        createListen(songId, userId, function(){
+          var song = false;
+          $.each(songs,function(i,checkSong){
+            if (checkSong['id'] == songId){
+              song = checkSong;
+            }
+          })
+          song['recently_listened'] = 0 - playerNumber
+          setUpRecentlyListened();
+        });
       }
     }, 90000)
   }
 
-  var createListen = function(songId, userId){
+  var createListen = function(songId, userId, callback){
     var q = $('.testing1').attr('is-queue');
     var b = $('.testing1').attr('is-blue');
     var s = $('.testing1').attr('is-search');
@@ -544,10 +582,8 @@ $(function(){
         'user_id': userId,
         'song_id': songId
       }}, function(response){
-        if (response['like_it']){
-          if ($('.left-side-wrapper .song#'+songId+' .upvote').length){
-            $('.left-side-wrapper .song#'+songId+' .upvote').trigger('click');
-          }
+        if (callback){
+          callback();
         }
       }
     )
@@ -1276,7 +1312,9 @@ $(function(){
           //   $('.refresh').show();
           //   $('.remark-news').show();
           // })
-          fetchSongs();
+          fetchSongs(function(){
+            setUpRecentlyListened();
+          });
         } else {
           $($('h3')[0]).html('sign in')
           $($('.new_user')[0]).prepend('<h4 style="color:red">wrong username or password</h4>')
@@ -1445,6 +1483,7 @@ $(function(){
         var marginTop = ($(window).height() - 390) / 2
         $('.page-wrapper').css({height: pageheight})
         $('.left-side-wrapper').css({top: marginTop})
+        setUpRecentlyListened();
         $('.next-song-btn').trigger('click');
         // $('.next-song-btn').trigger('click');
       });
@@ -1457,6 +1496,7 @@ $(function(){
         var marginTop = ($(window).height() - 390) / 2
         $('.page-wrapper').css({height: pageheight})
         $('.left-side-wrapper').css({top: marginTop})
+        setUpRecentlyListened();
         $('.next-song-btn').trigger('click');
         // $('.next-song-btn').trigger('click');
       });
@@ -1467,6 +1507,7 @@ $(function(){
       $('.small_header_index').show();
       $('.next-song-btn').attr('class', 'next-song-btn');
       setupTopSongs();
+      setUpRecentlyListened();
       $('.next-song-btn').show();
       $('.page-wrapper').show();
     });
