@@ -311,7 +311,9 @@ $(function(){
         setUpSingleRecent(i,song);
       })
       $($('.recently-listened-list .song')[0]).append('<div class="recently-listened-timestamp">most recent</div>')
-      $($('.recently-listened-list .song')[$('.recently-listened-list .song').length -1]).append('<div class="recently-listened-timestamp">least recent</div>')
+      if ($('.recently-listened-list .song').length > 2){
+        $($('.recently-listened-list .song')[$('.recently-listened-list .song').length -1]).append('<div class="recently-listened-timestamp">least recent</div>')
+      }
     }
   }
 
