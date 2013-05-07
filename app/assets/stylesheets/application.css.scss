@@ -422,6 +422,64 @@ h1 {
   /*overflow: hidden;*/
 }
 
+.up-next-holder {
+  top: 180px;
+  /*right:-320px;*/
+  width:200px;
+  height:150px;
+  background-color: rgb(233, 234, 237);
+  position:absolute;
+}
+
+.up-next-header {
+  font-size: 18px;
+  font-family: 'Open Sans';
+  margin-left: 55px;
+}
+
+.up-next-song {
+  width: 200px;
+  height:90px;
+  .song {
+    margin-left: 40px;
+    top: 5px;
+    width: 150px;
+    height: 85px;
+    overflow: hidden;
+    a {
+      color: #2c3e50;
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.up-next-change{
+  height: 40px;
+  color: white;
+  position: relative;
+  background: #1B0910;
+  cursor: pointer;
+  &:hover{
+    background: #C75769;
+  }
+}
+
+.up-next-text {
+  color: white;
+  font-family: 'Open Sans';
+  position: absolute;
+  top: 10px;
+  left: 35px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .feed-title {
   width: 100px;
   margin-top: 8px;
@@ -483,7 +541,7 @@ body {
   text-align: center;
   width: 180px;
   right: 100px;
-  top: 700px;
+  top: 500px;
   z-index: 1;
 }
 
@@ -514,15 +572,16 @@ body {
   margin-left: 43%;
   /*margin-top: -67px;*/
   background: #1B0910;
-  top: 0px;
+  top: -20px;
   color: white;
   width: 100px;
-  height: 80px;
+  height: 120px;
   position: absolute;
   border-radius: 2px;
   display: table;
   font-size: 7px;
   width: 150px;
+  border:solid #7f8c8d 1px;
 
   &:hover{
     cursor: pointer;

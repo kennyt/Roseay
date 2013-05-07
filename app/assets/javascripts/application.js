@@ -132,14 +132,15 @@ $(function(){
     $('.hidden-song .song').append('<span id="song"><a href="/songs?d='+link+'"><span class="song-artist">'+datum['song_artist']+'</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="song-name">'+datum["song_name"]+'</span></a></span>')
   }
 
-  var setupForcedSong = function(datum){
+  var setupNextSong = function(datum){
+    $('.up-next-song').empty();
     var songID = datum['id']
     var link = datum['song_link'].split('watch?v=')[1]
     if (link == undefined){
       var link = datum['song_link'];
     }
-    $('.forced-song').append('<li class="song" id="'+songID+'"></li>')
-    $('.forced-song .song').append('<span id="song"><a href="/songs?d='+link+'"><span class="song-artist">'+datum['song_artist']+'</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="song-name">'+datum["song_name"]+'</span></a></span>')
+    $('.up-next-song').append('<div class="song" id="'+songID+'"></div>')
+    $('.up-next-song .song').append('<span id="song"><a href="/songs?d='+link+'" data-upnext=1><span class="song-artist">'+datum['song_artist']+'</span><br><span class="song-name">'+datum["song_name"]+'</span></a></span>')
   }
 
   var setupSongBelowPlayer = function(i, song){
@@ -384,24 +385,9 @@ $(function(){
   }
 
   var playNextSong = function(id){
-    // if ($('.queue-songs #song a').length){
-    //   $($('.queue-songs #song a')[0]).trigger('click');
-    // } else {
-    //   numberOfSongs = $('.left-side-wrapper #song a').length
-    //   if (numberOfSongs && $('.testing1').attr('data-radio') == 'true'){
-    //     var randomNum = Math.floor(Math.random()*(numberOfSongs))
-    //     var song = $('.left-side-wrapper #song a')[randomNum]
-    //     while ($(song.parentNode.parentNode).attr('id') == id){
-    //       randomNum = Math.floor(Math.random()*(numberOfSongs))
-    //       song = $('.left-side-wrapper #song a')[randomNum]
-    //     }
-    //     $(song).trigger('click');
-    //   }
-    // }
-    if ($('.forced-song .song a').length){
-      $($('.forced-song .song a')[0]).trigger('click');
-      var chosenID = $($('.forced-song .song')[0]).attr('id');
-      $($('.forced-song .song')[0]).remove();
+    if ($('.up-next-song .song a').length){
+      $($('.up-next-song .song a')[0]).trigger('click');
+      var chosenID = $($('.up-next-song .song')[0]).attr('id');
 
       var chosenSong = false;
       $.each(songs,function(i, song){
@@ -409,64 +395,72 @@ $(function(){
           chosenSong = song;
         }
       });
-
-      $('.below-main').empty();
-      $('.below-main').append('<br><div class="show-song-author">1 person likes this song<br>contributed by '+chosenSong['author']+'</div>')
-      if (chosenSong['voted'] == 0){
-        $('.below-main').append('<div class="vote-box"><br><br>liked</div>')
-      } else {
-        $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br><br>like</div>')
-      }
-      $('.below-main').append('<div class="recently-added-tag">Recently Added</div>')
+      setupBelowMain(chosenSong);
       listenedAlready.push(chosenSong);
+      chosenSong = chooseNextSong();
+      setupNextSong(chosenSong);
     } else {
       $('.hidden-song').empty();
-      var chosenSong = false;
-      var priorityChance = Math.floor(Math.random()*6) == 0
-      if (priorityChance){
-        var prioritySongs = []
-        $.each(songs, function(i, song){
-          if (song['priority'] == 1){
-            prioritySongs.push(song)
-          }
-        })
-        if (prioritySongs.length){
-          while (!(chosenSong)){
-            chosenSong = prioritySongs[Math.floor(Math.random()*prioritySongs.length)]
-          }
-        } else {
-          while (!(chosenSong)){
-            chosenSong = songs[Math.floor(Math.random()*songs.length)]
-          }
-        }
+      var chosenSong = chooseNextSong();
+      if (listenedAlready.indexOf(chosenSong) == -1){
+        setupHiddenSong(chosenSong)
+        $('.hidden-song .song a').trigger('click');
+        setupBelowMain(chosenSong);
+        listenedAlready.push(chosenSong);
+      } else {
+        playNextSong(id);
+      }
+      chosenSong = chooseNextSong();
+      setupNextSong(chosenSong);
+    }
+  }
 
+  var chooseNextSong = function(){
+    var chosenSong = false;
+    var priorityChance = Math.floor(Math.random()*6) == 0
+    if (priorityChance){
+      var prioritySongs = []
+      $.each(songs, function(i, song){
+        if (song['priority'] == 1){
+          prioritySongs.push(song)
+        }
+      })
+      if (prioritySongs.length){
+        while (!(chosenSong)){
+          chosenSong = prioritySongs[Math.floor(Math.random()*prioritySongs.length)]
+        }
       } else {
         while (!(chosenSong)){
           chosenSong = songs[Math.floor(Math.random()*songs.length)]
         }
       }
-      if (listenedAlready.indexOf(chosenSong) == -1){
-        if (chosenSong['points'] == 1){
-          var personOrPeople = 'person likes'
-        } else {
-          var personOrPeople = 'people like'
-        }
-        setupHiddenSong(chosenSong)
-        $('.hidden-song .song a').trigger('click');
-        $('.below-main').empty();
-        $('.below-main').append('<br><div class="show-song-author">'+chosenSong['points']+' '+personOrPeople+' this song<br>contributed by '+chosenSong['author']+'</div>')
-        if (chosenSong['voted'] == 0){
-          $('.below-main').append('<div class="vote-box"><br><br>liked</div>')
-        } else {
-          $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br><br>like</div>')
-        }
-        listenedAlready.push(chosenSong);
-        if (chosenSong['priority'] == 1){
-          $('.below-main').append('<div class="recently-added-tag">Recently Added</div>')
-        }
-      } else {
-        playNextSong(id);
+    } else {
+      while (!(chosenSong)){
+        chosenSong = songs[Math.floor(Math.random()*songs.length)]
       }
+    }
+    if (listenedAlready.indexOf(chosenSong) == -1){
+      return chosenSong;
+    } else {
+      return chooseNextSong();
+    }
+  }
+
+  var setupBelowMain = function(chosenSong){
+    if (chosenSong['points'] == 1){
+      var personOrPeople = 'person likes'
+    } else {
+      var personOrPeople = 'people like'
+    }
+    $('.below-main').empty();
+    $('.below-main').append('<br><div class="show-song-author">'+chosenSong['points']+' '+personOrPeople+' this song<br>contributed by '+chosenSong['author']+'</div>')
+    if (chosenSong['voted'] == 0){
+      $('.below-main').append('<div class="vote-box"><br><br>liked</div>')
+    } else {
+      $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br><br>like</div>')
+    }
+    if (chosenSong['priority'] == 1){
+      $('.below-main').append('<div class="recently-added-tag">Recently Added</div>')
     }
   }
 
@@ -570,7 +564,7 @@ $(function(){
           setUpRecentlyListened();
         });
       }
-    }, 90000)
+    }, 30000)
   }
 
   var createListen = function(songId, userId, callback){
@@ -632,7 +626,7 @@ $(function(){
         } else {
           $('#close-modal').trigger('click');
           fetchSongs();
-          setupForcedSong(response);
+          setupNextSong(response);
           createThankTooltip();
         }
         $('.song-modal-submit').show();
@@ -1054,6 +1048,10 @@ $(function(){
       var title = $($(this).children()[2]).html().replace(/&amp;/g, '&');
       document.title = artist + ' - ' + title
     }
+    if ($(this).attr('data-upnext')){
+      var upNext = chooseNextSong();
+      setupNextSong(upNext);
+    }
   })
 
   // $('body').on('click', '.add-to-queue', function(ev){
@@ -1411,6 +1409,20 @@ $(function(){
         $('.notification-panel').remove();
     }, 1600)
   })
+
+  $('body').on('click','.up-next-change',function(){
+    var songID = $('.up-next-song .song').attr('id');
+    var upNext = false;
+    $.each(songs,function(i,song){
+      if (song['id'] == songID){
+        upNext = song;
+      }
+    })
+    listenedAlready.push(upNext);
+    upNext = chooseNextSong();
+    console.log(upNext['id']);
+    setupNextSong(upNext);
+  })
  
   SC.initialize({client_id:"8f1e619588b836d8f108bfe30977d6db"});
 
@@ -1489,6 +1501,7 @@ $(function(){
         var marginTop = ($(window).height() - 390) / 2
         $('.page-wrapper').css({height: pageheight})
         $('.left-side-wrapper').css({top: marginTop})
+        $('.up-next-holder').css({top: marginTop+60})
         setUpRecentlyListened();
         $('.next-song-btn').trigger('click');
         // $('.next-song-btn').trigger('click');
@@ -1502,6 +1515,7 @@ $(function(){
         var marginTop = ($(window).height() - 390) / 2
         $('.page-wrapper').css({height: pageheight})
         $('.left-side-wrapper').css({top: marginTop})
+        $('.up-next-holder').css({top: marginTop+60})
         setUpRecentlyListened();
         $('.next-song-btn').trigger('click');
         // $('.next-song-btn').trigger('click');
@@ -1536,14 +1550,20 @@ $(function(){
     //   }
     // }
   })
+  var holder = (($(window).width() / 2)+270)
   bigPictureTextMargin = 'margin-left:'+($(window).width() - 350) / 2+'px'
   nextSongMargin = 'margin-left:'+($(window).width() - 170) / 2+'px'
   leftWrapperMargin = 'margin-left:'+($(window).width() - 565) / 2+'px'
   roseayWordMargin = 'margin-left:'+($(window).width() - 205) / 2+'px'
+  upNextLeftMargin = 'left:'+ (((($(window).width() - holder) / 2)-115)+holder)+'px'
   $('.big-picture-text').attr('style',bigPictureTextMargin);
   $('.next-song-btn').attr('style',nextSongMargin);
   $('.left-side-wrapper').attr('style',leftWrapperMargin);
   $('.roseay-word').attr('style',roseayWordMargin);
+  $('.up-next-holder').attr('style',upNextLeftMargin);
+  console.log(upNextLeftMargin);
+
+
   $('.next-song-btn').hide();
   $('.notifications').hide();
   $('.submit-button').hide();
