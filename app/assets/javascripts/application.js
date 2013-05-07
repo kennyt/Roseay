@@ -389,15 +389,13 @@ $(function(){
       $($('.up-next-song .song a')[0]).trigger('click');
       var chosenID = $($('.up-next-song .song')[0]).attr('id');
 
-      var chosenSong = false;
       $.each(songs,function(i, song){
         if (song['id'] == chosenID){
-          chosenSong = song;
+          setupBelowMain(song);
         }
       });
-      setupBelowMain(chosenSong);
       listenedAlready.push(chosenSong);
-      chosenSong = chooseNextSong();
+      var chosenSong = chooseNextSong();
       setupNextSong(chosenSong);
     } else {
       $('.hidden-song').empty();
@@ -410,7 +408,7 @@ $(function(){
       } else {
         playNextSong(id);
       }
-      chosenSong = chooseNextSong();
+      var chosenSong = chooseNextSong();
       setupNextSong(chosenSong);
     }
   }
@@ -1048,17 +1046,14 @@ $(function(){
       var title = $($(this).children()[2]).html().replace(/&amp;/g, '&');
       document.title = artist + ' - ' + title
     }
-    if ($(this).attr('data-upnext')){
-      var upNext = chooseNextSong();
-      setupNextSong(upNext);
-      var before = false;
-      $.each(songs,function(i,song){
-        if (song['id'] == clickedId){
-          before = song;
-        }
-      })
-      setupBelowMain(before);
-    }
+    var upNext = chooseNextSong();
+    setupNextSong(upNext);
+    
+    $.each(songs,function(i,song){
+      if (song['id'] == clickedId){
+        setupBelowMain(song);
+      }
+    })
   })
 
   // $('body').on('click', '.add-to-queue', function(ev){
