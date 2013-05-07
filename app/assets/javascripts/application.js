@@ -1053,6 +1053,7 @@ $(function(){
     $.each(songs,function(i,song){
       if (song['id'] == clickedId){
         setupBelowMain(song);
+        listenedAlready.push(song);
       }
     })
   })
