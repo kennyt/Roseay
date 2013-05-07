@@ -384,29 +384,29 @@ $(function(){
     });
   }
 
-  var playNextSong = function(id){
+  var playNextSong = function(songzid){
     if ($('.up-next-song .song a').length){
       $($('.up-next-song .song a')[0]).trigger('click');
       var chosenID = $($('.up-next-song .song')[0]).attr('id');
+      var chosenSong = false;
 
       $.each(songs,function(i, song){
         if (song['id'] == chosenID){
-          setupBelowMain(song);
+          chosenSong = song;
         }
       });
       listenedAlready.push(chosenSong);
-      var chosenSong = chooseNextSong();
-      setupNextSong(chosenSong);
+      setupNextSong(chooseNextSong());
     } else {
       $('.hidden-song').empty();
       var chosenSong = chooseNextSong();
       if (listenedAlready.indexOf(chosenSong) == -1){
         setupHiddenSong(chosenSong)
         $('.hidden-song .song a').trigger('click');
-        setupBelowMain(chosenSong);
+        // setupBelowMain(chosenSong);
         listenedAlready.push(chosenSong);
       } else {
-        playNextSong(id);
+        playNextSong(songzid);
       }
       var chosenSong = chooseNextSong();
       setupNextSong(chosenSong);
@@ -1048,7 +1048,8 @@ $(function(){
     }
     var upNext = chooseNextSong();
     setupNextSong(upNext);
-    
+
+    console.log(clickedId);
     $.each(songs,function(i,song){
       if (song['id'] == clickedId){
         setupBelowMain(song);
