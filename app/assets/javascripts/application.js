@@ -196,7 +196,7 @@ $(function(){
     $('.below-main').empty();
     $('.below-main').append('<br><div class="show-song-author">'+ (parseInt(chosenSong['points']) + 1) +' people like this song<br>contributed by '+chosenSong['author']+'</div>')
     $('.below-main').append('<div class="vote-box"><br><br>liked</div>')
-    if (checkSong['priority']){
+    if (chosenSong['priority']){
       $('.below-main').append('<div class="recently-added-tag">Recently Added</div>')
     }
   }
