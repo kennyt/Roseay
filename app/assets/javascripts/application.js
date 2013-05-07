@@ -1051,6 +1051,13 @@ $(function(){
     if ($(this).attr('data-upnext')){
       var upNext = chooseNextSong();
       setupNextSong(upNext);
+      var before = false;
+      $.each(songs,function(i,song){
+        if (song['id'] == clickedId){
+          before = song;
+        }
+      })
+      setupBelowMain(before);
     }
   })
 
