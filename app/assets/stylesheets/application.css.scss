@@ -30,7 +30,7 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
 .submit-button {
   color: white;
   position: absolute;
-  right: 200px;
+  /*right: 200px;*/
   width: 120px;
   top: 10px;
   height: 60px;
@@ -435,6 +435,9 @@ h1 {
   font-size: 18px;
   font-family: 'Open Sans';
   margin-left: 55px;
+  margin-right: 72px;
+  border-bottom: solid grey 1px;
+  cursor: default;
 }
 
 .up-next-song {
@@ -459,7 +462,7 @@ h1 {
   height: 40px;
   color: white;
   position: relative;
-  background: #1B0910;
+  background-color: #2980b9;
   cursor: pointer;
   &:hover{
     background: #C75769;
@@ -582,6 +585,7 @@ body {
   font-size: 7px;
   width: 150px;
   border:solid #7f8c8d 1px;
+  font-family: 'Open Sans';
 
   &:hover{
     cursor: pointer;
@@ -1209,7 +1213,7 @@ iframe {
   margin-left: 40%;
   top: 50px;
   position: absolute;
-  color: white;
+  color: rgba(248, 248, 255, 0.6);
   cursor: default;
 }
 
@@ -1239,7 +1243,7 @@ iframe {
 .big-picture-text {
   font-family:'Open Sans';
   font-size: 70px;
-  color:white;
+  color: rgba(248, 248, 255, 0.6);
   margin-left: 35%; 
   margin-top: 250px;
   cursor:default;

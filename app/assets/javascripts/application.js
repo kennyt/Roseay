@@ -1049,7 +1049,6 @@ $(function(){
     var upNext = chooseNextSong();
     setupNextSong(upNext);
 
-    console.log(clickedId);
     $.each(songs,function(i,song){
       if (song['id'] == clickedId){
         setupBelowMain(song);
@@ -1424,7 +1423,6 @@ $(function(){
     })
     listenedAlready.push(upNext);
     upNext = chooseNextSong();
-    console.log(upNext['id']);
     setupNextSong(upNext);
   })
  
@@ -1565,8 +1563,7 @@ $(function(){
   $('.left-side-wrapper').attr('style',leftWrapperMargin);
   $('.roseay-word').attr('style',roseayWordMargin);
   $('.up-next-holder').attr('style',upNextLeftMargin);
-  console.log(upNextLeftMargin);
-
+  $('.submit-button').attr('style',upNextLeftMargin);
 
   $('.next-song-btn').hide();
   $('.notifications').hide();
