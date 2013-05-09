@@ -420,7 +420,7 @@ $(function(){
 
   var chooseNextSong = function(){
     var chosenSong = false;
-    var priorityChance = Math.floor(Math.random()*6) == 0
+    var priorityChance = Math.floor(Math.random()*11) == 0
     if (priorityChance){
       var prioritySongs = []
       $.each(songs, function(i, song){
