@@ -39,6 +39,7 @@ class ApplicationController < ActionController::Base
       voted: 0,
       author: song.author.username,
       authored: true,
+      priority: 1,
       time: distance_of_time_in_words(song.created_at - Time.now)
     }
   end

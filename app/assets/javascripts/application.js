@@ -420,7 +420,7 @@ $(function(){
 
   var chooseNextSong = function(){
     var chosenSong = false;
-    var priorityChance = Math.floor(Math.random()*11) == 0
+    var priorityChance = Math.floor(Math.random()*8) == 0
     if (priorityChance){
       var prioritySongs = []
       $.each(songs, function(i, song){
@@ -993,6 +993,7 @@ $(function(){
         $('.player-section').attr('style','');
         if (currentPlayer == playerNumber){
           if (track){
+            console.log(track);
             track.html['height'] = 300
             $('.left-side-wrapper').prepend(track.html);
             bindScPlayerFinish();
