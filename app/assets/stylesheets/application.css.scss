@@ -443,6 +443,7 @@ h1 {
 .up-next-song {
   width: 200px;
   height:90px;
+  position: relative;
   .song {
     margin-left: 40px;
     top: 5px;
@@ -481,6 +482,30 @@ h1 {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.hot-tag {
+  position: absolute;
+  top: 8px;
+  left: 6px;
+  background: #e74c3c;
+  color: white;
+  border-radius: 4px;
+  padding-right: 2px;
+  padding-left: 2px;
+  cursor: default;
+}
+
+.new-tag {
+  position: absolute;
+  top: 8px;
+  left: 6px;
+  background: #5EC97B;
+  color: white;
+  border-radius: 4px;
+  padding-right: 2px;
+  padding-left: 2px;
+  cursor: default;
 }
 
 .feed-title {

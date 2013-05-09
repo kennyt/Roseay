@@ -141,6 +141,11 @@ $(function(){
     }
     $('.up-next-song').append('<div class="song" id="'+songID+'"></div>')
     $('.up-next-song .song').append('<span id="song"><a href="/songs?d='+link+'" data-upnext=1><span class="song-artist">'+datum['song_artist']+'</span><br><span class="song-name">'+datum["song_name"]+'</span></a></span>')
+    if (datum['points'] > 7){
+      $('.up-next-song').append('<div class="hot-tag">hot</div>')
+    } else if (datum['priority'] == 1){
+      $('.up-next-song').append('<div class="new-tag">new</div>')
+    }
   }
 
   var setupSongBelowPlayer = function(i, song){
@@ -894,8 +899,15 @@ $(function(){
           setTimeout(function(){
             createGoodTasteTooltip();
           }, 2000)
-          songs[index]['voted'] = 0;
-          songs[index]['points'] ++;
+          var votedSong = false;
+          $.each(songs,function(i,song){
+            if (song['id'] == songID){
+              votedSong = song;
+            }
+          })
+          votedSong['voted'] = 0;
+          votedSong['points'] ++;
+
           if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]){
             if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]['id'] == songID){
               $('.upvote-player').empty()
