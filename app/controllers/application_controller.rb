@@ -39,8 +39,8 @@ class ApplicationController < ActionController::Base
       voted: 0,
       author: song.author.username,
       authored: true,
-      priority: 1,
-      time: distance_of_time_in_words(song.created_at - Time.now)
+      priority: 1
+      # time: distance_of_time_in_words(song.created_at - Time.now)
     }
   end
 
@@ -55,9 +55,7 @@ class ApplicationController < ActionController::Base
         break if recently_listened.length == 10
         recently_listened << listen.song_id unless recently_listened.include?(listen.song_id)
       end
-      logged_in = []
-      logged_in << current_user
-      logged_in = logged_in[0]
+      logged_in = ([]<<current_user)[0]
       songlist = songs.map do |song|
         author = song.author
         logged_in == author ? authoredz = true : authoredz = false
