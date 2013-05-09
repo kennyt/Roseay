@@ -42,6 +42,11 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
   &:hover {
     text-decoration: none;
     background: #C75769;
+    -webkit-transition: background-color 150ms linear;
+    -moz-transition: background-color 150ms linear;
+    -o-transition: background-color 150ms linear;
+    -ms-transition: background-color 150ms linear;
+    transition: background-color 150ms linear;
     color: white;
   }
 }
@@ -100,6 +105,11 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
   /*border-right: solid black 1px;*/
   &:hover{
     background: #1B0910;
+    -webkit-transition: background-color 150ms linear;
+    -moz-transition: background-color 150ms linear;
+    -o-transition: background-color 150ms linear;
+    -ms-transition: background-color 150ms linear;
+    transition: background-color 150ms linear;
     cursor: pointer;
   }
 }
@@ -467,6 +477,11 @@ h1 {
   cursor: pointer;
   &:hover{
     background: #C75769;
+    -webkit-transition: background-color 150ms linear;
+    -moz-transition: background-color 150ms linear;
+    -o-transition: background-color 150ms linear;
+    -ms-transition: background-color 150ms linear;
+    transition: background-color 150ms linear;
   }
 }
 
@@ -615,6 +630,11 @@ body {
   &:hover{
     cursor: pointer;
     background: #C75769;
+    -webkit-transition: background-color 150ms linear;
+    -moz-transition: background-color 150ms linear;
+    -o-transition: background-color 150ms linear;
+    -ms-transition: background-color 150ms linear;
+    transition: background-color 150ms linear;
   }
 }
 
