@@ -1074,9 +1074,12 @@ $(function(){
       var title = $($(this).children()[2]).html().replace(/&amp;/g, '&');
       document.title = artist + ' - ' + title
     }
-    var upNext = chooseNextSong();
-    setupNextSong(upNext);
 
+    if ($(this).attr('data-upnext')){
+      var upNext = chooseNextSong();
+      setupNextSong(upNext);
+    }
+    
     $.each(songs,function(i,song){
       if (song['id'] == clickedId){
         setupBelowMain(song);
