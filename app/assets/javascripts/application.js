@@ -511,7 +511,7 @@ $(function(){
   }
 
   var createThankTooltip = function(){
-    $('body').prepend('<div class="radio-tooltip">Thanks for contributing</div>')
+    $('body').prepend('<div class="radio-tooltip">Thanks for your contribution!</div>')
     setTimeout(function(){
       $('.radio-tooltip').remove();
     }, 10000)
@@ -524,8 +524,26 @@ $(function(){
     }, 12000)
   }
 
-  var createGoodTasteTooltip = function(){
-    $('body').prepend('<div class="radio-tooltip">Nice! Liking a song gives the contributor thanks.</div>')
+  var createGoodTasteTooltip = function(songId){
+    var likedSongAuthor = false;
+    $.each(songs, function(i,song){
+      if (song['id'] == songId){
+        likedSongAuthor = song['author'];
+      }
+    })
+    var chancinglol = [1,2,3,4]
+    var chanced = chancinglol[Math.floor(Math.random()*chancinglol.length)]
+    var currentUser = $('#logged_in').html();
+    if (chanced == 1){
+      var thanks = likedSongAuthor + ' : Thanks, ' + currentUser + '!'
+    } else if (chanced == 2) {
+      var thanks = currentUser + ', you are awesome. - ' + likedSongAuthor 
+    } else if (chanced == 3) {
+      var thanks = likedSongAuthor + ': You have good taste.'
+    } else if (chanced == 4) {
+      var thanks = 'BOOM! Thanks - ' + likedSongAuthor
+    }
+    $('body').prepend('<div class="radio-tooltip">'+thanks+'</div>')
     setTimeout(function(){
       $('.radio-tooltip').remove();
     }, 5000)
@@ -894,7 +912,7 @@ $(function(){
       } else {
         $.post(path, function(response){
           setTimeout(function(){
-            createGoodTasteTooltip();
+            createGoodTasteTooltip(songID);
           }, 2000)
           var votedSong = false;
           $.each(songs,function(i,song){
@@ -1320,7 +1338,7 @@ $(function(){
           $('#login-modal').remove();
           $('.notifications').show();
           $('.submit-button').show();
-          $('.top-banner').prepend('<span id="logged_in"></span><a href="/sessions/'+response['id']+'" class="logout" data-method="delete" rel="nofollow" style="margin-left:50px;">logout</a>')
+          $('.top-banner').prepend('<span id="logged_in">'+response['username']+'</span><a href="/sessions/'+response['id']+'" class="logout" data-method="delete" rel="nofollow" style="margin-left:50px;">logout</a>')
           $('#newSongModal h4').html('youtube/soundcloud links');
           $('#close-login-modal').trigger('click')
           // fetchRemarks(0, '', function(){
