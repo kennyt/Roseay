@@ -38,6 +38,7 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
   background: #3BB041;
   text-decoration: none;
   border-radius: 2px;
+  display: none;
 
   &:hover {
     text-decoration: none;
@@ -502,7 +503,7 @@ h1 {
   font-family: 'Open Sans';
   position: absolute;
   top: 10px;
-  left: 35px;
+  left: 76px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;

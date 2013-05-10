@@ -1530,6 +1530,7 @@ $(function(){
         $('.small_header_index').show();
         $('.next-song-btn').attr('class', 'next-song-btn');
         setupTopSongs();
+        $('.radio-next-text').show();
         $('.next-song-btn').show();
         $('.page-wrapper').show();
         var pageheight = $(window).height() - 90
@@ -1544,6 +1545,7 @@ $(function(){
     } else {
       fetchSongs(function(){
         setupTopSongs();
+        $('.radio-next-text').show();
         $('.next-song-btn').show();
         $('.page-wrapper').show();
         var pageheight = $(window).height() - 90
