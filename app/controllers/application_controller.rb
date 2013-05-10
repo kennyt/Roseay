@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
       recently_listened = []
       current_user.liked_songs.each{|song| liked_songz << song}
       current_user.song_listens.order('created_at DESC').each do |listen|
-        break if recently_listened.length == 10
+        break if recently_listened.length == 5
         recently_listened << listen.song_id unless recently_listened.include?(listen.song_id)
       end
       logged_in = ([]<<current_user)[0]

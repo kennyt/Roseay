@@ -251,6 +251,18 @@ h1 {
   color: white;
 }
 
+#contributors {
+  border-radius: 0px;
+}
+
+#newsong {
+  border-radius: 0px;
+}
+
+#login-signup { 
+  border-radius: 0px;
+}
+
 #login-modal {
   position: absolute;
   top: 5px;
@@ -672,6 +684,7 @@ body {
   /*margin-left: 12%;*/
   width: 920px;
   min-height: 100%;
+  display: none;
 }
 
 .player-holder-text {

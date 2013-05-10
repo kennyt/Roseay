@@ -314,7 +314,7 @@ $(function(){
       }
     })
     if (recentlyListened.length){
-      recentlyListened = recentlyListened.sort(function(a,b){return a['recently_listened']-b['recently_listened']}).slice(0,10);
+      recentlyListened = recentlyListened.sort(function(a,b){return a['recently_listened']-b['recently_listened']}).slice(0,5);
       $('.recently-listened-list').empty();
       $.each(recentlyListened, function(i, song){
         setUpSingleRecent(i,song);
@@ -429,18 +429,12 @@ $(function(){
         }
       })
       if (prioritySongs.length){
-        while (!(chosenSong)){
-          chosenSong = prioritySongs[Math.floor(Math.random()*prioritySongs.length)]
-        }
+        chosenSong = prioritySongs[Math.floor(Math.random()*prioritySongs.length)]
       } else {
-        while (!(chosenSong)){
-          chosenSong = songs[Math.floor(Math.random()*songs.length)]
-        }
-      }
-    } else {
-      while (!(chosenSong)){
         chosenSong = songs[Math.floor(Math.random()*songs.length)]
       }
+    } else {
+      chosenSong = songs[Math.floor(Math.random()*songs.length)]
     }
     if (listenedAlready.indexOf(chosenSong) == -1){
       return chosenSong;
@@ -576,9 +570,11 @@ $(function(){
     var s = $('.testing1').attr('is-search');
     var sh = $('.testing1').attr('is-shuffle');
     var l = $('.testing1').attr('is-recent');
+    var upnext = $('.testing1').attr('upnext-clicks');
+    $('.testing1').attr('upnext-clicks','');
 
     $.post(
-      '/song_listens.json?q='+q+'&b='+b+'&s='+s+'&sh='+sh+'&l='+l,
+      '/song_listens.json?q='+q+'&b='+b+'&s='+s+'&sh='+sh+'&l='+l+'&upnext='+upnext,
       {'song_listen' : {
         'user_id': userId,
         'song_id': songId
@@ -628,8 +624,9 @@ $(function(){
           $('#newSongModal h4').append('<br>--not logged in OR bad song link OR reached limit--')
         } else {
           $('#close-modal').trigger('click');
-          fetchSongs();
-          setupNextSong(response);
+          fetchSongs(function(){
+            setupNextSong(response);
+          });
           createThankTooltip();
         }
         $('.song-modal-submit').show();
@@ -1429,6 +1426,11 @@ $(function(){
   $('body').on('click','.up-next-change',function(){
     var songID = $('.up-next-song .song').attr('id');
     var upNext = false;
+    if ($('.testing1').attr('upnext-clicks')){
+      $('.testing1').attr('upnext-clicks', parseInt($('.testing1').attr('upnext-clicks')) + 1)
+    } else {
+      $('.testing1').attr('upnext-clicks', '1');
+    }
     $.each(songs,function(i,song){
       if (song['id'] == songID){
         upNext = song;
