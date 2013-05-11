@@ -503,7 +503,7 @@ h1 {
   font-family: 'Open Sans';
   position: absolute;
   top: 10px;
-  left: 76px;
+  left: 66px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -1274,6 +1274,12 @@ iframe {
   position: absolute;
   color: rgba(248, 248, 255, 0.6);
   cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .loading-gif {
@@ -1306,6 +1312,12 @@ iframe {
   margin-left: 35%; 
   margin-top: 250px;
   cursor:default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .bump-button {
