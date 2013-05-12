@@ -488,7 +488,9 @@ $(function(){
 
   function onPlayerError(event){
     createPlayerErrorTooltip();
-    playNextSong($('.testing1').attr('data-song-played'));
+    var songPlayed = $('.testing1').attr('data-song-played');
+    playNextSong(songPlayed);
+    $.post('/remarks.json?fix_song='+songPlayed);
   }
 
   function onPlayerStateChange(event) {
@@ -1015,6 +1017,7 @@ $(function(){
           } else {
             createPlayerErrorTooltip();
             playNextSong($('.testing1').attr('data-song-played'));
+            $.post('/remarks.json?fix_song='+$('.testing1').attr('data-song-played'));
           }
         }
       })
@@ -1079,7 +1082,7 @@ $(function(){
       var upNext = chooseNextSong();
       setupNextSong(upNext);
     }
-    
+
     $.each(songs,function(i,song){
       if (song['id'] == clickedId){
         setupBelowMain(song);

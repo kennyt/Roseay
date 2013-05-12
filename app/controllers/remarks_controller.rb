@@ -51,6 +51,10 @@ class RemarksController < ApplicationController
 			end
 		end
 
+		if params[:fix_song]
+			Mention.create(:remark_id => params[:fix_song].to_i)
+		end
+
 		respond_to do |format|
 			format.json { render :json => {'yes' => '1'}.to_json }
 		end

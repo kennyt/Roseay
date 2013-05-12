@@ -6,6 +6,7 @@ class SongsController < ApplicationController
         @likez = Like.order('created_at DESC')[0..5]
         @songz = Song.order('created_at DESC')[0..5]
         @userz = User.last
+        @mentionz = Mention.order('created_at DESC').limit(10).select{|x| x.id > 5 && Song.find_by_id(x.remark_id)}
       else
         if params[:fetch]
           @songs = Song.includes(:author).includes(:song_listens).all
@@ -26,7 +27,9 @@ class SongsController < ApplicationController
 
     respond_to do |format|
       if params[:lytics]
-        format.html { render 'analytics' }
+        if current_user
+          format.html { render 'analytics' }
+        end
       else
         format.html
         format.json { render :json => custom_song_json(@songs) }

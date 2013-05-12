@@ -180,7 +180,9 @@
 
   function onPlayerError(event){
     createPlayerErrorTooltip();
-    playNextSong($('.testing1').attr('data-song-played'));
+    var songPlayed = $('.testing1').attr('data-song-played');
+    playNextSong(songPlayed);
+    $.post('/remarks.json?fix_song='+songPlayed);
   }
 
   function onPlayerStateChange(event) {
