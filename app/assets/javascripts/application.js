@@ -1526,6 +1526,14 @@ $(function(){
   //   }
   // }, 40000);
 
+  setInterval(function(){
+    if ($('.testing1').attr('upnext-clicks')){
+      var clicks = $('.testing1').attr('upnext-clicks');
+      $('.testing1').attr('upnext-clicks','');
+      $.post('/remarks.json?clicks='+clicks);
+    }
+  }, 90000)
+
   if ($('.player-holder').length) {
     if ($('#logged_in').length){
       fetchSongs(function(){

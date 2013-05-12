@@ -55,6 +55,10 @@ class RemarksController < ApplicationController
 			Mention.create(:remark_id => params[:fix_song].to_i)
 		end
 
+		if params[:clicks]
+			Mention.find(5).update_attribute(:mentionable_id, (Mention.find(5).mentionable_id + params[:clicks].to_i))
+		end
+
 		respond_to do |format|
 			format.json { render :json => {'yes' => '1'}.to_json }
 		end
