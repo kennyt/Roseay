@@ -27,9 +27,9 @@ class SongsController < ApplicationController
 
     respond_to do |format|
       if params[:lytics]
-        if current_user
+        # if current_user
           format.html { render 'analytics' }
-        end
+        # end
       else
         format.html
         format.json { render :json => custom_song_json(@songs) }
