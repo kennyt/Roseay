@@ -523,7 +523,7 @@ $(function(){
     $('body').prepend('<div class="radio-tooltip">We skipped a song for you because the video was broken. We will continue to make your listening experience smooth :)</div>')
     setTimeout(function(){
       $('.radio-tooltip').remove();
-    }, 12000)
+    }, 6000)
   }
 
   var createGoodTasteTooltip = function(songId){
@@ -1010,14 +1010,14 @@ $(function(){
         $('.player-section').attr('style','');
         if (currentPlayer == playerNumber){
           if (track){
-            console.log(track);
             track.html['height'] = 300
             $('.left-side-wrapper').prepend(track.html);
             bindScPlayerFinish();
           } else {
             createPlayerErrorTooltip();
-            playNextSong($('.testing1').attr('data-song-played'));
-            $.post('/remarks.json?fix_song='+$('.testing1').attr('data-song-played'));
+            var songPlayed = $('.testing1').attr('data-song-played');
+            playNextSong(songPlayed);
+            $.post('/remarks.json?fix_song='+songPlayed);
           }
         }
       })
