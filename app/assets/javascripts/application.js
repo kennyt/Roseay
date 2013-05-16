@@ -913,9 +913,9 @@ $(function(){
         $('.need-to-login').css('left', ev.pageX - 60)
       } else {
         $.post(path, function(response){
-          setTimeout(function(){
-            createGoodTasteTooltip(songID);
-          }, 2000)
+          // setTimeout(function(){
+          //   createGoodTasteTooltip(songID);
+          // }, 2000)
           var votedSong = false;
           $.each(songs,function(i,song){
             if (song['id'] == songID){
