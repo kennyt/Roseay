@@ -31,23 +31,17 @@ a {text-decoration: none; cursor: pointer;} a {color: black}
   color: white;
   position: absolute;
   /*right: 200px;*/
-  width: 120px;
-  top: 10px;
-  height: 60px;
-  text-align: center;
-  background: #3BB041;
+  /*width: 120px;*/
+  top: 45px;
+  right: 10px;
+  /*height: 60px;*/
+  /*text-align: center;*/
+  /*background: #3BB041;*/
   text-decoration: none;
-  border-radius: 2px;
+  /*border-radius: 2px;*/
   display: none;
 
   &:hover {
-    text-decoration: none;
-    background: #C75769;
-    -webkit-transition: background-color 150ms linear;
-    -moz-transition: background-color 150ms linear;
-    -o-transition: background-color 150ms linear;
-    -ms-transition: background-color 150ms linear;
-    transition: background-color 150ms linear;
     color: white;
   }
 }
@@ -253,10 +247,6 @@ h1 {
 }
 
 #contributors {
-  border-radius: 0px;
-}
-
-#newsong {
   border-radius: 0px;
 }
 

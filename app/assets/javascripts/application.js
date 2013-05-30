@@ -520,7 +520,7 @@ $(function(){
   }
 
   var createPlayerErrorTooltip = function(){
-    $('body').prepend('<div class="radio-tooltip">We skipped a song for you because the video was broken. We will continue to make your listening experience smooth :)</div>')
+    $('body').prepend('<div class="radio-tooltip">We skipped a song</div>')
     setTimeout(function(){
       $('.radio-tooltip').remove();
     }, 6000)
@@ -994,7 +994,7 @@ $(function(){
 
     var link   = this['href'].split('songs?d=')[1]
     var songId = $(this).parent().parent().attr('id')
-    $('.testing1').attr('data-youtube-code', link + '?vq=hd720&autoplay=1&controls=1&iv_load_policy=3&autohide=1&modestbranding=1')
+    $('.testing1').attr('data-youtube-code', link + '?autoplay=1&controls=1&iv_load_policy=3&autohide=1&modestbranding=1')
     $('.testing1').attr('data-song-played', songId);
     $('iframe').remove();
 
@@ -1612,7 +1612,6 @@ $(function(){
   $('.left-side-wrapper').attr('style',leftWrapperMargin);
   $('.roseay-word').attr('style',roseayWordMargin);
   $('.up-next-holder').attr('style',upNextLeftMargin);
-  $('.submit-button').attr('style',upNextLeftMargin);
 
   $('.next-song-btn').hide();
   $('.notifications').hide();
