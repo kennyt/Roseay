@@ -1943,8 +1943,8 @@ $(function(){
 
   $('body').on('click','.edit-lib-submit',function(){
     var id = $(this).attr('data-id')
-    var artist = $('#edit-lib-song-artist').val().replace(/&/g,'zxcvbn').replace(/#/g,'wphshtg');
-    var name = $('#edit-lib-song-name').val().replace(/&/g,'zxcvbn').replace(/#/g,'wphshtg');
+    var artist = $('#edit-lib-song-artist').val();
+    var name = $('#edit-lib-song-name').val();
     var link = $('#edit-lib-song-link').val()
 
     $.each(librarySongs,function(i, song){
@@ -1962,7 +1962,7 @@ $(function(){
     $('.library-playlist-button').trigger('click');
     $('.modal-backdrop').trigger('click');
 
-    $.post('/remarks.json?edit_lib=1&name='+name+'&artist='+artist+'&link='+link+'&lib_id='+id)
+    $.post('/remarks.json?edit_lib=1&name='+name.replace(/&/g,'zxcvbn').replace(/#/g,'wphshtg')+'&artist='+artist.replace(/&/g,'zxcvbn').replace(/#/g,'wphshtg')+'&link='+link+'&lib_id='+id)
   })
 
   SC.initialize({client_id:"8f1e619588b836d8f108bfe30977d6db"});

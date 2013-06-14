@@ -6,7 +6,7 @@ class SongsController < ApplicationController
         @likez = Like.order('created_at DESC')[0..5]
         @songz = Song.order('created_at DESC')[0..5]
         @userz = User.last
-        @mentionz = Mention.order('created_at DESC').limit(10).select{|x| x.id > 5 && Song.find_by_id(x.remark_id)}
+        @mentionz = Mention.order('created_at DESC').select{|x| x.id > 5 && Song.find_by_id(x.remark_id) && !(x.id == 468)}
         @lib_listens = Mention.find(468);
         @lib_count = LibrarySong.all.length
       else
