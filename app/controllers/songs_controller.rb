@@ -7,6 +7,8 @@ class SongsController < ApplicationController
         @songz = Song.order('created_at DESC')[0..5]
         @userz = User.last
         @mentionz = Mention.order('created_at DESC').limit(10).select{|x| x.id > 5 && Song.find_by_id(x.remark_id)}
+        @lib_listens = Mention.find(62);
+        @lib_count = LibrarySong.all.length
       else
         if params[:fetch]
           @songs = Song.order('created_at DESC').includes(:author).includes(:song_listens).all

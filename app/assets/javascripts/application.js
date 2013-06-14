@@ -115,7 +115,7 @@ $(function(){
     if (song['voted'] == 2){
       var likeOrNo = '<div class="upvote" data-path="/songs/'+song['id']+'/upvote">like</div>'
     } else {
-      var likeOrNo = ''
+      var likeOrNo = '<div class="edm-add-to-lib" data-id='+song['id']+'>+</div>'
     }
     if (song['being-played']){
       var beingPlayedOrNo = ' being-played'
@@ -1108,23 +1108,9 @@ $(function(){
         votedSong['voted'] = 0;
         votedSong['points'] ++;
 
-
-        librarySongs.unshift({
-          id: votedSong['id'],
-          song_name: votedSong['song_name'],
-          song_artist: votedSong['song_artist'],
-          song_link: votedSong['song_link']
-        })
-        createAddedToLibTooltip(votedSong);
-        var songName = votedSong['song_name'].replace(/&/g,'zxcvbn').replace(/#/g,'wphshtg');
-        var songArtist = votedSong['song_artist'].replace(/&/g,'zxcvbn').replace(/#/g,'wphshtg');
-        var songLink = votedSong['song_link'];
-
-        $.post('/remarks.json?new_lib=1&artist='+songArtist+'&name='+songName+'&link='+songLink);
-
-
         $('.song-line.'+songID+' .like-count').html(votedSong['points']);
         $('.song-line.'+songID+' .upvote').remove();
+        $('.song-line.'+songID+' .right-inline').append('<div class="edm-add-to-lib" data-id='+songID+'>+</div>');
         $.post(path, function(response){
 
           if (songs[parseInt($('.upvote-player .upvote').attr('data_song_index'))]){
@@ -1145,6 +1131,34 @@ $(function(){
     }
   })
 
+  $('body').on('click','.edm-add-to-lib',function(){
+    if ($(this).attr('data-stop')){
+
+    } else {
+      var id = $(this).attr('data-id');
+      var addedSong = false;
+      $.each(songs,function(i, song){
+        if (song){
+          if (song['id'] == id){
+            addedSong = song;
+          }
+        }
+      })
+      librarySongs.unshift({
+        id: addedSong['id'],
+        song_name: addedSong['song_name'],
+        song_artist: addedSong['song_artist'],
+        song_link: addedSong['song_link']
+      })
+      var songName = addedSong['song_name'].replace(/&/g,'zxcvbn').replace(/#/g,'wphshtg');
+      var songArtist = addedSong['song_artist'].replace(/&/g,'zxcvbn').replace(/#/g,'wphshtg');
+      var songLink = addedSong['song_link'];
+
+      $.post('/remarks.json?new_lib=1&artist='+songArtist+'&name='+songName+'&link='+songLink);
+
+      createAddedToLibTooltip(addedSong);
+    }
+  })
   // $('.testing1').on('click', '.add-to-hubsongs', function(ev){
   //   ev.preventDefault();
   //   ev.stopImmediatePropagation();
@@ -1782,11 +1796,15 @@ $(function(){
     } else {
       notLogged = '<div class="not-logged-library">You don\'t have a library yet, so we added a song we really like for you. Don\'t feel left out. Try out adding a song to the library! Log in to start your own.</div>'
     }
-    $('.right-half').append('<div class="edm-banner"><input id="new-lib-song-artist" placeholder="artist"></input><input id="new-lib-song-name" placeholder="song name"></input><input id="new-lib-song-link" placeholder="youtube/soundcloud link"></input><div class="submit-lib-song"><div class="submit-lib-song-word">Add to Library</div></div><div class="library-description">Songs you liked, contributed, or privately added. Any genre. Song or set.</div></div><div class="song-list"></div>'+notLogged);
+    $('.right-half').append('<div class="edm-banner"><input id="new-lib-song-artist" placeholder="artist"></input><input id="new-lib-song-name" placeholder="song name"></input><input id="new-lib-song-link" placeholder="youtube/soundcloud link"></input><div class="submit-lib-song"><div class="submit-lib-song-word">Add to Library</div></div><div class="library-description">Songs you <span class="edm-add-to-lib" data-stop=1>+</span>\'d or manually added. Any genre. Song or set.</div></div><div class="song-list"></div>'+notLogged);
     var firstPageSongs = librarySongs.slice(0,(50*libPage+50));
-    $.each(firstPageSongs, function(i, song){
-      setupLibrarySongLine(song,i);
-    })
+    if (librarySongs.length){
+      $.each(firstPageSongs, function(i, song){
+        setupLibrarySongLine(song,i);
+      })
+    } else {
+      $('.right-half').append('<div class="not-logged-library">Library is empty</div>')
+    }
     if (!(libraryScrollTop == 'k')){
       if (libraryScrollTop < 400){
         $(document).scrollTop(400)
@@ -1799,6 +1817,7 @@ $(function(){
   })
 
   $('body').on('click','.submit-lib-song',function(){
+    $('.not-logged-library').remove();
     var songArtist = $('#new-lib-song-artist').val()
     var songName   = $('#new-lib-song-name').val()
     var songLink   = $('#new-lib-song-link').val().split('&')[0]

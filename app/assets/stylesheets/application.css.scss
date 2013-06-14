@@ -895,6 +895,33 @@ body {
   font-size: 18px;
   color: #a9a9a9;
   cursor: default;
+  .edm-add-to-lib {
+    text-align: left;
+    height: auto;
+    width: 10px;
+    top:2px;
+    left: 58px;
+    font-weight: normal;
+    font-size: 13px;
+    font-family: Lucida Sans Unicode, Lucida Grande, sans-serif;
+    background: #27ae60;
+    border-radius: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    color: white;
+    cursor: pointer;
+    opacity: 0.5;
+    &:hover{
+      opacity:1;
+      -moz-transition: opacity 220ms ease;
+      -webkit-transition: opacity 220ms ease;
+      -o-transition: opacity 220ms ease;
+      -ms-transition: opacity 220ms ease;
+      transition: opacity 220ms ease;
+    }
+  }
 }
 
 .song-line {
@@ -930,6 +957,22 @@ body {
       }
     }
     .upvote {
+      opacity: 0.7;
+      -webkit-transition: opacity 100ms ease-out;
+      -moz-transition: opacity 100ms ease-out;
+      -o-transition: opacity 100ms ease-out;
+      -ms-transition: opacity 100ms ease-out;
+      transition: opacity 100ms ease-out;
+      &:hover {
+        opacity: 1;
+        -webkit-transition: opacity 100ms ease-out;
+        -moz-transition: opacity 100ms ease-out;
+        -o-transition: opacity 100ms ease-out;
+        -ms-transition: opacity 100ms ease-out;
+        transition: opacity 100ms ease-out;
+      }
+    }
+    .edm-add-to-lib {
       opacity: 0.7;
       -webkit-transition: opacity 100ms ease-out;
       -moz-transition: opacity 100ms ease-out;
@@ -983,6 +1026,26 @@ body {
     padding-bottom: 2px;
     color: white;
     opacity: 0.15;
+  }
+  .edm-add-to-lib {
+    text-align: left;
+    position: absolute;
+    height: auto;
+    width: auto;
+    top:2px;
+    left: 58px;
+    font-weight: normal;
+    font-size: 13px;
+    font-family: Lucida Sans Unicode, Lucida Grande, sans-serif;
+    background: #27ae60;
+    border-radius: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    color: white;
+    opacity: 0.15;
+    cursor: pointer;
   }
   .remove-warning {
     cursor: pointer;

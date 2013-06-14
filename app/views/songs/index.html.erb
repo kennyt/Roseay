@@ -452,7 +452,7 @@
                 if (song['voted'] == 2){
                   var likeOrNo = '<div class="upvote" data-path="/songs/'+song['id']+'/upvote">like</div>'
                 } else {
-                  var likeOrNo = ''
+                  var likeOrNo = '<div class="edm-add-to-lib" data-id='+song['id']+'>+</div>'
                 }
                 $('.song-list').append('<div class="song-line '+song['id']+'"><div class="song" id="'+song['id']+'"><span id="song"><a href="/songs?d='+link+'">play</a></span></div><div class="song-id-text">'+song['song_name']+'<span class="song-artist-shade">'+song['song_artist']+'</span></div><div class="right-inline"><div class="like-count">'+song['points']+likeWord+'</div>'+likeOrNo+'<div class="song-line-author">'+song['author']+'</div></div></div>');
               })

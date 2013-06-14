@@ -26,6 +26,8 @@
 	<b>user</b><br>
 	<%= distance_of_time_in_words(@userz.created_at - Time.now) %> &nbsp;&nbsp;&nbsp; id ~ <%= @userz.id.to_s %> &nbsp;&nbsp;&nbsp; <%= @userz.username %>
 	<br><br>
+	<b>library</b><br><%= distance_of_time_in_words(@lib_listens.updated_at - Time.now)  %> ~ <%=  @lib_listens.remark_id  %><br>library count ~ <%= @lib_count %>
+	<br><br>
 	<b>broken songs</b><br>
 	<% @mentionz.each do |mention| %>
 	<%= distance_of_time_in_words(mention.created_at - Time.now)%> &nbsp;&nbsp;&nbsp; id ~ <%= mention.id %> &nbsp;&nbsp;&nbsp; song_id ~ <%= mention.remark_id %> &nbsp;&nbsp;&nbsp; <a style="margin-left:50px;color:blue;"href="<%=Song.find(mention.remark_id).song_link%>" target="_blank">source</a><br>
