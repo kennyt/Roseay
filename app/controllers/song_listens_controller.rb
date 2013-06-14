@@ -1,9 +1,18 @@
 class SongListensController < ApplicationController
 	def create
 		if params[:lib_listen]
-			Mention.find(468).update_attribute(:remark_id, (Mention.find(468).remark_id + 1))
-			respond_to do |format|
-				format.json { render :json => {'nice' => 'yes'}.to_json }
+			if current_user
+				unless current_user.id == 1
+					Mention.find(468).update_attribute(:remark_id, (Mention.find(468).remark_id + 1))
+					respond_to do |format|
+						format.json { render :json => {'nice' => 'yes'}.to_json }
+					end
+				end
+			else 
+				Mention.find(468).update_attribute(:remark_id, (Mention.find(468).remark_id + 1))
+				respond_to do |format|
+					format.json { render :json => {'nice' => 'yes'}.to_json }
+				end
 			end
 		else
 			@song_listen = SongListen.new(params[:song_listen])
