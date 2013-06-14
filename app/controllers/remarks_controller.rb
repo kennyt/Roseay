@@ -59,6 +59,29 @@ class RemarksController < ApplicationController
 			Mention.find(5).update_attribute(:mentionable_id, (Mention.find(5).mentionable_id + params[:clicks].to_i))
 		end
 
+		if params[:new_lib]
+			if current_user
+				name = params[:name].gsub('zxcvbn','&').gsub('wphshtg','#')
+				artist = params[:artist].gsub('zxcvbn','&').gsub('wphshtg','#')
+				current_user.library_songs.create(:song_link => params[:link], :song_name => name, :song_artist => artist)
+			end
+		end
+
+		if params[:delete_lib]
+			if current_user
+				LibrarySong.find(params[:lib_id].to_i).destroy
+			end
+		end
+
+		if params[:edit_lib]
+			if current_user
+				lib_song = LibrarySong.find(params[:lib_id])
+				lib_song.update_attribute(:song_name,params[:name])
+				lib_song.update_attribute(:song_artist,params[:artist])
+				lib_song.update_attribute(:song_link,params[:link])
+			end
+		end
+
 		respond_to do |format|
 			format.json { render :json => {'yes' => '1'}.to_json }
 		end

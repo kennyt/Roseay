@@ -11,13 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130321184019) do
+ActiveRecord::Schema.define(:version => 20130612044710) do
 
   create_table "hubsongs", :force => true do |t|
     t.integer  "song_id"
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "library_songs", :force => true do |t|
+    t.string   "song_artist"
+    t.string   "song_name"
+    t.string   "song_link"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "likes", :force => true do |t|

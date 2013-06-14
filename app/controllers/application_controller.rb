@@ -75,6 +75,14 @@ class ApplicationController < ActionController::Base
           # author_total: all_users_total[author.id.to_s]
         }
       end
+      library = current_user.library_songs.order('created_at DESC').map do |lib_song|
+        {
+          song_artist: lib_song.song_artist,
+          song_name: lib_song.song_name,
+          song_link: lib_song.song_link,
+          id: lib_song.id
+        }
+      end
     else
       songlist = songs.map do |song|
         author = song.author
@@ -94,9 +102,16 @@ class ApplicationController < ActionController::Base
           # author_total: all_users_total[author.id.to_s]
         }
       end
+      library = [{
+                  song_artist: 'Ilan Bluestone & Jerome Isma-ae',
+                  song_name: 'Under My Skin',
+                  song_link: 'http://www.youtube.com/watch?v=KTNCoM4X9Dg',
+                  id: 0
+                }]
     end
 
-    songlist
+    {'edm_songs' => songlist,
+     'library_songs' => library}
   end
 
   def custom_remark_json(remarks)

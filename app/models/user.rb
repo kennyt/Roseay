@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :song_listens
   has_many :they_listened, through: :submissions, source: :song_listens
   has_many :songs_listened_to, through: :song_listens, source: :song
+  has_many :library_songs
 
   validates_length_of :username, minimum: 4, message: "too short"
   # validates_length_of :password, minimum: 4, message: "too short"
@@ -63,6 +64,27 @@ class User < ActiveRecord::Base
   def is_spamming_votes
     liked_songs.each do |song|
       song.update_attribute(:points, song.points - 1)
+    end
+  end
+
+  def create_initial_library_songs
+    holder = []
+    likes.each do |like| 
+      if Song.find_by_id(like.song_id) == nil
+        like.destroy
+      else
+        holder << like
+      end
+    end
+    submissions.each{|sub| holder << sub}
+    holder.sort{|x,y| x.created_at <=> y.created_at}.each do |item|
+      if item.class == Like
+        song = item.song
+        LibrarySong.create(:song_name => song.song_name, :song_link => song.song_link, :song_artist => song.song_artist, :user_id => id, :created_at => item.created_at)
+      else 
+        song = item
+        LibrarySong.create(:song_name => song.song_name, :song_link => song.song_link, :song_artist => song.song_artist, :user_id => id, :created_at => item.created_at)
+      end
     end
   end
 end

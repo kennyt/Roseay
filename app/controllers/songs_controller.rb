@@ -9,7 +9,7 @@ class SongsController < ApplicationController
         @mentionz = Mention.order('created_at DESC').limit(10).select{|x| x.id > 5 && Song.find_by_id(x.remark_id)}
       else
         if params[:fetch]
-          @songs = Song.includes(:author).includes(:song_listens).all
+          @songs = Song.order('created_at DESC').includes(:author).includes(:song_listens).all
         end
 
         # if params[:d]
