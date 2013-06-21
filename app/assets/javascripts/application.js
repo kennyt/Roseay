@@ -518,7 +518,7 @@ $(function(){
 
   var chooseNextSong = function(){
     var chosenSong = false;
-    var priorityChance = Math.floor(Math.random()*8) == 0
+    var priorityChance = false;
     if (priorityChance){
       var prioritySongs = []
       $.each(songs, function(i, song){
