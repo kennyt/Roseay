@@ -610,6 +610,7 @@ $(function(){
     if (myPlayerState == 0){
       if ($('.testing1').attr('song-repeat')){
         widget.seekTo(0);
+        checkValidListen(playerNumber, $('.testing1').attr('currently-playing'));
       } else {
         if ($('.testing1').attr('current-playlist') == 'edm'){
           playNextSong($('.testing1').attr('data-song-played'));
@@ -1192,6 +1193,7 @@ $(function(){
     if (!(clickedId)){
       clickedId = $(this).attr('data-songid');
     }
+    $('.testing1').attr('currently-playing',clickedId);
     setupCurrentSong(clickedId);
     $('.song-line.'+clickedId).attr('class', 'song-line '+clickedId+' being-played');
     $('.song#'+clickedId).attr('style', '');
