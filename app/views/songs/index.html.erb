@@ -52,6 +52,7 @@
   </div> -->
   <div class="play-pause-button"><div class="play-pause-word">pause / go</div></div>
   <div class="next-song-btn clash"><div class="radio-next-text">play</div></div>
+  <div class="repeat-button"><div class="repeat-text">repeat is off</div></div>
   <div class="current-song">No Song Playing</div>
   <!-- <div class="notifications"><div class="logo">!</div></div> -->
   <% if current_user %>
@@ -204,12 +205,15 @@
     var myPlayerState;
     myPlayerState = event.data;
     if (myPlayerState == 0){
-      if ($('.testing1').attr('current-playlist') == 'edm'){
-        playNextSong(songPlayed);
+      if ($('.testing1').attr('song-repeat')){
+        widget.seekTo(0);
       } else {
-        playNextLibrarySong(songPlayed);
+        if ($('.testing1').attr('current-playlist') == 'edm'){
+          playNextSong($('.testing1').attr('data-song-played'));
+        } else {
+          playNextLibrarySong($('.testing1').attr('data-song-played'));
+        }
       }
-      $.post('/remarks.json?completed_song=1')
     }
   }
 

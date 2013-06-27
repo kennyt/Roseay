@@ -451,10 +451,15 @@ $(function(){
     var widgetIframe = $('iframe')[0],
         widget       = SC.Widget(widgetIframe);
     widget.bind(SC.Widget.Events.FINISH, function(player, data) {
-      if ($('.testing1').attr('current-playlist') == 'edm'){
-        playNextSong($('.testing1').attr('data-song-played'));
+      if ($('.testing1').attr('song-repeat')){
+        widget.play();
+        widget.seekTo(0);
       } else {
-        playNextLibrarySong($('.testing1').attr('data-song-played'));
+        if ($('.testing1').attr('current-playlist') == 'edm'){
+          playNextSong($('.testing1').attr('data-song-played'));
+        } else {
+          playNextLibrarySong($('.testing1').attr('data-song-played'));
+        }
       }
     });
     // clearInterval(playerCounter);
@@ -603,10 +608,14 @@ $(function(){
     var myPlayerState;
     myPlayerState = event.data;
     if (myPlayerState == 0){
-      if ($('.testing1').attr('current-playlist') == 'edm'){
-        playNextSong($('.testing1').attr('data-song-played'));
+      if ($('.testing1').attr('song-repeat')){
+        widget.seekTo(0);
       } else {
-        playNextLibrarySong($('.testing1').attr('data-song-played'));
+        if ($('.testing1').attr('current-playlist') == 'edm'){
+          playNextSong($('.testing1').attr('data-song-played'));
+        } else {
+          playNextLibrarySong($('.testing1').attr('data-song-played'));
+        }
       }
     }
   }
@@ -1963,6 +1972,16 @@ $(function(){
     $('.modal-backdrop').trigger('click');
 
     $.post('/remarks.json?edit_lib=1&name='+name.replace(/&/g,'zxcvbn').replace(/#/g,'wphshtg')+'&artist='+artist.replace(/&/g,'zxcvbn').replace(/#/g,'wphshtg')+'&link='+link+'&lib_id='+id)
+  })
+
+  $('body').on('click','.repeat-button',function(){
+    if ($('.testing1').attr('song-repeat')){
+      $('.testing1').attr('song-repeat','');
+      $('.repeat-button .repeat-text').html('repeat is off');
+    } else {
+      $('.testing1').attr('song-repeat','1');
+      $('.repeat-button .repeat-text').html('repeat is on');
+    }
   })
 
   SC.initialize({client_id:"8f1e619588b836d8f108bfe30977d6db"});

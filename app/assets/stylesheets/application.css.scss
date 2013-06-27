@@ -1223,6 +1223,38 @@ body {
   }
 }
 
+.repeat-button {
+  text-align: center;
+  left: 860px;
+  /*margin-top: -67px;*/
+  background: #1B0910;
+  background: #2c3e50;
+  -webkit-transition: background-color 150ms linear;
+  -moz-transition: background-color 150ms linear;
+  -o-transition: background-color 150ms linear;
+  -ms-transition: background-color 150ms linear;
+  transition: background-color 150ms linear;
+  top: 10px;
+  color: white;
+  height: 60px;
+  position: absolute;
+  display: table;
+  font-size: 7px;
+  width: 150px;
+  font-family: 'Open Sans';
+  z-index: 2;
+  border-radius: 2px;
+  cursor: pointer;
+  .repeat-text {
+    position: absolute;
+    font-family: 'Open Sans';
+    left: 25px;
+    top: 18px;
+    font-size: 18px;
+    color: white;
+  }
+}
+
 .loading-bar {
   position: absolute;
   bottom: 0px;
