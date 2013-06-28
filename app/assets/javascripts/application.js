@@ -454,6 +454,7 @@ $(function(){
       if ($('.testing1').attr('song-repeat')){
         widget.play();
         widget.seekTo(0);
+        checkValidListen(playerNumber, $('.testing1').attr('currently-playing'));
       } else {
         if ($('.testing1').attr('current-playlist') == 'edm'){
           playNextSong($('.testing1').attr('data-song-played'));
