@@ -29,7 +29,7 @@ group :assets do
   gem 'heroku'
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'bcrypt-ruby'
+  gem 'bcrypt-ruby', '~> 3.1.1'
   gem 'bootstrap-sass', '~> 2.2.2.0'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
