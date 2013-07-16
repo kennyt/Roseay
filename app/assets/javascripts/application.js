@@ -265,8 +265,8 @@ $(function(){
       }
     })
     $('.below-main').empty();
-    $('.below-main').append('<br><div class="show-song-author">'+ (parseInt(chosenSong['points']) + 1) +' people like this song<br>contributed by '+chosenSong['author']+'</div>')
-    $('.below-main').append('<div class="vote-box"><br><br>liked</div>')
+    $('.below-main').append('<div class="show-song-author">'+ (parseInt(chosenSong['points']) + 1) +' people like this song<br>contributed by '+chosenSong['author']+'</div>')
+    $('.below-main').append('<div class="vote-box"><br>liked</div>')
     if (chosenSong['priority']){
       $('.below-main').append('<div class="recently-added-tag">Recently Added</div>')
     }
@@ -558,11 +558,11 @@ $(function(){
       var personOrPeople = 'people like'
     }
     $('.below-main').empty();
-    $('.below-main').append('<br><div class="show-song-author">'+chosenSong['points']+' '+personOrPeople+' this song<br>contributed by '+chosenSong['author']+'</div>')
+    $('.below-main').append('<div class="show-song-author">'+chosenSong['points']+' '+personOrPeople+' this song<br>contributed by '+chosenSong['author']+'</div>')
     if (chosenSong['voted'] == 0){
-      $('.below-main').append('<div class="vote-box"><br><br>liked</div>')
+      $('.below-main').append('<div class="vote-box"><br>liked</div>')
     } else {
-      $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br><br>like</div>')
+      $('.below-main').append('<div class="upvote" data-path="/songs/'+chosenSong['id']+'/upvote"><br>like</div>')
     }
     if (chosenSong['priority'] == 1){
       $('.below-main').append('<div class="recently-added-tag">Recently Added</div>')
@@ -582,8 +582,8 @@ $(function(){
   var constructYTVideo = function(playerID){
     if (playerID == playerNumber){
       player = new YT.Player('ytplayer' + playerNumber, {
-        height: '220',
-        width: '545',
+        height: '320',
+        width: '600',
         videoId: $('.testing1').attr('data-youtube-code'),
         events: {
           'onReady': onPlayerReady,
@@ -1256,10 +1256,11 @@ $(function(){
       $('.player-section').attr('style','height:171px;');
       var currentPlayer = playerNumber;
       var link = link.replace(/%2F/g, '/').replace(/%3A/g, ':')
-      SC.oEmbed(link,{auto_play:true, maxwidth:545, height:300, show_comments: true, color:'602220' }, function(track){
+      SC.oEmbed(link,{auto_play:true, maxwidth:600, height:300, show_comments: true, color:'602220' }, function(track){
         $('.player-section').attr('style','');
         if (currentPlayer == playerNumber){
           if (track){
+            $('.left-side-wrapper').css({top:100})
             $('.testing1').attr('data-player-type','soundcloud');
             track.html['height'] = 300
             $('.left-side-wrapper').prepend(track.html);
@@ -1279,6 +1280,7 @@ $(function(){
         }
       })
     } else {
+      $('.left-side-wrapper').css({top:0})
       $('.testing1').attr('data-player-type','youtube');
       $('.player-section').attr('style','height: 220px;')
       $('.left-side-wrapper').prepend('<div id="ytplayer'+playerNumber+'"></div>')
@@ -2070,7 +2072,7 @@ $(function(){
         $('.next-song-btn').show();
         $('.page-wrapper').show();
         var pageheight = $(window).height() - 90
-        var marginTop = 25;
+        var marginTop = 0;
         $('.page-wrapper').css({height: pageheight})
         $('.left-side-wrapper').css({top: marginTop})
         $('.up-next-holder').css({top: marginTop+60})
@@ -2134,7 +2136,7 @@ $(function(){
   var holder = (($(window).width() / 2)+270)
   bigPictureTextMargin = 'margin-left:'+($(window).width() - 350) / 2+'px'
   nextSongMargin = 'margin-left:'+($(window).width() + 50) / 2+'px'
-  leftWrapperMargin = 'margin-left:'+($(window).width() - 565) / 2+'px'
+  leftWrapperMargin = 'margin-left:'+($(window).width() - 620) / 2+'px'
   roseayWordMargin = 'margin-left:'+($(window).width() - 205) / 2+'px'
   upNextLeftMargin = 'left:'+ (((($(window).width() - holder) / 2)-115)+holder)+'px'
   leftHalfHeight = 'height:'+($(window).height() - 78)+'px'
