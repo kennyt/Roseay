@@ -9,111 +9,37 @@
           <iframe  width="545" height="220" src=<%="http://www.youtube.com/embed/#{@embed}?autoplay=1&controls=2&iv_load_policy=3&autohide=2&modestbranding=1&loop=1&fmt=18"%> frameborder="0" data-id="<%= @id %>"></iframe>
         <% end %>
       <% else %>
-        <div class="player-holder"><span class="player-holder-text"><br><br><br>click play</span></div>
+        <!-- <div class="player-holder"><span class="player-holder-text"><br><br><br>click play</span></div> -->
       <% end %>
     </div>
-    <!-- <div class="top_header">
-      <span class="about">readme</span>
-    </div> -->
     <div class="below-main">
     </div>
-    <!-- <div class="feed-header-holder">
-      <span class="feed-title">
-        <div class="big_header">
-          <h1><a>Refresh Song Feed</a></h1>
-        </div>
-      </span>
-    </div> -->
-
-    <!-- <div id="12345" data-time="<%=@by_time%>"> -->
-      <!-- <span class="pagination">
-        <span class="backbtn">back</span>
-        <span class="nextbtn"><a href="#nextbtn">next</a></span>
-        <br><br>
-      </span> -->
-      <!-- <ol start="1" id="songwrap" > -->
-
-      <!-- </ol>
-      <span class="pagination"> -->
-        <!-- <span class="backbtn">less</span> -->
-        <!-- <span class="nextbtn"><a href="#nextbtn">more</a></span> -->
-        <!-- <br><br>
-      </span>
-    </div> -->
   </div> 
-  <!--
-  <div class="big-picture-text">edm radio</div> -->
 </div>
 <div class="top-banner">
-  <!-- <div class="small_header_index">
-    <span class="small_header_text">
-      shuffle songs
-    </span>
-  </div> -->
   <div class="play-pause-button"><div class="play-pause-word">pause / go</div></div>
-  <div class="next-song-btn clash"><div class="radio-next-text">play</div></div>
+  <div class="next-song-btn"><div class="radio-next-text">>>|</div></div>
   <div class="repeat-button"><div class="repeat-text">repeat is off</div></div>
   <div class="current-song">No Song Playing</div>
-  <!-- <div class="notifications"><div class="logo">!</div></div> -->
   <% if current_user %>
     <span id="logged_in"><%= current_user.username %></span>
     <%= link_to 'logout', session_path(current_user), method: :delete, class: 'logout' %>
   <% else %>
     <a id="login-modal" href="#login-signup" data-toggle="modal">login / join</a>
-    <!-- |
-    <a href="#newSessionModal" data-toggle="modal">join</a> -->
   <% end %>
-  <!-- <a id="faq-modal" href="#faq" data-toggle="modal">faq</a> -->
 </div>
 <div class="page-wrapper"> 
-  <div class="left-tool-column">
-    <div class="recently-listened-holder">
-      <div class="recently-listened-header">
-        <div class="recently-header-text">your listening history</div>
-      </div>
-      <div class="recently-listened-list">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;none
-      </div>
-    </div>
-  </div>
-   
+
   <div class="hidden-song"></div>
   <div class="forced-song"></div>
-
-<!--   <div class="queue-holder">
-    <div class="queue-header">your Q</div>
-    <span class="queue-songs">
-      &nbsp;&nbsp;&nbsp;empty
-    </span>
-  </div> -->
-
   <div class="topsongs-section">
     <div class="topsongs-holder">
     </div>
   </div>
-<!--   <div class="feedback-input">
-    <div class="feedback-title">Feedback/Suggestions (anonymous)</div>
-    <textarea class="remark-input"></textarea>
-    <button class="remark-input-btn">tell us</button>
-  </div> -->
-
-<!--   <span class="right-remarks">
-    <div class="remark-section">
-      <div class="remark-header">
-        remarks
-      </div> -->
-<!--       <div class="refresh">Refresh Remark Feed</div>
-      <span class="remarks">
-      </span>
-      <span class="pagination"><a class="next-remark-btn" data-remark-page="1" data-remark-filter>more</a></span>
-      <br>
-    </div>
-  </span> -->
-
   <div class="right-side-wrapper">
     <span class="left-songlist">
       <div class="testing1" data-radio="true" current-playlist="edm">
-        <div class="below-player">
+        <!-- <div class="below-player">
           <div class="other-songs-holder">
             <div class="other-songs-left-side">
               <div class="upvote-player"></div>
@@ -122,19 +48,9 @@
             <div class="other-songs-right-side">
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </span>
-  </div>
-  <div class="up-next-holder">
-    <div class="up-next-header">
-      up next..
-    </div>
-    <div class="up-next-song">
-    </div>
-    <div class="up-next-change">
-      <div class="up-next-text">re-choose</div>
-    </div>
   </div>
   <div class="right-half">
   </div>
@@ -220,7 +136,6 @@
 
   function onPlayerReady(event){
     widget = event.target;
-    // var dummyWidget = widget;
     event.target.playVideo();
     clearInterval(playerCounter);
     playerCounter = setInterval(function(){
@@ -231,12 +146,6 @@
       var currentTime = secondsToTime(Math.floor(widget.getCurrentTime())) + ' / ' + secondsToTime(widget.getDuration())
       $('.current-player-time').html(currentTime);
     }, 300)
-    // setTimeout(function(){
-    //   console.log(dummyWidget);
-    //   if ((widget.getPlayerState() == -1)&&(widget == dummyWidget)){
-    //     $('.next-song-btn').trigger('click');
-    //   }
-    // },12000)
   }
 
   function secondsToTime(secs, milli){
@@ -264,7 +173,6 @@
   var playNextLibrarySong = function(prevId){
     if ($('.up-next-song .song #song').attr('data-library')){
       $($('.up-next-song .song a')[0]).trigger('click');
-      
       setupNextLibrarySong(chooseNextLibrarySong());
     } else {
       setupNextLibrarySong(chooseNextLibrarySong());
@@ -482,21 +390,5 @@
           }
         }
     });
-    // window.onscroll = function() {
-    //   var posX = (document.documentElement.scrollLeft) ? document.documentElement.scrollLeft : window.pageXOffset;
-    //   var posY = (document.documentElement.scrollTop) ? document.documentElement.scrollTop : window.pageYOffset;
-      
-    //   var ground = document.getElementById('picture');
-    //   var groundparallax = 47 + ((calcParallax(50, 8, posY) / $(document).height()) * 2000);
-    //   if (groundparallax > 100){
-    //     groundparallax = 100;
-    //   } else if (groundparallax < 0) {
-    //     groundparallax = 0;
-    //   }
-    //   ground.style.backgroundPosition = "left "+ groundparallax+"%"; 
-    // }
 });
-
-
-
 </script>

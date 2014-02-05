@@ -24,6 +24,7 @@
 # a.submissions.create(song_name: 'Goin In (Skrillex Goin Down Remix)', song_artist: 'Skrillex', song_link: 'http://www.youtube.com/watch?v=EtSz_7nMyyU')
 # a.submissions.create(song_name: 'Goin In (Skrillex Goin Hard Remix)', song_artist: 'Skrillex', song_link: 'http://www.youtube.com/watch?v=BUK2H08AZB4')
 
+User.create(username: 'kenny', password: '1234', password_confirmation: '1234')
 a = User.last
 a.submissions.create(song_name: 'Summertime Sadness (Cedric Gervais remix)', song_artist: 'Lana Del Rey', song_link: 'http://www.youtube.com/watch?v=XPbN2pQXe1o')
 a.submissions.create(song_name: 'The Scientist', song_artist: 'Flux Pavilion', song_link: 'http://www.youtube.com/watch?v=fh5yJG7No3w')
