@@ -540,7 +540,7 @@ $(function(){
         $('.player-section').attr('style','');
         if (currentPlayer == playerNumber){
           if (track){
-            $('.left-side-wrapper').css({top:100})
+            $('.left-side-wrapper').css({top:0})
             $('.testing1').attr('data-player-type','soundcloud');
             track.html['height'] = 300
             $('.left-side-wrapper').prepend(track.html);
