@@ -105,7 +105,7 @@ function SongController(){
       if (that.player.playerNumber == uniqueId){
         that.createListen(songId, userId, playlist);
       }
-    }, 1000)
+    }, 30000)
   }
 
   this.createListen = function(songId, userId, playlist){
@@ -1239,7 +1239,9 @@ window.onload = function(){
             });
         }
         if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100){
-        	doit.goToNextPage();
+        	if ($('#song-search').val().length == 0){
+        		doit.goToNextPage();
+        	}
         }
     });
 });

@@ -16,7 +16,6 @@ class SongListensController < ApplicationController
 			end
 		else
 			@song_listen = SongListen.new(params[:song_listen])
-
 			respond_to do |format|
 				if @song_listen.save
 					if current_user && current_user.song_listens.where(:song_id => params[:song_listen][:song_id]).length >= 3
