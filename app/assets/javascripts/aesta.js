@@ -451,7 +451,6 @@ function AllSongs(){
 
   this.fetchSongs = function(callback){
 	  var that = this;
-		$('.big-picture').prepend('<div class="loading-gif"></div>')
 	    $.getJSON(
 	      '/songs.json?fetch=1',
 	      function(response){
@@ -505,7 +504,6 @@ function AllSongs(){
 
 	this.fillNames = function(songlist){
 		this.names = [];
-		var songlist = songlist.slice(0,50);
 		var that = this;
 		$.each(songlist, function(i, datum){
 	    that.names.push(datum['song_artist'].toLowerCase() + ' - ' +  datum['song_name'].toLowerCase())
