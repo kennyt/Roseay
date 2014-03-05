@@ -49,12 +49,12 @@ class ApplicationController < ActionController::Base
     # all_songs_listens = Song.all_recent_listens
     if current_user
       liked_songz = []
-      recently_listened = []
+      # recently_listened = []
       current_user.liked_songs.each{|song| liked_songz << song}
-      current_user.song_listens.order('created_at DESC').each do |listen|
-        break if recently_listened.length == 5
-        recently_listened << listen.song_id unless recently_listened.include?(listen.song_id)
-      end
+      # current_user.song_listens.order('created_at DESC').each do |listen|
+      #   break if recently_listened.length == 5
+      #   recently_listened << listen.song_id unless recently_listened.include?(listen.song_id)
+      # end
       logged_in = ([]<<current_user)[0]
       songlist = songs.map do |song|
         author = song.author
@@ -69,8 +69,8 @@ class ApplicationController < ActionController::Base
           author: author.username,
           authored: authoredz,
           # time: distance_of_time_in_words(song.created_at - Time.now),
-          priority: Time.now - song.created_at < 259200 ? 1 : 0,
-          recently_listened: recently_listened.index(song.id) ? recently_listened.index(song.id) + 1 : false
+          priority: Time.now - song.created_at < 259200 ? 1 : 0
+          # recently_listened: recently_listened.index(song.id) ? recently_listened.index(song.id) + 1 : false
           # listen_count: all_songs_listens[song.id.to_s],
           # author_total: all_users_total[author.id.to_s]
         }
@@ -96,8 +96,8 @@ class ApplicationController < ActionController::Base
           author: author.username,
           authored: false,
           # time: distance_of_time_in_words(song.created_at - Time.now),
-          priority: Time.now - song.created_at < 172800 ? 1 : 0,
-          recently_listened: false
+          priority: Time.now - song.created_at < 172800 ? 1 : 0
+          # recently_listened: false
           # listen_count: all_songs_listens[song.id.to_s],
           # author_total: all_users_total[author.id.to_s]
         }

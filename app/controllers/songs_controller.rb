@@ -11,7 +11,7 @@ class SongsController < ApplicationController
         @lib_count = LibrarySong.order('created_at DESC').limit(10)
       else
         if params[:fetch]
-          @songs = Song.order('created_at DESC').includes(:author).includes(:song_listens).all
+          @songs = Song.order('created_at DESC').includes(:author).all
         end
 
         # if params[:d]
