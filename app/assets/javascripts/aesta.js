@@ -1039,7 +1039,7 @@ function SongPlayer(songFinishBind){
     var widgetIframe = $('iframe')[0]
     this.widget = SC.Widget(widgetIframe);
     this.widget.bind(SC.Widget.Events.FINISH, function(player, data) {
-      if (this.songRepeat){
+      if (that.songRepeat){
         that.repeat();
         that.widget.play();
       } else {
