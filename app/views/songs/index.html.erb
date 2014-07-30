@@ -32,7 +32,7 @@
   <div class="repeat-button"><div class="repeat-text">repeat is off</div></div>
   <% if current_user %>
     <span id="logged_in"><%= current_user.username %></span>
-    <%= link_to '', session_path(current_user), method: :delete, class: 'logout' %>
+    <a href="/sessions/<%= current_user.id %>" class="logout" data-method="delete" rel="nofollow" title="Log out."></a>
   <% else %>
     <a id="login-modal" href="#login-signup" data-toggle="modal" title="Sign in or Join."></a>
   <% end %>
@@ -50,9 +50,7 @@
 <div class="title-extractor"></div>
 <%= render 'new_song_modal' %>
 <%= render 'new_session_modal' %>
-<%= render 'new_bump_modal' %>
 <%= render 'contributors_modal' %>
-<%= render 'faq_modal' %>
 <%= render 'edit_library_song_modal' %>
 
 <script src="//connect.soundcloud.com/sdk.js"></script>

@@ -885,7 +885,7 @@ function SongView(){
   this.successfulLogin = function(id){
     $('#login-modal').remove();
     $('.submit-button').show();
-    $('.left-half').prepend('<span id="logged_in"></span><a href="/sessions/'+id+'" class="logout" data-method="delete" rel="nofollow"></a>');
+    $('.left-half').prepend('<span id="logged_in"></span><a href="/sessions/'+id+'" class="logout" data-method="delete" rel="nofollow" title="Log out."></a>');
     $('#close-login-modal').trigger('click');
     $('#newSongModal h4').html('youtube/soundcloud links');
   }
@@ -969,7 +969,7 @@ function SongPlayer(songFinishBind){
     } else {
       $('.left-side-wrapper').css({top:0})
       this.playerType = 'youtube';
-      $('.left-side-wrapper').prepend('<div id="ytplayer'+this.playerNumber+'"></div>')
+      $('.left-side-wrapper').prepend('<div id="ytplayer'+this.playerNumber+'" style="display:block !important"></div>')
       this.constructYTVideo(this.playerNumber);
     }
 	}
@@ -982,6 +982,7 @@ function SongPlayer(songFinishBind){
 
   this.onPlayerStateChange = function(event) {
     var myPlayerState;
+    console.log('changed')
     myPlayerState = event.data;
     if (myPlayerState == 0){
       if (this.songRepeat){
@@ -1057,7 +1058,7 @@ function SongPlayer(songFinishBind){
           	}
           })
         })
-        that.widget.setVolume(that.volume);
+        that.widget.setVolume(that.volume/100);
       })
     }, 300)
   }
